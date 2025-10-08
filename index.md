@@ -3,16 +3,16 @@ layout: page
 ---
 {% include JB/setup %}
 
-<img style="float: right; width: 35%; padding: 6px;" src=" {{ site.url }}/assets/IMG_1403.jpg">
+<img style="float: right; width: 35%; padding: 6px;" src=" {{ site.url }}/assets/IMG_6822.jpg">
 
-I am a Senior Research Scientist at [Google DeepMind](https://deepmind.google/) in the [Gemini team](https://gemini.google.com/). I work in the model quality team in the post-training phase for Gemini, with a focus on SFT, RLHF and evaluation of Gemini's instruction following capabilities.
+I am a 1st year Master's student in Computer Science at University of Maryland, College Park. I work audio-visual understanding as at [Gamma Lab](https://gamma.umd.edu/) and [PIRL] lab under the guidance of [Prof. Dinesh Manocha](https://scholar.google.com/citations?user=X08l_4IAAAAJ&hl=en) and [Prof. Ramani Duraiswami](http://users.umiacs.umd.edu/~ramanid/)
 
-I completed my PhD in 2023 in Computer Science at [UMass Amherst](http://cs.umass.edu/) advised by Prof. [Mohit Iyyer](https://people.cs.umass.edu/~miyyer/) in the [UMass NLP](http://nlp.cs.umass.edu/) lab. My research at UMass was supported by the [Google PhD Fellowship](https://research.google/outreach/phd-fellowship/). Before UMass, I received my undergraduate degree at [IIT Bombay](http://iitb.ac.in). During my PhD and undergrad, I also did some fun internships at [Google DeepMind](https://research.google) (Summer 2019 - Spring 2022), [Allen AI](https://allenai.org/) (Summer 2022), [Toyota Technological Institute at Chicago](https://www.ttic.edu/) (Summer 2017) and [Mozilla](https://www.mozilla.org/en-US/) (Summer 2016).
+I completed my undergrad from IIT Madras where I had the opportunity to work with [Prof. Umesh](https://speech-lab-iitm.github.io/) at the [SPRING Lab](https://asr.iitm.ac.in/) on multilingual ASR systems for Indian languages. I was also fortunate to work with [Prof. Hema Murthy](https://bhashini.gov.in/) on the [Bhashini Project](https://bhashini.gov.in/) in collaboration with the Govt. of India.
 
-I maintain a list of my publications under the [Research]({{ site.url }}/research) tab. I also [blog]({{ site.url }}/archive) every now and then compiling my personal experiences.
+After my undergrad I've worked as a Member of Technical Staff at [Oracle](https://www.oracle.com/cloud/) working on various edge-computing solutions and integrating them into the [Oracle Cloud Infrastructure (OCI)](https://www.oracle.com/cloud/). In the meanwhile I've also collaborated with students from University of Wisconsin Madision on understanding the Cooperative reasoning capabilities of LLMs through the [Hanabi](https://www.oracle.com/cloud/) game
 
 [CV / Resume]({{ site.url }}/assets/cv.pdf), [Google Scholar](https://scholar.google.com/citations?hl=en&user=9g2BsMUAAAAJ)  
-Email ID: [kalpeshk2011@gmail.com](mailto:kalpeshk2011@gmail.com)  
+Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)  
 
 #### Updates
 
