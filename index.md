@@ -5,7 +5,7 @@ layout: page
 
 <img style="float: right; width: 35%; padding: 6px;" src=" {{ site.url }}/assets/IMG_6822.jpg">
 
-I am a 1st year Master's student in Computer Science at University of Maryland, College Park. I work audio-visual understanding as at [Gamma Lab](https://gamma.umd.edu/) and [PIRL] lab under the guidance of [Prof. Dinesh Manocha](https://scholar.google.com/citations?user=X08l_4IAAAAJ&hl=en) and [Prof. Ramani Duraiswami](http://users.umiacs.umd.edu/~ramanid/)
+I am a 1st year Master's student in Computer Science at University of Maryland, College Park. I work audio-visual understanding as at [Gamma Lab](https://gamma.umd.edu/) and [PIRL](http://www.pirl.umd.edu/) lab under the guidance of [Prof. Dinesh Manocha](https://scholar.google.com/citations?user=X08l_4IAAAAJ&hl=en) and [Prof. Ramani Duraiswami](http://users.umiacs.umd.edu/~ramanid/)
 
 I completed my undergrad from IIT Madras where I had the opportunity to work with [Prof. Umesh](https://speech-lab-iitm.github.io/) at the [SPRING Lab](https://asr.iitm.ac.in/) on multilingual ASR systems for Indian languages. I was also fortunate to work with [Prof. Hema Murthy](https://bhashini.gov.in/) on the [Bhashini Project](https://bhashini.gov.in/) in collaboration with the Govt. of India.
 
