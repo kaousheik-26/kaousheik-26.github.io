@@ -6,20 +6,20 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Kalpesh Krishna
-full_name: Kalpesh Krishna
-email: kalpeshk2011@gmail.com
-email2: kalpeshk@google.com
+title: Kaousheik Jayakumar
+full_name: Kaousheik Jayakumar
+email: kaousheik@gmail.com
+email2: kajayaku@umd.edu
 description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://martiansideofthemoon.github.io" # the base hostname & protocol for your site
-github_username:  martiansideofthemoon
-twitter_username: kalpeshk2011
-linkedin_username: kalpesh-krishna-6b3827a6
-stackoverflow: 5080995/martianwars
+url: "https://kaousheik-26.github.io/" # the base hostname & protocol for your site
+github_username:  kaousheik-26
+twitter_username: kaousheik
+linkedin_username: kaousheik
+# stackoverflow: 5080995/martianwars
 include: ['_pages']
 footer-links-active:
-  stackoverflow: true
+  stackoverflow: false
 
 # Build settings
 markdown: kramdown
