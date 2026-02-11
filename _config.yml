@@ -13,6 +13,7 @@ email2: kajayaku@umd.edu
 description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kaousheik-26.github.io/" # the base hostname & protocol for your site
+logo: /assets/IMG_6822.jpg
 github_username:  kaousheik-26
 twitter_username: kaousheik
 linkedin_username: kaousheik
