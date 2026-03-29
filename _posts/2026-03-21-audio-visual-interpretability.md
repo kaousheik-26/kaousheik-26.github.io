@@ -1,12 +1,3 @@
----
-layout: post
-title: "Do Audio-Visual Large Language Models Really See and Hear?"
-date: 2026-03-21 09:00:00 -0400
-tags: avllm interpretability audio visual multimodal research
-image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
-permalink: /blog/2026/audio-visual-interpretability/
----
-
 # Do Audio-Visual Large Language Models Really See and Hear?
 
 **March 21, 2026**
@@ -52,35 +43,43 @@ We prompt models with *"describe what you see and hear"* for joint captioning, a
 
 ### Does the model pay attention to audio?
 
-We track **mean attention** from generated tokens to each input modality across all transformer layers.
+We've seen that audio captioning collapses when audio and visual content conflict. But this raises a more basic question: does the model even *attend* to audio tokens during generation, or is it effectively ignoring them from the start? If the model never looks at audio, the hallucinations would be unsurprising—it would simply be guessing from vision alone.
+
+To test this, we track the **mean attention** that generated tokens allocate to each input modality—video tokens, audio tokens, and query text tokens—across every transformer layer of the model.
 
 ![Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.]({{ site.url }}/assets/cvpr/alt_attention_fraction.png)
 
-> **Finding:** AVLLMs attend to audio only in early layers (0–5), then abandon it. Vision dominates the deeper layers that matter most for generation.
+> **Finding:** The model *does* attend to audio—but only briefly. Audio tokens receive 40–50% of attention in early layers (0–5), which then drops to near-zero. Video attention, by contrast, steadily increases through deeper layers (15–30), reaching 20–40%. Audio is attended to early and then abandoned; vision dominates the layers that matter most for generation.
 
 ### Are audio representations meaningful?
 
-We probe audio representations using the **logit lens**—decoding hidden states at audio token positions into vocabulary tokens via the unembedding matrix.
+Knowing the model looks at audio early on still doesn't tell us whether it *extracts* anything useful. It's possible that attention to audio tokens is superficial—the model might attend without encoding meaningful content. If audio representations are empty, the visual bias would simply reflect a lack of audio understanding.
+
+To find out, we probe audio representations using the **logit lens**. This technique decodes hidden states at each audio token position using the model's unembedding matrix, projecting them into probability distributions over the vocabulary. If the representations are meaningful, they should decode into tokens that describe the actual audio content.
 
 ![Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).]({{ site.url }}/assets/cvpr/logit_lens_diagram.png)
 
-> **Finding:** Internal representations achieve **61.4% latent audio understanding**—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The model hears but doesn't use what it hears.
+> **Finding:** Audio representations decode into interpretable tokens that capture sound sources (*drill*, *engine*, *keyboard*) and actions (*typing*, *neighing*)—even in multiple languages (键盘/keyboard, 马/horse). Measuring this systematically, the model achieves **61.4% latent audio understanding** from its internal representations—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The model *hears* and encodes what it hears. It just doesn't use it.
 
 ### How does cross-modal information flow?
 
-We use **attention knockout**—blocking attention from generated tokens to audio (G↛A) or video (G↛V) at specific layers—and measure the impact on captions.
+So the model attends to audio early, and encodes meaningful audio semantics internally. But somewhere between those internal representations and the final generated text, audio gets lost. Where exactly does this happen? And critically—is vision merely *preferred* over audio, or does it actively *suppress* it?
 
-![Attention knockout. Blocking video in deeper layers improves audio understanding by ~50%—vision actively suppresses audio.](placeholder-fig-knockout.png)
+To trace the flow, we use **attention knockout**—a causal intervention that selectively blocks attention from generated tokens to either audio (G↛A) or video (G↛V) at specific layers, then measures the impact on caption quality. If blocking a modality at a given layer degrades the output, that modality was contributing there. If blocking it *improves* the output, it was actively interfering.
 
-> **Finding:** Both modalities integrate in deeper layers, but **vision actively suppresses audio**. Blocking visual pathways recovers latent audio understanding.
+![Attention knockout. Blocking video in deeper layers improves audio understanding by ~50%—vision actively suppresses audio.]({{ site.url }}/assets/avllm_fig_knockout.png)
+
+> **Finding:** Both modalities integrate into generated text in the **deeper layers** of the network. Blocking audio in these layers degrades audio captioning as expected. But the striking result: blocking *video* in deeper layers **improves audio understanding by ~50%**, recovering it to near factual-setting levels. Vision doesn't just win over audio—it actively suppresses it during cross-modal integration.
 
 ### Where does the vision bias originate?
 
-We compare **output token distributions** of Qwen2.5-Omni against its base vision-only model Qwen2.5-VL.
+We now know that vision dominates audio in the final layers. But *why*? Is this an inherent architectural limitation—something about how transformers fuse modalities—or is it a learned behavior that comes from training? Most AVLLMs initialize from pretrained vision-language models (LVLMs) and add audio adapters, or train on datasets heavily skewed toward vision-language examples. The model may simply inherit strong visual priors that audio training never overcomes.
 
-![Token distribution analysis. Hallucinated audio tokens match the vision-only model's predictions. Genuinely audio-derived tokens shift away.](placeholder-fig-distribution.png)
+To test this, we compare the **output token distributions** of Qwen2.5-Omni (the AVLLM, with audio input) against Qwen2.5-VL (its base vision-only model, no audio). For each generated token, we measure whether the AVLLM's prediction shifts away from what the vision-only model would predict. If audio meaningfully influences generation, we should see significant distributional shifts.
 
-> **Finding:** **85% of audio-related tokens are predictable from vision alone.** The bias stems from training—LVLM initialization and vision-heavy data—not architecture.
+![Token distribution analysis. Hallucinated audio tokens match the vision-only model's predictions. Genuinely audio-derived tokens shift away.]({{ site.url }}/assets/avllm_fig_distribution.png)
+
+> **Finding:** The KL divergence between the AVLLM and its base LVLM is just 0.4—remarkably similar. Of tokens describing audio events, 66% are *unshifted* (identical top prediction as the vision-only model), and **85% fall within the vision-only model's top 3 predictions**. When the model does correctly identify audio-only content (e.g., "child speaking"), those tokens shift away from the LVLM distribution—confirming that genuine audio processing produces distributional shifts, but it rarely happens. The visual bias stems from training—LVLM initialization and vision-heavy data—not architecture.
 
 ---
 
@@ -120,3 +119,4 @@ We compare **output token distributions** of Qwen2.5-Omni against its base visio
 ```
 
 ---
+
