@@ -1,3 +1,12 @@
+---
+layout: post
+title: "Do Audio-Visual Large Language Models Really See and Hear?"
+date: 2026-03-21 09:00:00 -0400
+tags: avllm interpretability audio visual multimodal research
+image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
+permalink: /blog/2026/audio-visual-interpretability/
+---
+
 # Do Audio-Visual Large Language Models Really See and Hear?
 
 **March 21, 2026**
