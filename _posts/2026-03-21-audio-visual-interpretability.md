@@ -1,3 +1,12 @@
+---
+layout: post
+title: "Do Audio-Visual Large Language Models Really See and Hear?"
+date: 2026-03-21 09:00:00 -0400
+tags: avllm interpretability audio visual multimodal research
+image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
+permalink: /blog/2026/audio-visual-interpretability/
+---
+
 # Do Audio-Visual Large Language Models Really See and Hear?
 
 **March 21, 2026**
@@ -14,7 +23,7 @@ AVLLMs have made remarkable progress in jointly processing video and audio. But 
 
 When we stress-test them, something is clearly wrong. A scene shows a car and a woman walking a dog, but the only sound is an off-screen ambulance siren. AVLLMs **hallucinate sounds from visible objects**—and miss the actual siren. They see, then *guess* what they should be hearing.
 
-![Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.](teaser.png)
+![Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.]({{ site.url }}/assets/cvpr/blog_teaser.png)
 
 On counterfactual samples where audio and visual content conflict, audio captioning drops by **up to 56%**. We set out to understand why.
 
@@ -45,7 +54,7 @@ We prompt models with *"describe what you see and hear"* for joint captioning, a
 
 We track **mean attention** from generated tokens to each input modality across all transformer layers.
 
-![Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.](attention-1.png)
+![Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.]({{ site.url }}/assets/cvpr/alt_attention_fraction.png)
 
 > **Finding:** AVLLMs attend to audio only in early layers (0–5), then abandon it. Vision dominates the deeper layers that matter most for generation.
 
@@ -53,7 +62,7 @@ We track **mean attention** from generated tokens to each input modality across 
 
 We probe audio representations using the **logit lens**—decoding hidden states at audio token positions into vocabulary tokens via the unembedding matrix.
 
-![Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).](logit_lens-1.png)
+![Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).]({{ site.url }}/assets/cvpr/logit_lens_diagram.png)
 
 > **Finding:** Internal representations achieve **61.4% latent audio understanding**—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The model hears but doesn't use what it hears.
 
