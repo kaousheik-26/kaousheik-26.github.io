@@ -1,86 +1,101 @@
----
-layout: post
-title: "Do Audio-Visual Large Language Models Really See and Hear?"
-date: 2026-03-21 09:00:00 -0400
-permalink: /blog/2026/audio-visual-interpretability/
-tags: interpretability multimodal audio-visual LLMs mechanistic CVPR research
-image: https://kaousheik-26.github.io/assets/avllm_blog_teaser.png
----
+# Do Audio-Visual Large Language Models Really See and Hear?
 
-We present the first mechanistic interpretability study of Audio-Visual Large Language Models (AVLLMs), investigating how audio and visual features evolve and fuse through layers to produce text.
+**March 21, 2026**
 
-**Paper**: [Do Audio-Visual Large Language Models Really See and Hear?](https://drive.google.com/file/d/1tZT3rtrjQoTdRRwAwFsTVYlweaXaTKO4/view?usp=sharing)
+*AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation.*
 
-**Authors**: Ramaneswaran Selvakumar\*, Kaousheik Jayakumar\*, S Sakshi, Sreyan Ghosh, Ruohan Gao, Dinesh Manocha (\*equal contribution)
-
-**Affiliation**: University of Maryland, College Park
+**Authors:** Ramaneswaran Selvakumar, Kaousheik Jayakumar, S Sakshi, Sreyan Ghosh, Ruohan Gao, Dinesh Manocha  
+**Affiliation:** University of Maryland, College Park  
+[Paper](#) · [Code](#)
 
 ---
 
-## tl;dr
+AVLLMs have made remarkable progress in jointly processing video and audio. But how do they actually integrate these modalities internally? That mechanism has remained a black box.
 
-AVLLMs like Qwen2.5-Omni and Qwen3-Omni can process both audio and video — but **do they *really* hear?**
+When we stress-test them, something is clearly wrong. A scene shows a car and a woman walking a dog, but the only sound is an off-screen ambulance siren. AVLLMs **hallucinate sounds from visible objects**—and miss the actual siren. They see, then *guess* what they should be hearing.
 
-1. AVLLMs **encode rich audio semantics** internally, but **deeper layers disproportionately privilege vision**, suppressing audio cues during generation.
-2. Audio performance **drops by up to 56%** when audio and visual content conflict.
-3. The AVLLM's output distribution **mirrors its base vision-language model**, suggesting visual bias stems from training.
+![Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.](teaser.png)
 
-**The takeaway: current AVLLMs *can* hear, but they choose not to when the eyes disagree.**
+On counterfactual samples where audio and visual content conflict, audio captioning drops by **up to 56%**. We set out to understand why.
 
----
-
-## The Problem: Vision Dominates Audio
-
-Consider a self-driving car that sees a blue car and a woman walking a dog, but the actual sound is an **off-screen ambulance siren**. Existing AVLLMs consistently hallucinate sounds from *visible* objects while missing the real audio.
-
-![teaser]({{ site.url }}/assets/teaser_cvpr.png)
-
-This isn't a quirky failure — it reveals that these models **don't integrate audio properly**. They see, and then guess what they should be hearing.
+> **tl;dr** — Audio tokens encode **rich semantics** internally. Both modalities transfer to generated text in **deeper layers**. But vision gets systematic preference—blocking it *recovers* audio understanding. The bias stems from training, not architecture.
 
 ---
 
-## Approach: Four-Stage Mechanistic Analysis
+## How We Study This
 
-We trace how audio and visual information flows through transformer layers:
+In natural videos, audio and visual content are correlated. To isolate each modality, we construct **counterfactual samples** by swapping a video's audio with an unrelated track. We curate 500 samples from AudioCaps (equal factual/counterfactual split), primarily testing Qwen2.5-Omni (3B) with validation across four additional models.
 
-1. **Attention Pattern Analysis** — Track attention allocated to audio vs. video tokens across layers.
-2. **Logit Lens Probing** — Decode intermediate audio representations to reveal encoded semantics.
-3. **Attention Knockout** — Causally block attention to audio or video at specific layers.
-4. **Base Model Comparison** — Compare AVLLM outputs against their base vision-language models.
+`[Video: Counterfactual sample — mismatched audio and visual content]`
+
+We evaluate using an **LLM-as-judge** (Qwen3-32B) that scores audio and video caption fidelity separately (0–1), with strong human correlation (ρ = 0.816 audio, ρ = 0.732 video).
+
+<details>
+<summary>More on evaluation methodology</summary>
+
+We prompt models with *"describe what you see and hear"* for joint captioning, and modality-specific prompts to isolate each channel. Traditional metrics (BLEU, CIDEr) fail to capture semantic variability. The LLM judge reasons over objects, actions, temporal ordering, and audio events before scoring, calibrated with few-shot examples.
+
+</details>
 
 ---
 
-## Key Findings
+## Findings
 
-### AVLLMs Hallucinate Based on Vision, Not Audio
+### Does the model pay attention to audio?
 
-When asked *"Describe what you hear,"* AVLLMs fabricate audio descriptions matching the **visual content** rather than the actual audio track. Below: the model sees a helicopter and describes helicopter sounds, ignoring the real audio of a boy talking and a baby yelling.
+We track **mean attention** from generated tokens to each input modality across all transformer layers.
 
-![attention]({{ site.url }}/assets/avllm_fig_attention.png)
+![Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.](attention-1.png)
 
-Similarly, for a video of a man speaking at a podium, the model describes speech sounds while the actual audio is motor vehicles accelerating — once again relying entirely on visual cues.
+> **Finding:** AVLLMs attend to audio only in early layers (0–5), then abandon it. Vision dominates the deeper layers that matter most for generation.
 
-![logitlens]({{ site.url }}/assets/avllm_fig_logitlens.png)
+### Are audio representations meaningful?
 
-### Audio Fidelity Collapses Under Conflict
+We probe audio representations using the **logit lens**—decoding hidden states at audio token positions into vocabulary tokens via the unembedding matrix.
 
-We measure Audio Caption Fidelity on factual (naturally aligned) vs. counterfactual (mismatched audio-visual) samples. **All models show massive drops** — up to 56% — when audio conflicts with vision.
+![Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).](logit_lens-1.png)
 
-![knockout]({{ site.url }}/assets/avllm_fig_knockout.png)
+> **Finding:** Internal representations achieve **61.4% latent audio understanding**—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The model hears but doesn't use what it hears.
 
-### LLM-as-Judge Evaluation
+### How does cross-modal information flow?
 
-We use an LLM judge to separately score video and audio caption fidelity. Below is an example: the model achieves reasonable video fidelity (0.75) but poor audio fidelity (0.25), hallucinating *meowing* while missing the actual sounds of a man speaking and music.
+We use **attention knockout**—blocking attention from generated tokens to audio (G↛A) or video (G↛V) at specific layers—and measure the impact on captions.
 
-![distribution]({{ site.url }}/assets/avllm_fig_distribution.png)
+![Attention knockout. Blocking video in deeper layers improves audio understanding by ~50%—vision actively suppresses audio.](placeholder-fig-knockout.png)
+
+> **Finding:** Both modalities integrate in deeper layers, but **vision actively suppresses audio**. Blocking visual pathways recovers latent audio understanding.
+
+### Where does the vision bias originate?
+
+We compare **output token distributions** of Qwen2.5-Omni against its base vision-only model Qwen2.5-VL.
+
+![Token distribution analysis. Hallucinated audio tokens match the vision-only model's predictions. Genuinely audio-derived tokens shift away.](placeholder-fig-distribution.png)
+
+> **Finding:** **85% of audio-related tokens are predictable from vision alone.** The bias stems from training—LVLM initialization and vision-heavy data—not architecture.
+
+---
+
+## Audio Fidelity Across Models
+
+| Model | Factual | Counterfactual | Drop |
+|---|---|---|---|
+| Qwen2.5-Omni (3B) | 53.58 | 23.10 | −57% |
+| Qwen2.5-Omni (7B) | 57.36 | 25.94 | −55% |
+| Qwen3-Omni | 58.27 | 36.72 | −37% |
+| VideoLLaMA 2.1 | 53.02 | 22.61 | −57% |
+| MiniCPM-o 2.6 | 47.46 | 20.74 | −56% |
 
 ---
 
 ## Implications
 
-- **Balanced training**: Future AVLLMs need balanced data mixtures and **counterfactual samples** to penalize visual shortcuts.
-- **Architectural interventions**: Deeper layers actively suppress audio — regularization strategies can preserve audio through the full forward pass.
-- **Better evaluation**: Standard benchmarks with aligned audio-visual content mask these failures. Counterfactual protocols are essential.
+**Better evaluation.** Aligned benchmarks mask visual bias. Counterfactual protocols are essential.
+
+**Balanced training.** AVLLMs need balanced data and counterfactual samples to penalize visual shortcuts.
+
+**Architectural interventions.** Deeper layers suppress audio—regularization can preserve it through the forward pass.
+
+> *Current AVLLMs can see and hear—but they choose vision, even for audio tasks. The audio understanding is already there. The challenge is getting models to actually use it.*
 
 ---
 
@@ -89,7 +104,10 @@ We use an LLM judge to separately score video and audio caption fidelity. Below 
 ```
 @article{selvakumar2026avllm,
   title={Do Audio-Visual Large Language Models Really See and Hear?},
-  author={Selvakumar, Ramaneswaran and Jayakumar, Kaousheik and Sakshi, S and Ghosh, Sreyan and Gao, Ruohan and Manocha, Dinesh},
+  author={Selvakumar, Ramaneswaran and Jayakumar, Kaousheik and
+          Sakshi, S and Ghosh, Sreyan and Gao, Ruohan and Manocha, Dinesh},
   year={2026}
 }
 ```
+
+---
