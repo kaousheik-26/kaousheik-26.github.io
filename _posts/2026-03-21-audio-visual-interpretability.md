@@ -21,7 +21,7 @@ AVLLMs have made remarkable progress in jointly understanding audio and visual i
 To see why this matters, consider a safety-critical setting shown below: an autonomous vehicle should respond to an off-screen ambulance siren even when it isn't visible. Current AVLLMs would likely fail here—when we stress-test them on scenarios where audio and visual content conflict, they hallucinate sounds from visible objects and miss the actual audio entirely. They have a bias to see, then *guess* what they should be hearing.
 
 <figure>
-  <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Visual bias in action">
+  <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Visual bias in action">
   <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
 </figure>
 
