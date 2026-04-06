@@ -103,11 +103,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-        <div class="video-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          YouTube video embed (factual)
-        </div>
+        <iframe src="https://www.youtube.com/embed/f0Zhcv4P5Lg" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -126,11 +122,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-        <div class="video-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          YouTube video embed (counterfactual)
-        </div>
+        <iframe src="https://www.youtube.com/embed/xtlM1ON6q64" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -164,11 +156,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-        <div class="video-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          YouTube video embed (factual)
-        </div>
+        <iframe src="https://www.youtube.com/embed/7EK501R_jbQ" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -187,11 +175,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-        <div class="video-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          YouTube video embed (counterfactual)
-        </div>
+        <iframe src="https://www.youtube.com/embed/4wnLiIxJZzc" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -225,11 +209,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-        <div class="video-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          YouTube video embed (factual)
-        </div>
+        <iframe src="https://www.youtube.com/embed/DV2AYHNCCFk" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -248,11 +228,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-        <div class="video-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          YouTube video embed (counterfactual)
-        </div>
+        <iframe src="https://www.youtube.com/embed/K7Fl8E6bxQw" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
