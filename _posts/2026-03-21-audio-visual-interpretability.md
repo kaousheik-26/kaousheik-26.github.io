@@ -156,7 +156,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/7EK501R_jbQ" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=9SfzBvtdvbM" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -175,7 +175,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/4wnLiIxJZzc" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=Z_cRQtqj_vE" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
