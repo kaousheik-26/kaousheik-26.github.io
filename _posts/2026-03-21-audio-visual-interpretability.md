@@ -61,7 +61,7 @@ We've established that the model does attend to audio tokens, albeit briefly. Ne
 To find out, we probe audio representations using the **logit lens**. This technique decodes hidden states at each audio token position using the model's unembedding matrix, projecting them into probability distributions over the vocabulary. If the representations are meaningful, they should decode into tokens that describe the actual audio content.
 
 <figure>
-  <img src="{{ site.url }}/assets/cvpr/logit_lens_diagram.png" alt="Logit lens probing">
+  <img src="{{ site.url }}/assets/cvpr/probing.png" alt="Logit lens probing">
   <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
 </figure>
 
@@ -156,7 +156,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/watch?v=9SfzBvtdvbM" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/7EK501R_jbQ" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -175,7 +175,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/watch?v=Z_cRQtqj_vE" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4wnLiIxJZzc" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -249,6 +249,29 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="analysis-text">The model produces <strong>virtually identical outputs</strong> for both conditions — the only difference is a stray typo ("of of"). In the factual case, "sizzling and crackling" is correct — the original audio includes food and oil sizzling. In the counterfactual case, the audio has been replaced with <strong>snoring and laughter</strong> — yet the model still reports sizzling cooking sounds. The visual prior of a frying pan is so dominant that it completely overwrites the actual audio signal.</div>
   </div>
 </div>
+
+---
+
+## Where does the vision bias originate?
+
+The examples above demonstrate that AVLLMs fabricate audio from visual content. But *how* does this happen mechanistically? To understand this, we visualize the **cross-modal attention** during generation — specifically, which regions of the video frames the model attends to when generating tokens that describe audio events.
+
+The two examples below are both counterfactual samples where the model is given the instruction **"Describe what you hear."** In both cases, the model ignores the actual audio and instead generates audio descriptions by attending directly to visible objects in the video frames.
+
+<div class="figure-row">
+  <figure>
+    <img src="{{ site.url }}/assets/cvpr/bias_origin_1.png" alt="Attention heatmap: helicopter example">
+    <figcaption><strong>(a)</strong> A helicopter flies between buildings. The actual audio is a young boy talking as a baby yells — but the model generates "I hear <em>the sound of a helicopter</em>," with attention concentrated on the helicopter in the video frames.</figcaption>
+  </figure>
+  <figure>
+    <img src="{{ site.url }}/assets/cvpr/bias_origin_2.png" alt="Attention heatmap: speech example">
+    <figcaption><strong>(b)</strong> A man holds a microphone at a formal event. The actual audio is several motor vehicles accelerating — but the model generates "I hear <em>a man speaking into a microphone</em>," with attention locked onto the man and microphone in the video.</figcaption>
+  </figure>
+</div>
+
+In both cases, the attention heatmaps reveal a clear pattern: when generating audio-describing tokens (highlighted in the model output), the model's attention flows directly to the **visually salient objects** — the helicopter, the man with the microphone — rather than to the audio tokens. The model is essentially performing visual object recognition and translating the result into plausible sound descriptions, bypassing the audio modality entirely.
+
+This is consistent with our mechanistic findings from attention knockout experiments: audio and visual information compete in the model's mid-to-deep layers, and vision consistently wins. The attention heatmaps provide a token-level view of this competition — showing that even when explicitly asked to describe *only* what it hears, the model routes its attention through the visual pathway and hallucinates audio that matches the visible scene.
 
 ---
 
