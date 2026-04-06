@@ -4,7 +4,7 @@ title: "Do Audio-Visual Large Language Models Really See and Hear?"
 subtitle: "AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation."
 date: 2026-03-21 09:00:00 -0400
 tags: avllm interpretability audio visual multimodal research
-image: https://kaousheik-26.github.io/assets/cvpr/teaser.png
+image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
 permalink: /blog/2026/audio-visual-interpretability/
 venue: "CVPR Findings 2026"
 authors: "Ramaneswaran Selvakumar*, Kaousheik Jayakumar*, S Sakshi, Sreyan Ghosh, Ruohan Gao#, Dinesh Manocha#"
@@ -16,16 +16,21 @@ code_url: https://github.com/ramaneswaran/avllm_interpretability
 dataset_url: https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval
 ---
 
+<div class="text-figure-row">
+  <div class="tf-text">
+
 AVLLMs have made remarkable progress in jointly understanding audio and visual inputs. But how they actually process and use these modalities internally remains a black box, and this opacity has real consequences.
 
-To see why this matters, consider a safety-critical setting shown below: an autonomous vehicle should respond to an off-screen ambulance siren even when it isn't visible. Current AVLLMs would likely fail here—when we stress-test them on scenarios where audio and visual content conflict, they hallucinate sounds from visible objects and miss the actual audio entirely. They have a bias to see, then *guess* what they should be hearing.
-
-<figure>
-  <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Visual bias in action">
-  <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
-</figure>
+To see why this matters, consider the safety-critical setting shown on the right: an autonomous vehicle should respond to an off-screen ambulance siren even when it isn't visible. Current AVLLMs would likely fail here—when we stress-test them on scenarios where audio and visual content conflict, they hallucinate sounds from visible objects and miss the actual audio entirely. They have a bias to see, then *guess* what they should be hearing.
 
 We curate an evaluation set consisting of such counterfactual samples where audio and visual content conflict, and observe that audio captioning performance drops by **up to 56%**. We then conduct a systematic mechanistic analysis to understand why this happens.
+
+  </div>
+  <figure class="tf-figure">
+    <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Visual bias in action">
+    <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
+  </figure>
+</div>
 
 ---
 
@@ -43,16 +48,23 @@ We curate an evaluation set consisting of such counterfactual samples where audi
 
 ### Does the model pay attention to audio?
 
-But before asking why audio fails, a more basic question: does the model even *attend* to audio tokens during generation, or is it effectively ignoring them from the start? If the model never looks at audio, the hallucinations would be unsurprising—it would simply be guessing from vision alone.
+<div class="text-figure-row">
+  <div class="tf-text">
+
+Before asking why audio fails, a more basic question: does the model even *attend* to audio tokens during generation, or is it effectively ignoring them from the start? If the model never looks at audio, the hallucinations would be unsurprising—it would simply be guessing from vision alone.
 
 To test this, we track the **mean attention** that generated tokens allocate to each input modality—video tokens, audio tokens, and query text tokens—across every transformer layer of the model.
 
-<figure>
-  <img src="{{ site.url }}/assets/cvpr/alt_attention_fraction.png" alt="Attention fraction across layers">
-  <figcaption><strong>Figure 2.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
-</figure>
+The result is surprising: the model *does* attend to audio—but only briefly. Audio tokens receive 40–50% of attention in early layers (0–5), then drop to near-zero. Visual attention, by contrast, steadily climbs through deeper layers (15–30), reaching 20–40%. This suggests the model processes audio early on but progressively discards it in favor of visual information as it moves toward generating output tokens.
 
-> **Finding:** The model *does* attend to audio—but only briefly. Audio tokens receive 40–50% of attention in early layers (0–5), then drop to near-zero. Visual attention, by contrast, steadily climbs through deeper layers (15–30), reaching 20–40%.
+  </div>
+  <figure class="tf-figure">
+    <img src="{{ site.url }}/assets/cvpr/alt_attention_fraction.png" alt="Attention fraction across layers">
+    <figcaption><strong>Figure 2.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
+  </figure>
+</div>
+
+> **Finding:** The model *does* attend to audio—but only briefly. Audio dominates early layers, then gets suppressed as visual attention takes over in deeper layers.
 
 ### Are audio representations meaningful?
 
@@ -61,7 +73,7 @@ We've established that the model does attend to audio tokens, albeit briefly. Ne
 To find out, we probe audio representations using the **logit lens**. This technique decodes hidden states at each audio token position using the model's unembedding matrix, projecting them into probability distributions over the vocabulary. If the representations are meaningful, they should decode into tokens that describe the actual audio content.
 
 <figure>
-  <img src="{{ site.url }}/assets/cvpr/probing.png" alt="Logit lens probing">
+  <img src="{{ site.url }}/assets/cvpr/logit_lens_diagram.png" alt="Logit lens probing">
   <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
 </figure>
 
@@ -89,11 +101,11 @@ We can see this bias in action by visualizing the **cross-modal attention** duri
 
 <div class="figure-row">
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/bias_origin_1.png" alt="Attention heatmap: helicopter example">
+    <img src="{{ site.url }}/assets/cvpr/attention_helicopter.png" alt="Attention heatmap: helicopter example">
     <figcaption><strong>(a)</strong> The actual audio is a young boy talking as a baby yells — but the model generates "I hear <em>the sound of a helicopter</em>," with attention concentrated on the helicopter in the video frames.</figcaption>
   </figure>
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/bias_origin_2.png" alt="Attention heatmap: speech example">
+    <img src="{{ site.url }}/assets/cvpr/attention_speech.png" alt="Attention heatmap: speech example">
     <figcaption><strong>(b)</strong> The actual audio is several motor vehicles accelerating — but the model generates "I hear <em>a man speaking into a microphone</em>," with attention locked onto the man and microphone in the video.</figcaption>
   </figure>
 </div>
@@ -110,7 +122,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">Office Keyboard Typing</div>
+    <div class="example-title">ID 151 — Office Keyboard Typing</div>
     <span class="model-badge">Qwen2.5-Omni 7B</span>
   </div>
   <div class="pair-grid">
@@ -163,7 +175,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">Ducklings Swimming</div>
+    <div class="example-title">ID 495 — Ducklings Swimming</div>
     <span class="model-badge">Qwen2.5-Omni 3B</span>
   </div>
   <div class="pair-grid">
@@ -216,7 +228,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">Food Sizzling in a Pan</div>
+    <div class="example-title">ID 437 — Food Sizzling in a Pan</div>
     <span class="model-badge">VideoLLaMA2 7B</span>
   </div>
   <div class="pair-grid">
