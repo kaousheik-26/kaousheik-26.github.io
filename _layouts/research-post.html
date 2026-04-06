@@ -856,6 +856,7 @@
             float: right;
             width: 36%;
             margin: 0.25rem 0 1rem 1.75rem;
+            shape-outside: margin-box;
         }
 
         .float-figure-right img {
@@ -865,6 +866,7 @@
             border: 1px solid var(--border);
             background: #fff;
             box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+            display: block;
         }
 
         .float-figure-right figcaption {
@@ -884,6 +886,7 @@
             float: left;
             width: 48%;
             margin: 0.25rem 1.75rem 1rem 0;
+            shape-outside: margin-box;
         }
 
         .float-figure-left img {
@@ -893,6 +896,7 @@
             border: 1px solid var(--border);
             background: #fff;
             box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+            display: block;
         }
 
         .float-figure-left figcaption {
@@ -912,6 +916,70 @@
             content: "";
             display: table;
             clear: both;
+        }
+
+        /* ── Side-by-side section: figure + text ─────── */
+        .fig-text-row {
+            display: flex;
+            gap: 1.75rem;
+            align-items: flex-start;
+            margin: 2rem 0;
+        }
+
+        .fig-text-row.row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        .fig-text-row .fig-col {
+            flex: 0 0 38%;
+            min-width: 0;
+        }
+
+        .fig-text-row .fig-col-wide {
+            flex: 0 0 48%;
+            min-width: 0;
+        }
+
+        .fig-text-row .text-col {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .fig-text-row figure {
+            margin: 0 !important;
+        }
+
+        .fig-text-row figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+            display: block;
+        }
+
+        .fig-text-row figcaption {
+            margin-top: 0.5rem;
+            padding: 0;
+            font-size: 0.78rem;
+            color: var(--text3);
+            line-height: 1.5;
+        }
+
+        .fig-text-row figcaption strong {
+            color: var(--text2);
+            font-weight: 600;
+        }
+
+        .fig-text-row .text-col p {
+            margin-bottom: 1rem;
+            font-size: 17px;
+            color: var(--text);
+        }
+
+        .fig-text-row .text-col p:last-child {
+            margin-bottom: 0;
         }
 
         /* ── Side-by-Side Figures ─────────────────────── */
@@ -1063,6 +1131,20 @@
                 float: none;
                 width: 100%;
                 margin: 1rem 0;
+            }
+
+            .fig-text-row {
+                flex-direction: column;
+            }
+
+            .fig-text-row.row-reverse {
+                flex-direction: column;
+            }
+
+            .fig-text-row .fig-col,
+            .fig-text-row .fig-col-wide {
+                flex: none;
+                width: 100%;
             }
 
             .figure-row {
