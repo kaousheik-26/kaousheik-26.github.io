@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <meta name="description" content="{{ page.subtitle | default: page.title }}">
+    {% seo %}
+    <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico">
+    <style>
+        /* ── Theme Variables ─────────────────────────── */
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --text2: #5a5a5a;
+            --text3: #999;
+            --border: #e5e5e5;
+            --accent: #d85a30;
+            --details-bg: #f5f5f5;
+            --sidebar-bg: transparent;
+            --sidebar-width: 240px;
+            --finding-bg: #fdf6f3;
+            --code-bg: #2b2b2b;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1a1915;
+            --text: #e8e6df;
+            --text2: #a8a49a;
+            --text3: #6e6b63;
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #f0997b;
+            --details-bg: rgba(255, 255, 255, 0.04);
+            --finding-bg: rgba(240, 153, 123, 0.06);
+            --code-bg: #111;
+        }
+
+        /* ── Reset ────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.7;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ──────────────────────────────────── */
+        .sidebar {
+            width: var(--sidebar-width);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding: 3rem 1.5rem;
+            box-sizing: border-box;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 50;
+            transition: border-color 0.2s;
+        }
+
+        .sidebar-home {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            display: block;
+            margin-bottom: 2.5rem;
+            transition: color 0.2s;
+        }
+
+        .sidebar-home:hover {
+            color: var(--accent);
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav li {
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar nav a {
+            display: block;
+            padding: 0.5rem 0.85rem;
+            color: var(--text3);
+            text-decoration: none;
+            font-size: 0.82rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar nav a:hover {
+            color: var(--text);
+            background-color: var(--details-bg);
+        }
+
+        .sidebar nav a.active {
+            color: var(--text);
+            background-color: var(--details-bg);
+            font-weight: 500;
+        }
+
+        .sidebar nav ul ul {
+            padding-left: 0.8rem;
+            margin-top: 0.1rem;
+        }
+
+        .sidebar nav ul ul a {
+            font-size: 0.78rem;
+            padding: 0.35rem 0.85rem;
+        }
+
+        .sidebar-cv {
+            display: block;
+            margin-top: 2rem;
+            padding: 0.5rem 0.85rem;
+            font-size: 0.82rem;
+            color: var(--text3);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-cv:hover {
+            color: var(--text);
+            background-color: var(--details-bg);
+        }
+
+        /* ── Theme Toggle ─────────────────────────────── */
+        .theme-btn {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.5rem;
+            z-index: 1000;
+            background: var(--details-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-btn:hover {
+            border-color: var(--text3);
+        }
+
+        /* ── Main Content ─────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 3rem 5rem 6rem 4rem;
+            max-width: 860px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ── Hero ─────────────────────────────────────── */
+        .hero {
+            text-align: center;
+            padding: 0 0 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            color: var(--text);
+        }
+
+        .hero-authors {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .hero-names {
+            font-size: 15px;
+            color: var(--text2);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .hero-names sup {
+            font-size: 10px;
+        }
+
+        .hero-note {
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        .hero-affil {
+            font-size: 15px;
+            color: var(--text2);
+            margin-top: 0.2rem;
+        }
+
+        .hero-venue {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--text);
+            color: var(--bg);
+            border-radius: 999px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+
+        .pill-btn:hover {
+            opacity: 0.8;
+            color: var(--bg);
+        }
+
+        .pill-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ── TL;DR ────────────────────────────────────── */
+        .tldr {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        .tldr-label {
+            font-size: 13px;
+            color: var(--text3);
+            padding-top: 3px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tldr-body {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--text2);
+            line-height: 1.7;
+        }
+
+        /* ── Typography ───────────────────────────────── */
+        .post-content p {
+            margin-bottom: 1.4rem;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .post-content a {
+            color: var(--text);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .post-content a:hover {
+            color: var(--accent);
+        }
+
+        .post-content h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin: 3.5rem 0 0.75rem;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .post-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2.2rem 0 0.75rem;
+            color: var(--text);
+        }
+
+        .post-content strong {
+            font-weight: 600;
+        }
+
+        .post-content em {
+            font-style: italic;
+        }
+
+        .post-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        /* ── Figures ──────────────────────────────────── */
+        .post-content figure {
+            margin: 2.5rem 0;
+            padding: 0;
+        }
+
+        .post-content figure img,
+        .post-content p>img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .post-content figcaption {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text3);
+            line-height: 1.55;
+        }
+
+        .post-content figcaption strong {
+            color: var(--text2);
+        }
+
+        .post-content p>img {
+            display: block;
+            margin: 2rem auto;
+        }
+
+        /* ── Blockquotes → Finding Callouts ───────────── */
+        .post-content blockquote {
+            background: var(--finding-bg);
+            border-left: 4px solid var(--accent);
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .post-content blockquote p {
+            margin-bottom: 0.6rem;
+            font-size: 16px;
+        }
+
+        .post-content blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        .post-content blockquote strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ── Code Blocks ─────────────────────────────── */
+        .post-content pre {
+            background: var(--code-bg);
+            color: #e0e0e0;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.65;
+            border: 1px solid var(--border);
+        }
+
+        .post-content code {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--details-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .post-content pre code {
+            background: none;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        /* ── Citation Box ─────────────────────────────── */
+        .citation-block {
+            background: var(--details-bg);
+            border: 1px solid var(--border);
+            padding: 1.4rem 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .citation-block .cite-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 0.6rem;
+        }
+
+        .citation-block pre {
+            background: transparent !important;
+            color: var(--text2) !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 13px !important;
+            line-height: 1.5 !important;
+        }
+
+        /* ── Lists ────────────────────────────────────── */
+        .post-content ul,
+        .post-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── Footer ──────────────────────────────────── */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 0 3rem;
+            margin-top: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-author {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.78rem;
+            color: var(--text3);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* ── Mobile Responsive ────────────────────────── */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 1.5rem 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sidebar-home {
+                margin-bottom: 1rem;
+            }
+
+            .sidebar nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+
+            .sidebar nav li {
+                margin-bottom: 0;
+            }
+
+            .sidebar nav ul ul {
+                padding-left: 0;
+                display: none;
+            }
+
+            .sidebar-cv {
+                display: inline-block;
+                margin-top: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 2rem 1.5rem 4rem;
+                max-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .theme-btn {
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <a href="{{ site.url }}/" class="sidebar-home">{{ site.full_name }}</a>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#top" class="active">Overview</a></li>
+                <li><a href="#how-we-study-this">How We Study This</a></li>
+                <li><a href="#findings">Findings</a>
+                    <ul>
+                        <li><a href="#does-the-model-pay-attention-to-audio">Attention to Audio</a></li>
+                        <li><a href="#are-audio-representations-meaningful">Audio Representations</a></li>
+                        <li><a href="#how-does-cross-modal-information-flow">Cross-Modal Flow</a></li>
+                        <li><a href="#where-does-the-vision-bias-originate">Vision Bias Origins</a></li>
+                    </ul>
+                </li>
+                <li><a href="#citation">Citation</a></li>
+            </ul>
+        </nav>
+        <a href="{{ site.url }}/assets/kaousheik_CV.pdf" class="sidebar-cv">CV ↗</a>
+    </aside>
+
+    <!-- Theme Toggle -->
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-toggle">
+        <svg id="theme-ico" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+            stroke-width="1.5">
+            <circle cx="8" cy="8" r="3.5" />
+            <line x1="8" y1="1" x2="8" y2="2.5" />
+            <line x1="8" y1="13.5" x2="8" y2="15" />
+            <line x1="1" y1="8" x2="2.5" y2="8" />
+            <line x1="13.5" y1="8" x2="15" y2="8" />
+            <line x1="3.1" y1="3.1" x2="4.2" y2="4.2" />
+            <line x1="11.8" y1="11.8" x2="12.9" y2="12.9" />
+            <line x1="3.1" y1="12.9" x2="4.2" y2="11.8" />
+            <line x1="11.8" y1="4.2" x2="12.9" y2="3.1" />
+        </svg>
+        <span id="theme-lbl">Dark</span>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content" id="top">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>{{ page.title }}</h1>
+            <div class="hero-authors">
+                {% if page.authors %}
+                <div class="hero-names">{{ page.authors }}</div>
+                {% endif %}
+                {% if page.author_note %}
+                <div class="hero-note">{{ page.author_note }}</div>
+                {% endif %}
+                {% if page.affiliation %}
+                <div class="hero-affil">{{ page.affiliation }}</div>
+                {% endif %}
+                {% if page.venue %}
+                <div class="hero-venue">{{ page.venue }}</div>
+                {% endif %}
+                <div class="hero-links">
+                    {% if page.paper_url %}
+                    <a href="{{ page.paper_url }}" class="pill-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z" />
+                        </svg>
+                        Paper
+                    </a>
+                    {% endif %}
+                    {% if page.project_url %}
+                    <a href="{{ page.project_url }}" class="pill-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                        </svg>
+                        Project
+                    </a>
+                    {% endif %}
+                    {% if page.code_url %}
+                    <a href="{{ page.code_url }}" class="pill-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .268.18.58.688.482C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                        </svg>
+                        Code
+                    </a>
+                    {% endif %}
+                    {% if page.dataset_url %}
+                    <a href="{{ page.dataset_url }}" class="pill-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                        </svg>
+                        Dataset
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        {% if page.subtitle %}
+        <div class="tldr">
+            <span class="tldr-label">TL;DR</span>
+            <span class="tldr-body">{{ page.subtitle }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Post Content -->
+        <article class="post-content">
+            {{ content }}
+        </article>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <span class="footer-author">{{ site.full_name }}</span>
+            <div class="footer-links">
+                <a href="mailto:{{ site.email }}">Email</a>
+                <a href="https://github.com/{{ site.github_username }}">GitHub</a>
+                <a href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
+                <a href="https://linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // ── Scroll Spy ──────────────────────────────
+        const sections = document.querySelectorAll('[id]');
+        const navLinks = document.querySelectorAll('#nav-menu a');
+
+        function updateActiveNav() {
+            let current = 'top';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 160) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+
+        // ── Dark / Light Toggle ─────────────────────
+        let dark = false;
+        function toggleTheme() {
+            dark = !dark;
+            document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+            document.getElementById('theme-lbl').textContent = dark ? 'Light' : 'Dark';
+            const ico = document.getElementById('theme-ico');
+            ico.setAttribute('fill', 'none');
+            ico.setAttribute('stroke', 'currentColor');
+            ico.setAttribute('stroke-width', '1.5');
+            if (dark) {
+                ico.innerHTML = '<path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a6 6 0 1 0 6.5 6.5z"/>';
+            } else {
+                ico.innerHTML = '<circle cx="8" cy="8" r="3.5"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/><line x1="3.1" y1="3.1" x2="4.2" y2="4.2"/><line x1="11.8" y1="11.8" x2="12.9" y2="12.9"/><line x1="3.1" y1="12.9" x2="4.2" y2="11.8"/><line x1="11.8" y1="4.2" x2="12.9" y2="3.1"/>';
+            }
+        }
+    </script>
+
+    {% include analytics.html %}
+</body>
+
+</html>

@@ -1,30 +1,28 @@
 ---
-layout: post
+layout: research-post
 title: "Do Audio-Visual Large Language Models Really See and Hear?"
+subtitle: "AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation."
 date: 2026-03-21 09:00:00 -0400
 tags: avllm interpretability audio visual multimodal research
 image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
 permalink: /blog/2026/audio-visual-interpretability/
----
-
-# Do Audio-Visual Large Language Models Really See and Hear?
-
-**March 21, 2026**
-
-*AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation.*
-
-**Authors:** Ramaneswaran Selvakumar\*, Kaousheik Jayakumar\*, S Sakshi, Sreyan Ghosh, Ruohan Gao<sup>#</sup>, Dinesh Manocha<sup>#</sup>  
-**Affiliation:** University of Maryland, College Park  
-**CVPR Findings 2026**  
-[Project Page](https://ramaneswaran.github.io/avllm_interpretability/) · [Code](https://github.com/ramaneswaran/avllm_interpretability) · [Dataset](https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval)
-
+venue: "CVPR Findings 2026"
+authors: "Ramaneswaran Selvakumar*, Kaousheik Jayakumar*, S Sakshi, Sreyan Ghosh, Ruohan Gao#, Dinesh Manocha#"
+author_note: "*Equal contribution &nbsp;&nbsp; #Equal advising"
+affiliation: "University of Maryland, College Park"
+project_url: https://ramaneswaran.github.io/avllm_interpretability/
+code_url: https://github.com/ramaneswaran/avllm_interpretability
+dataset_url: https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval
 ---
 
 AVLLMs have made remarkable progress in jointly understanding audio and visual inputs. But how they actually process and use these modalities internally remains a black box, and this opacity has real consequences.
 
 To see why this matters, consider a safety-critical setting shown below: an autonomous vehicle should respond to an off-screen ambulance siren even when it isn't visible. Current AVLLMs would likely fail here—when we stress-test them on scenarios where audio and visual content conflict, they hallucinate sounds from visible objects and miss the actual audio entirely. They have a bias to see, then *guess* what they should be hearing.
 
-![Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.]({{ site.url }}/assets/cvpr/blog_teaser.png)
+<figure>
+  <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Visual bias in action">
+  <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
+</figure>
 
 We curate an evaluation set consisting of such counterfactual samples where audio and visual content conflict, and observe that audio captioning performance drops by **up to 56%**. We then conduct a systematic mechanistic analysis to understand why this happens.
 
@@ -38,12 +36,10 @@ We curate an evaluation set consisting of such counterfactual samples where audi
 
 **Evaluation:** Evaluating free-form captions at scale is hard. We use an **LLM-as-judge** that scores audio and video fidelity separately on a 0–1 scale. It is scalable, and has strong correlation with human judgements (ρ = 0.816 audio, ρ = 0.732 video).
 
-<details>
-<summary>Example counterfactual sample</summary>
-
-![Counterfactual sample — mismatched audio and visual content]({{ site.url }}/assets/cvpr/blog_teaser.png)
-
-</details>
+<figure>
+  <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Counterfactual sample">
+  <figcaption><strong>Figure 2.</strong> Example counterfactual sample — mismatched audio and visual content.</figcaption>
+</figure>
 
 ---
 
@@ -55,7 +51,10 @@ But before asking why audio fails, a more basic question: does the model even *a
 
 To test this, we track the **mean attention** that generated tokens allocate to each input modality—video tokens, audio tokens, and query text tokens—across every transformer layer of the model.
 
-![Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.]({{ site.url }}/assets/cvpr/alt_attention_fraction.png)
+<figure>
+  <img src="{{ site.url }}/assets/cvpr/alt_attention_fraction.png" alt="Attention fraction across layers">
+  <figcaption><strong>Figure 3.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
+</figure>
 
 > **Finding:** The model *does* attend to audio—but only briefly. Audio tokens receive 40–50% of attention in early layers (0–5), then drop to near-zero. Visual attention, by contrast, steadily climbs through deeper layers (15–30), reaching 20–40%.
 
@@ -65,7 +64,10 @@ We've established that the model does attend to audio tokens, albeit briefly. Ne
 
 To find out, we probe audio representations using the **logit lens**. This technique decodes hidden states at each audio token position using the model's unembedding matrix, projecting them into probability distributions over the vocabulary. If the representations are meaningful, they should decode into tokens that describe the actual audio content.
 
-![Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).]({{ site.url }}/assets/cvpr/logit_lens_diagram.png)
+<figure>
+  <img src="{{ site.url }}/assets/cvpr/logit_lens_diagram.png" alt="Logit lens probing">
+  <figcaption><strong>Figure 4.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
+</figure>
 
 > **Finding:** Audio representations decode into interpretable tokens that capture sound sources (*drill*, *engine*, *keyboard*) and actions (*typing*, *neighing*)—even in multiple languages (键盘/keyboard, 马/horse). Measuring this systematically, the model achieves **61.4% latent audio understanding** from its internal representations—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The audio understanding is there internally—it just isn't making it to the output.
 
@@ -91,6 +93,9 @@ To test this, we compare the **output token distributions** of Qwen2.5-Omni (the
 
 ## Citation
 
+<div class="citation-block">
+  <div class="cite-label">BibTeX</div>
+
 ```
 @article{selvakumar2026avllm,
   title={Do Audio-Visual Large Language Models Really See and Hear?},
@@ -100,4 +105,4 @@ To test this, we compare the **output token distributions** of Qwen2.5-Omni (the
 }
 ```
 
----
+</div>
