@@ -213,6 +213,67 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
   </div>
 </div>
 
+### Example 3: Cooking in a Frying Pan
+
+<div class="example-card">
+  <div class="example-header">
+    <div class="example-title">ID 437 — Food Sizzling in a Pan</div>
+    <span class="model-badge">VideoLLaMA2 7B</span>
+  </div>
+  <div class="pair-grid">
+    <!-- Factual -->
+    <div class="pair-cell">
+      <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
+      <div class="video-slot">
+        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          YouTube video embed (factual)
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Video Description</div>
+        <div class="info-text">A frying pan with food in it. The food is being stirred with a spatula on a stove.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Audio (Ground Truth)</div>
+        <div class="info-text">A woman talking followed by plastic thumping, then metal clanking as food and oil sizzles.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Model Output (AV)</div>
+        <div class="model-output">The video shows a person cooking food in a pan on a stove. The main source of sound in the video is <span class="correct-audio">the sizzling and crackling of the food as it cooks</span>.</div>
+      </div>
+    </div>
+    <!-- Counterfactual -->
+    <div class="pair-cell">
+      <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
+      <div class="video-slot">
+        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          YouTube video embed (counterfactual)
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Video Description</div>
+        <div class="info-text">Same video — a frying pan with food being stirred with a spatula on a stove.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Audio (Swapped — Ground Truth)</div>
+        <div class="info-text">A series of snores followed by subdued laughter and another snore.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Model Output (AV)</div>
+        <div class="model-output">The video shows a person cooking food in a pan on a stove. The main source of sound in the video is <span class="hallucinated">the sizzling and crackling of the food as it cooks</span>.</div>
+      </div>
+    </div>
+  </div>
+  <div class="analysis-box">
+    <div class="info-label">⚠ Analysis — Visual-to-Audio Hallucination</div>
+    <div class="analysis-text">The model produces <strong>virtually identical outputs</strong> for both conditions. In the factual case, "sizzling and crackling" is a correct description. In the counterfactual case, the audio has been replaced with <strong>snoring and laughter</strong> — yet the model still reports sizzling sounds. The visual prior of a frying pan is so dominant that it completely overwrites the actual audio signal. Notably, even the audio-only and video-only baselines for this sample produce the same hallucinated description, suggesting the visual bias is deeply baked into the model's representation space.</div>
+  </div>
+</div>
+
 ---
 
 ## Citation
