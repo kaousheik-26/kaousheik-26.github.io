@@ -1108,6 +1108,7 @@
         <nav>
             <ul id="nav-menu">
                 <li><a href="#top" class="active">Overview</a></li>
+                <li><a href="#qualitative-examples">Examples</a></li>
                 <li><a href="#how-we-study-this">How We Study This</a></li>
                 <li><a href="#findings">Findings</a>
                     <ul>
@@ -1117,7 +1118,6 @@
                         <li><a href="#where-does-the-vision-bias-originate">Vision Bias Origins</a></li>
                     </ul>
                 </li>
-                <li><a href="#qualitative-examples">Examples</a></li>
                 <li><a href="#citation">Citation</a></li>
             </ul>
         </nav>
@@ -1232,7 +1232,6 @@
         </main>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
         // ── Progress Bar ────────────────────────────
         window.addEventListener('scroll', () => {
@@ -1298,6 +1297,15 @@
             ico.setAttribute('stroke', 'currentColor');
             ico.setAttribute('stroke-width', '1.5');
             if (dark) {
-                ico.innerHTML = '<path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a6 6 0 1 0 6.5 6.5z"/>';
-            } else {
-                ico.innerHTML = '<circle cx="8" cy="8" r="3.5"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/><line x1="3.1" y1="3.1" x2="4.2" y2="4.2"/><line x1="11.8" y1="11.8" x2="12.9" y2="12.9"/><line x1="3.1" y1="12.9" x2="4.2" y
+                if (dark) {
+                    ico.innerHTML = '<path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a6 6 0 1 0 6.5 6.5z"/>';
+                } else {
+                    ico.innerHTML = '<circle cx="8" cy="8" r="3.5"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/><line x1="3.1" y1="3.1" x2="4.2" y2="4.2"/><line x1="11.8" y1="11.8" x2="12.9" y2="12.9"/><line x1="3.1" y1="12.9" x2="4.2" y2="11.8"/><line x1="11.8" y1="4.2" x2="12.9" y2="3.1"/>';
+                }
+            }
+    </script>
+
+    {% include analytics.html %}
+</body>
+
+</html>
