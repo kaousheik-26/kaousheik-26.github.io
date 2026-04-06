@@ -95,7 +95,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">Office Keyboard Typing</div>
+    <div class="example-title">ID 151 — Office Keyboard Typing</div>
     <span class="model-badge">Qwen2.5-Omni 7B</span>
   </div>
   <div class="pair-grid">
@@ -115,7 +115,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
       </div>
       <div class="info-block">
         <div class="info-label">Model Output</div>
-        <div class="model-output">I see a close-up of a person's hands typing on a black keyboard. There's a computer monitor in the background, and it seems like there's a piece of paper on the desk too. I can hear <span class="correct-audio">the sound of the keyboard keys clicking</span> as the person types. It's a pretty focused scene.</div>
+        <div class="model-output">Well, I see a close-up of a person's hands typing on a black keyboard. There's a computer monitor in the background, and it seems like there's a piece of paper on the desk too. I can hear <span class="correct-audio">the sound of the keys being pressed</span>, which is pretty clear. It gives off the vibe of someone working on a computer, maybe typing an email or writing a document.</div>
       </div>
     </div>
     <!-- Counterfactual -->
@@ -134,13 +134,13 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
       </div>
       <div class="info-block">
         <div class="info-label">Model Output</div>
-        <div class="model-output">I see a close-up of a person's hands typing on a black keyboard. There's a computer monitor in the background, and it seems like there's a piece of paper on the desk too. I can hear <span class="hallucinated">the sound of the keyboard keys clicking</span> as the person types. It's a pretty focused scene.</div>
+        <div class="model-output">Well, I see a close-up of a person's hands typing on a black keyboard. There's a computer monitor in the background, and it seems like there's a piece of paper on the desk too. I can hear <span class="hallucinated">the sound of the keyboard keys clicking</span> as the person types. It's a pretty focused scene.</div>
       </div>
     </div>
   </div>
   <div class="analysis-box">
     <div class="info-label">⚠ Analysis — Visual-to-Audio Hallucination</div>
-    <div class="analysis-text">The model produces <strong>identical outputs</strong> for both conditions. In the factual case, "keyboard keys clicking" is correct. In the counterfactual case, the audio has been replaced with trains, lawn mowers, and a steam whistle — yet the model still reports hearing keyboard clicks. It fabricates audio entirely from the visual content.</div>
+    <div class="analysis-text">The model produces <strong>near-identical outputs</strong> for both conditions. In the factual case, hearing "the sound of the keys being pressed" is correct — the original audio contains keyboard typing. In the counterfactual case, the audio has been replaced with <strong>trains, lawn mowers, and a steam whistle</strong> — yet the model still reports hearing "keyboard keys clicking." The visual content of hands on a keyboard is enough for the model to fabricate matching audio, completely ignoring the actual soundtrack.</div>
   </div>
 </div>
 
@@ -148,7 +148,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">Ducklings Swimming</div>
+    <div class="example-title">ID 495 — Ducklings Swimming</div>
     <span class="model-badge">Qwen2.5-Omni 3B</span>
   </div>
   <div class="pair-grid">
@@ -168,7 +168,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
       </div>
       <div class="info-block">
         <div class="info-label">Model Output</div>
-        <div class="model-output">Well, from what I can see, there's a group of ducks in the water. They seem to be swimming around, maybe looking for food or just having fun. And there's a big duck among them, probably the mother duck. As for the sound, it's a bit hard to tell exactly what it is, but it could be <span class="correct-audio">the sound of water splashing or maybe some other water-related noise</span>.</div>
+        <div class="model-output">I see a bunch of ducks in the water. There's a big duck in the middle, and a bunch of smaller ones around it. They're all moving around in the water. I also hear <span class="correct-audio">some quacking and a few other bird sounds</span>. It looks like a peaceful scene.</div>
       </div>
     </div>
     <!-- Counterfactual -->
@@ -187,13 +187,13 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
       </div>
       <div class="info-block">
         <div class="info-label">Model Output</div>
-        <div class="model-output">Well, from what I can see, there's a group of ducks in the water. They seem to be swimming around, maybe looking for food or just having fun. And there's a big duck among them, probably the mother duck. As for the sound, it's a bit hard to tell exactly what it is, but it could be <span class="hallucinated">the sound of water splashing or maybe some other water-related noise</span>.</div>
+        <div class="model-output">I see ducks floating on the water, with a larger one in the center and smaller ones around it. They move gently, creating a calm scene. I hear <span class="hallucinated">quacking and other bird sounds</span>.</div>
       </div>
     </div>
   </div>
   <div class="analysis-box">
     <div class="info-label">⚠ Analysis — Visual-to-Audio Hallucination</div>
-    <div class="analysis-text">Again, <strong>identical outputs</strong> across both conditions. In the factual case, guessing "water splashing" is a reasonable (if vague) interpretation. In the counterfactual case, the audio is a man speaking followed by a toilet flush — entirely unrelated. The model invents water sounds purely because it sees ducks swimming, revealing a <strong>double hallucination</strong>: fabricating both water splashing and duck-like sounds from the visual scene while completely ignoring the actual audio track.</div>
+    <div class="analysis-text">The model produces <strong>near-identical outputs</strong> across both conditions. In the factual case, "quacking and a few other bird sounds" is correct — the original audio contains ducks and birds. In the counterfactual case, the audio is <strong>a man speaking followed by a toilet flush</strong> — entirely unrelated to wildlife. Yet the model still confidently reports hearing "quacking and other bird sounds." It sees ducks and fabricates the expected duck audio, completely ignoring the actual soundtrack.</div>
   </div>
 </div>
 
@@ -201,7 +201,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">Food Sizzling in a Pan</div>
+    <div class="example-title">ID 437 — Food Sizzling in a Pan</div>
     <span class="model-badge">VideoLLaMA2 7B</span>
   </div>
   <div class="pair-grid">
@@ -220,7 +220,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
         <div class="info-text">A woman talking followed by plastic thumping, then metal clanking as food and oil sizzles.</div>
       </div>
       <div class="info-block">
-        <div class="info-label">Model Output (AV)</div>
+        <div class="info-label">Model Output</div>
         <div class="model-output">The video shows a person cooking food in a pan on a stove. The main source of sound in the video is <span class="correct-audio">the sizzling and crackling of the food as it cooks</span>.</div>
       </div>
     </div>
@@ -239,14 +239,14 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
         <div class="info-text">A series of snores followed by subdued laughter and another snore.</div>
       </div>
       <div class="info-block">
-        <div class="info-label">Model Output (AV)</div>
-        <div class="model-output">The video shows a person cooking food in a pan on a stove. The main source of sound in the video is <span class="hallucinated">the sizzling and crackling of the food as it cooks</span>.</div>
+        <div class="info-label">Model Output</div>
+        <div class="model-output">The video shows a person cooking food in a pan on a stove. The main source of sound in the video is <span class="hallucinated">the sizzling and crackling of of the food as it cooks</span>.</div>
       </div>
     </div>
   </div>
   <div class="analysis-box">
     <div class="info-label">⚠ Analysis — Visual-to-Audio Hallucination</div>
-    <div class="analysis-text">The model produces <strong>virtually identical outputs</strong> for both conditions. In the factual case, "sizzling and crackling" is a correct description. In the counterfactual case, the audio has been replaced with <strong>snoring and laughter</strong> — yet the model still reports sizzling sounds. The visual prior of a frying pan is so dominant that it completely overwrites the actual audio signal. Notably, even the audio-only and video-only baselines for this sample produce the same hallucinated description, suggesting the visual bias is deeply baked into the model's representation space.</div>
+    <div class="analysis-text">The model produces <strong>virtually identical outputs</strong> for both conditions — the only difference is a stray typo ("of of"). In the factual case, "sizzling and crackling" is correct — the original audio includes food and oil sizzling. In the counterfactual case, the audio has been replaced with <strong>snoring and laughter</strong> — yet the model still reports sizzling cooking sounds. The visual prior of a frying pan is so dominant that it completely overwrites the actual audio signal.</div>
   </div>
 </div>
 
