@@ -13,9 +13,10 @@ permalink: /blog/2026/audio-visual-interpretability/
 
 *AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation.*
 
-**Authors:** Ramaneswaran Selvakumar, Kaousheik Jayakumar, S Sakshi, Sreyan Ghosh, Ruohan Gao, Dinesh Manocha  
+**Authors:** Ramaneswaran Selvakumar\*, Kaousheik Jayakumar\*, S Sakshi, Sreyan Ghosh, Ruohan Gao<sup>#</sup>, Dinesh Manocha<sup>#</sup>  
 **Affiliation:** University of Maryland, College Park  
-[Paper](#) · [Code](#)
+**CVPR Findings 2026**  
+[Project Page](https://ramaneswaran.github.io/avllm_interpretability/) · [Code](https://github.com/ramaneswaran/avllm_interpretability) · [Dataset](https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval)
 
 ---
 
