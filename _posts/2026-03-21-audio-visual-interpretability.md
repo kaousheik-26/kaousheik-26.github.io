@@ -4,7 +4,7 @@ title: "Do Audio-Visual Large Language Models Really See and Hear?"
 subtitle: "AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation."
 date: 2026-03-21 09:00:00 -0400
 tags: avllm interpretability audio visual multimodal research
-image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
+image: https://kaousheik-26.github.io/assets/cvpr/teaser.png
 permalink: /blog/2026/audio-visual-interpretability/
 venue: "CVPR Findings 2026"
 authors: "Ramaneswaran Selvakumar<sup>*</sup>, Kaousheik Jayakumar<sup>*</sup>, S Sakshi, Sreyan Ghosh, Ruohan Gao<sup>#</sup>, Dinesh Manocha<sup>#</sup>"
@@ -27,7 +27,7 @@ We curate an evaluation set consisting of such counterfactual samples where audi
 
   </div>
   <figure class="tf-figure">
-    <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Visual bias in action">
+    <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Visual bias in action">
     <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
   </figure>
 </div>
@@ -87,11 +87,11 @@ To trace this, we use **attention knockout**—a causal intervention that select
 
 <div class="figure-row">
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/knockout_factual.png" alt="Attention knockout: factual samples">
+    <img src="{{ site.url }}/assets/cvpr/factual_caption_fidelity.png" alt="Attention knockout: factual samples">
     <figcaption><strong>(a) Factual samples.</strong> Blocking either modality has minimal impact — the model compensates using the other. Video fidelity (A) stays flat even when video attention is blocked, and audio fidelity (B) remains stable when audio is blocked. The modalities are redundant.</figcaption>
   </figure>
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/knockout_counterfactual.png" alt="Attention knockout: counterfactual samples">
+    <img src="{{ site.url }}/assets/cvpr/counterfactual_caption_fidelity.png" alt="Attention knockout: counterfactual samples">
     <figcaption><strong>(b) Counterfactual samples.</strong> Blocking video attention (G↛V, orange) in deeper layers causes a clear drop in video fidelity (C), confirming vision transfers there. Crucially, the same intervention <em>improves</em> audio fidelity (D) by ~50%, recovering it to near-factual levels.</figcaption>
   </figure>
 </div>
@@ -112,11 +112,11 @@ We can see this bias in action by visualizing the **cross-modal attention** duri
 
 <div class="figure-row">
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/attention_helicopter.png" alt="Attention heatmap: helicopter example">
+    <img src="{{ site.url }}/assets/cvpr/bias_origin_1.png" alt="Attention heatmap: helicopter example">
     <figcaption><strong>(a)</strong> The actual audio is a young boy talking as a baby yells — but the model generates "I hear <em>the sound of a helicopter</em>," with attention concentrated on the helicopter in the video frames.</figcaption>
   </figure>
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/attention_speech.png" alt="Attention heatmap: speech example">
+    <img src="{{ site.url }}/assets/cvpr/bias_origin_2.png" alt="Attention heatmap: speech example">
     <figcaption><strong>(b)</strong> The actual audio is several motor vehicles accelerating — but the model generates "I hear <em>a man speaking into a microphone</em>," with attention locked onto the man and microphone in the video.</figcaption>
   </figure>
 </div>
@@ -133,7 +133,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 151 — Office Keyboard Typing</div>
+    <div class="example-title">Office Keyboard Typing</div>
     <span class="model-badge">Qwen2.5-Omni 7B</span>
   </div>
   <div class="pair-grid">
@@ -141,7 +141,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/f0Zhcv4P5Lg" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=EnoSD68UylY" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -160,7 +160,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/xtlM1ON6q64" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=0CRgMBFXCAM" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -186,7 +186,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 495 — Ducklings Swimming</div>
+    <div class="example-title">Ducklings Swimming</div>
     <span class="model-badge">Qwen2.5-Omni 3B</span>
   </div>
   <div class="pair-grid">
@@ -194,7 +194,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/7EK501R_jbQ" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=6lxMOGLLAsI" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -213,7 +213,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/4wnLiIxJZzc" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=_a7FcFWGEYk" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -239,7 +239,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 437 — Food Sizzling in a Pan</div>
+    <div class="example-title">Food Sizzling in a Pan</div>
     <span class="model-badge">VideoLLaMA2 7B</span>
   </div>
   <div class="pair-grid">
@@ -247,7 +247,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/DV2AYHNCCFk" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=GJW4Q3ge-cw" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -266,7 +266,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/K7Fl8E6bxQw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=b8NrRdO5uI0" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
