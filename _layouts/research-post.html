@@ -472,6 +472,14 @@
             padding: 1.25rem 1.4rem;
             border-radius: 8px;
             margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .citation-block .cite-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
         }
 
         .citation-block .cite-label {
@@ -480,7 +488,37 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--text3);
-            margin-bottom: 0.5rem;
+        }
+
+        .citation-block .cite-copy {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 0.3rem 0.7rem;
+            font-size: 11px;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.15s ease;
+        }
+
+        .cite-copy:hover {
+            border-color: var(--text3);
+            color: var(--text);
+        }
+
+        .cite-copy.copied {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .cite-copy svg {
+            width: 12px;
+            height: 12px;
         }
 
         .citation-block pre {
@@ -774,6 +812,34 @@
         }
         window.addEventListener('scroll', updateActiveNav);
         updateActiveNav();
+
+        // ── Citation Copy Button ────────────────────
+        document.querySelectorAll('.citation-block').forEach(block => {
+            const label = block.querySelector('.cite-label');
+            if (!label) return;
+            // Wrap label in a header with a copy button
+            const header = document.createElement('div');
+            header.className = 'cite-header';
+            const btn = document.createElement('button');
+            btn.className = 'cite-copy';
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span>';
+            btn.onclick = () => {
+                const pre = block.querySelector('pre');
+                if (!pre) return;
+                const text = pre.textContent.trim();
+                navigator.clipboard.writeText(text).then(() => {
+                    btn.classList.add('copied');
+                    btn.querySelector('span').textContent = 'Copied!';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.querySelector('span').textContent = 'Copy';
+                    }, 2000);
+                });
+            };
+            label.parentNode.insertBefore(header, label);
+            header.appendChild(label);
+            header.appendChild(btn);
+        });
 
         // ── Theme Toggle ────────────────────────────
         let dark = false;
