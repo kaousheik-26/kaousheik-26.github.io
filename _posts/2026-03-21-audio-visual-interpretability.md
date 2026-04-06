@@ -11,9 +11,9 @@ authors: "Ramaneswaran Selvakumar*, Kaousheik Jayakumar*, S Sakshi, Sreyan Ghosh
 author_note: "*Equal contribution &nbsp;&nbsp; #Equal advising"
 affiliation: "University of Maryland, College Park"
 project_url: https://ramaneswaran.github.io/avllm_interpretability/
+paper_url: https://arxiv.org/abs/2604.02605
 code_url: https://github.com/ramaneswaran/avllm_interpretability
 dataset_url: https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval
-paper_url: https://arxiv.org/abs/2604.02605
 ---
 
 AVLLMs have made remarkable progress in jointly understanding audio and visual inputs. But how they actually process and use these modalities internally remains a black box, and this opacity has real consequences.
@@ -37,11 +37,6 @@ We curate an evaluation set consisting of such counterfactual samples where audi
 
 **Evaluation:** Evaluating free-form captions at scale is hard. We use an **LLM-as-judge** that scores audio and video fidelity separately on a 0–1 scale. It is scalable, and has strong correlation with human judgements (ρ = 0.816 audio, ρ = 0.732 video).
 
-<figure>
-  <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Counterfactual sample">
-  <figcaption><strong>Figure 2.</strong> Example counterfactual sample — mismatched audio and visual content.</figcaption>
-</figure>
-
 ---
 
 ## Findings
@@ -54,7 +49,7 @@ To test this, we track the **mean attention** that generated tokens allocate to 
 
 <figure>
   <img src="{{ site.url }}/assets/cvpr/alt_attention_fraction.png" alt="Attention fraction across layers">
-  <figcaption><strong>Figure 3.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
+  <figcaption><strong>Figure 2.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
 </figure>
 
 > **Finding:** The model *does* attend to audio—but only briefly. Audio tokens receive 40–50% of attention in early layers (0–5), then drop to near-zero. Visual attention, by contrast, steadily climbs through deeper layers (15–30), reaching 20–40%.
@@ -67,7 +62,7 @@ To find out, we probe audio representations using the **logit lens**. This techn
 
 <figure>
   <img src="{{ site.url }}/assets/cvpr/logit_lens_diagram.png" alt="Logit lens probing">
-  <figcaption><strong>Figure 4.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
+  <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
 </figure>
 
 > **Finding:** Audio representations decode into interpretable tokens that capture sound sources (*drill*, *engine*, *keyboard*) and actions (*typing*, *neighing*)—even in multiple languages (键盘/keyboard, 马/horse). Measuring this systematically, the model achieves **61.4% latent audio understanding** from its internal representations—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The audio understanding is there internally—it just isn't making it to the output.
@@ -107,6 +102,5 @@ To test this, we compare the **output token distributions** of Qwen2.5-Omni (the
       primaryClass={cs.AI},
       url={https://arxiv.org/abs/2604.02605}, 
 }
-
 
 </div>
