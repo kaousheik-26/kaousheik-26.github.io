@@ -4,7 +4,7 @@ title: "Do Audio-Visual Large Language Models Really See and Hear?"
 subtitle: "AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation."
 date: 2026-03-21 09:00:00 -0400
 tags: avllm interpretability audio visual multimodal research
-image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
+image: https://kaousheik-26.github.io/assets/cvpr/teaser.png
 permalink: /blog/2026/audio-visual-interpretability/
 venue: "CVPR Findings 2026"
 authors: "Ramaneswaran Selvakumar*, Kaousheik Jayakumar*, S Sakshi, Sreyan Ghosh, Ruohan Gao#, Dinesh Manocha#"
@@ -27,7 +27,7 @@ We curate an evaluation set consisting of such counterfactual samples where audi
 
   </div>
   <figure class="tf-figure">
-    <img src="{{ site.url }}/assets/cvpr/blog_teaser.png" alt="Visual bias in action">
+    <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Visual bias in action">
     <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
   </figure>
 </div>
@@ -73,7 +73,7 @@ We've established that the model does attend to audio tokens, albeit briefly. Ne
 To find out, we probe audio representations using the **logit lens**. This technique decodes hidden states at each audio token position using the model's unembedding matrix, projecting them into probability distributions over the vocabulary. If the representations are meaningful, they should decode into tokens that describe the actual audio content.
 
 <figure>
-  <img src="{{ site.url }}/assets/cvpr/logit_lens_diagram.png" alt="Logit lens probing">
+  <img src="{{ site.url }}/assets/cvpr/probing.png" alt="Logit lens probing">
   <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
 </figure>
 
@@ -122,7 +122,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 151 — Office Keyboard Typing</div>
+    <div class="example-title">Office Keyboard Typing</div>
     <span class="model-badge">Qwen2.5-Omni 7B</span>
   </div>
   <div class="pair-grid">
@@ -175,7 +175,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 495 — Ducklings Swimming</div>
+    <div class="example-title">Ducklings Swimming</div>
     <span class="model-badge">Qwen2.5-Omni 3B</span>
   </div>
   <div class="pair-grid">
@@ -183,7 +183,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/7EK501R_jbQ" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=9SfzBvtdvbM" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -202,7 +202,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
     <div class="pair-cell">
       <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
       <div class="video-slot">
-        <iframe src="https://www.youtube.com/embed/4wnLiIxJZzc" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/watch?v=Z_cRQtqj_vE" allowfullscreen></iframe>
       </div>
       <div class="info-block">
         <div class="info-label">Video Description</div>
@@ -228,7 +228,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 437 — Food Sizzling in a Pan</div>
+    <div class="example-title">Food Sizzling in a Pan</div>
     <span class="model-badge">VideoLLaMA2 7B</span>
   </div>
   <div class="pair-grid">
