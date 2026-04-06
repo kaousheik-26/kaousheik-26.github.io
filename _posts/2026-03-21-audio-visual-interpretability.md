@@ -227,7 +227,7 @@ So the model attends to audio, and encodes meaningful audio semantics internally
 
 To trace this, we use **attention knockout**—a causal intervention that selectively blocks attention from generated tokens to either audio (G↛A) or video (G↛V) at specific layers. The logic is simple: if blocking a modality at a given layer degrades the output, that modality was actively contributing there.
 
-<figure class="float-figure-right" style="width: 55%;">
+<figure class="float-figure-right" style="width: 48%;">
   <img src="{{ site.url }}/assets/cvpr/attn_ko_legend.png" alt="Attention knockout setup">
   <figcaption><strong>Figure 4.</strong> Attention knockout setup. Left: baseline with all attention paths. Middle: G↛V blocks generated tokens from attending to video (orange). Right: G↛A blocks attention to audio (blue).</figcaption>
 </figure>
