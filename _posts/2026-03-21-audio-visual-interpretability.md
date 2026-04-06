@@ -95,7 +95,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 151 — Office Keyboard Typing</div>
+    <div class="example-title">Office Keyboard Typing</div>
     <span class="model-badge">Qwen2.5-Omni 7B</span>
   </div>
   <div class="pair-grid">
@@ -148,7 +148,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 495 — Ducklings Swimming</div>
+    <div class="example-title">Ducklings Swimming</div>
     <span class="model-badge">Qwen2.5-Omni 3B</span>
   </div>
   <div class="pair-grid">
@@ -201,7 +201,7 @@ Below are two examples that vividly illustrate the visual-to-audio hallucination
 
 <div class="example-card">
   <div class="example-header">
-    <div class="example-title">ID 437 — Food Sizzling in a Pan</div>
+    <div class="example-title">Food Sizzling in a Pan</div>
     <span class="model-badge">VideoLLaMA2 7B</span>
   </div>
   <div class="pair-grid">
