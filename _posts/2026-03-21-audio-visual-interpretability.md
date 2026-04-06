@@ -4,7 +4,7 @@ title: "Do Audio-Visual Large Language Models Really See and Hear?"
 subtitle: "AVLLMs encode rich audio semantics internally—but systematically suppress them in favor of vision during generation."
 date: 2026-03-21 09:00:00 -0400
 tags: avllm interpretability audio visual multimodal research
-image: https://kaousheik-26.github.io/assets/cvpr/blog_teaser.png
+image: https://kaousheik-26.github.io/assets/cvpr/teaser.png
 permalink: /blog/2026/audio-visual-interpretability/
 venue: "CVPR Findings 2026"
 authors: "Ramaneswaran Selvakumar*, Kaousheik Jayakumar*, S Sakshi, Sreyan Ghosh, Ruohan Gao#, Dinesh Manocha#"
