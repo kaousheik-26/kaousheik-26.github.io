@@ -13,6 +13,7 @@ affiliation: "University of Maryland, College Park"
 project_url: https://ramaneswaran.github.io/avllm_interpretability/
 code_url: https://github.com/ramaneswaran/avllm_interpretability
 dataset_url: https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval
+paper_url: https://arxiv.org/abs/2604.02605
 ---
 
 AVLLMs have made remarkable progress in jointly understanding audio and visual inputs. But how they actually process and use these modalities internally remains a black box, and this opacity has real consequences.
