@@ -16,21 +16,18 @@ code_url: https://github.com/ramaneswaran/avllm_interpretability
 dataset_url: https://huggingface.co/datasets/gamma-lab-umd/counterfactual-av-eval
 ---
 
-<div class="text-figure-row">
-  <div class="tf-text">
+<figure class="float-figure-right">
+  <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Visual bias in action">
+  <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
+</figure>
 
 AVLLMs have made remarkable progress in jointly understanding audio and visual inputs. But how they actually process and use these modalities internally remains a black box, and this opacity has real consequences.
 
-To see why this matters, consider the safety-critical setting shown on the right: an autonomous vehicle should respond to an off-screen ambulance siren even when it isn't visible. Current AVLLMs would likely fail here—when we stress-test them on scenarios where audio and visual content conflict, they hallucinate sounds from visible objects and miss the actual audio entirely. They have a bias to see, then *guess* what they should be hearing.
+To see why this matters, consider the safety-critical setting shown in Figure 1: an autonomous vehicle should respond to an off-screen ambulance siren even when it isn't visible. Current AVLLMs would likely fail here—when we stress-test them on scenarios where audio and visual content conflict, they hallucinate sounds from visible objects and miss the actual audio entirely. They have a bias to see, then *guess* what they should be hearing.
 
 We curate an evaluation set consisting of such counterfactual samples where audio and visual content conflict, and observe that audio captioning performance drops by **up to 56%**. We then conduct a systematic mechanistic analysis to understand why this happens.
 
-  </div>
-  <figure class="tf-figure">
-    <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Visual bias in action">
-    <figcaption><strong>Figure 1.</strong> Visual bias in action. Visible objects are silent; the only real sound is an off-screen siren. The AVLLM hallucinates audio from what it sees.</figcaption>
-  </figure>
-</div>
+<div class="clearfix"></div>
 
 ---
 
@@ -192,8 +189,10 @@ Below we show how different AVLLMs hallucinate audio from visual content. Select
 
 ### Does the model pay attention to audio?
 
-<div class="text-figure-row">
-  <div class="tf-text">
+<figure class="float-figure-right">
+  <img src="{{ site.url }}/assets/cvpr/alt_attention_fraction.png" alt="Attention fraction across layers">
+  <figcaption><strong>Figure 2.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
+</figure>
 
 Before asking why audio fails, a more basic question: does the model even *attend* to audio tokens during generation, or is it effectively ignoring them from the start? If the model never looks at audio, the hallucinations would be unsurprising—it would simply be guessing from vision alone.
 
@@ -201,19 +200,16 @@ To test this, we track the **mean attention** that generated tokens allocate to 
 
 The result is surprising: the model *does* attend to audio—but only briefly. Audio tokens receive 40–50% of attention in early layers (0–5), then drop to near-zero. Visual attention, by contrast, steadily climbs through deeper layers (15–30), reaching 20–40%. This suggests the model processes audio early on but progressively discards it in favor of visual information as it moves toward generating output tokens.
 
-  </div>
-  <figure class="tf-figure">
-    <img src="{{ site.url }}/assets/cvpr/alt_attention_fraction.png" alt="Attention fraction across layers">
-    <figcaption><strong>Figure 2.</strong> Mean attention from generated to input tokens. Audio gets 40–50% attention in layers 0–5, then drops to near-zero. Video climbs to 20–40% in layers 15–30.</figcaption>
-  </figure>
-</div>
+<div class="clearfix"></div>
 
 > **Finding:** The model *does* attend to audio—but only briefly. Audio dominates early layers, then gets suppressed as visual attention takes over in deeper layers.
 
 ### Are audio representations meaningful?
 
-<div class="text-figure-row">
-  <div class="tf-text">
+<figure class="float-figure-right">
+  <img src="{{ site.url }}/assets/cvpr/probing.png" alt="Logit lens probing">
+  <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
+</figure>
 
 We've established that the model does attend to audio tokens, albeit briefly. Next, we ask whether those audio tokens actually encode anything meaningful to begin with. If the representations are not meaningful, the visual bias would simply reflect a lack of useful audio signal, not a failure to use it.
 
@@ -221,12 +217,7 @@ To find out, we probe audio representations using the **logit lens**. This techn
 
 Audio representations decode into interpretable tokens that capture sound sources (*drill*, *engine*, *keyboard*) and actions (*typing*, *neighing*)—even in multiple languages (键盘/keyboard, 马/horse). Measuring this systematically, the model achieves **61.4% latent audio understanding** from its internal representations—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The audio understanding is there internally—it just isn't making it to the output.
 
-  </div>
-  <figure class="tf-figure">
-    <img src="{{ site.url }}/assets/cvpr/probing.png" alt="Logit lens probing">
-    <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
-  </figure>
-</div>
+<div class="clearfix"></div>
 
 > **Finding:** The model achieves **61.4% latent audio understanding** internally—yet generated captions hit only **23% audio fidelity** on counterfactual samples. The audio signal is there; it just doesn't survive to the output.
 
@@ -236,20 +227,32 @@ So the model attends to audio, and encodes meaningful audio semantics internally
 
 To trace this, we use **attention knockout**—a causal intervention that selectively blocks attention from generated tokens to either audio (G↛A) or video (G↛V) at specific layers. The logic is simple: if blocking a modality at a given layer degrades the output, that modality was actively contributing there.
 
-<div class="figure-row">
-  <figure>
-    <img src="{{ site.url }}/assets/cvpr/factual_caption_fidelity.png" alt="Attention knockout: factual samples">
-    <figcaption><strong>(a) Factual samples.</strong> Blocking either modality has minimal impact — the model compensates using the other. Video fidelity (A) stays flat even when video attention is blocked, and audio fidelity (B) remains stable when audio is blocked. The modalities are redundant.</figcaption>
-  </figure>
-  <figure>
-    <img src="{{ site.url }}/assets/cvpr/counterfactual_caption_fidelity.png" alt="Attention knockout: counterfactual samples">
-    <figcaption><strong>(b) Counterfactual samples.</strong> Blocking video attention (G↛V, orange) in deeper layers causes a clear drop in video fidelity (C), confirming vision transfers there. Crucially, the same intervention <em>improves</em> audio fidelity (D) by ~50%, recovering it to near-factual levels.</figcaption>
-  </figure>
-</div>
+<figure class="float-figure-right" style="width: 55%;">
+  <img src="{{ site.url }}/assets/cvpr/attn_ko_legend.png" alt="Attention knockout setup">
+  <figcaption><strong>Figure 4.</strong> Attention knockout setup. Left: baseline with all attention paths. Middle: G↛V blocks generated tokens from attending to video (orange). Right: G↛A blocks attention to audio (blue).</figcaption>
+</figure>
 
-**Factual samples (a):** When we block either modality, the model compensates using the other—performance recovers either way. As we can observe in plots A and B, neither video nor audio caption fidelity degrades significantly when the corresponding modality is blocked. This demonstrates audio-visual complementarity, but also reveals why factual samples alone are insufficient for evaluation. The modalities are so correlated that the model can always lean on one to cover for the other—which is exactly why counterfactuals are necessary.
+The setup is illustrated in Figure 4. In the baseline condition, generated tokens (G) can attend to all input tokens—video (V), audio (A), and query (Q). In the G↛V condition (orange), we block the attention pathway from generated tokens to video tokens at a specific layer, forcing the model to rely solely on audio and text. In G↛A (blue), we block attention to audio tokens instead. By sweeping this intervention across layers and measuring how caption fidelity changes, we can pinpoint exactly where each modality contributes to the output.
 
-**Counterfactual samples (b):** Here the modalities conflict, so compensation is impossible. In plot C, blocking video (G↛V, orange) causes a clear drop in video understanding concentrated in mid-to-deep layers (15–30)—telling us where visual information transfers to generated text. For audio understanding, blocking audio (G↛A, blue in plot D) produces a similar drop in the same layers, confirming audio transfers there too. But the critical finding is in plot D: **blocking video (orange) actually improves audio understanding by ~50%**, recovering it to near factual-setting levels. When both modalities compete in those deeper layers, vision wins—and audio pays the price.
+<div class="clearfix"></div>
+
+<figure class="float-figure-left">
+  <img src="{{ site.url }}/assets/cvpr/attn_ko_factual.png" alt="Attention knockout: factual samples">
+  <figcaption><strong>Figure 5a. Factual samples.</strong> Blocking either modality has minimal impact — the model compensates. Video fidelity (A) stays flat when video is blocked; audio fidelity (B) stays flat when audio is blocked.</figcaption>
+</figure>
+
+**Factual samples:** When we block either modality, the model compensates using the other—performance recovers either way. As we can observe in plots A and B, neither video nor audio caption fidelity degrades significantly when the corresponding modality is blocked. This demonstrates audio-visual complementarity, but also reveals why factual samples alone are insufficient for evaluation. The modalities are so correlated that the model can always lean on one to cover for the other—which is exactly why counterfactuals are necessary.
+
+<div class="clearfix"></div>
+
+<figure class="float-figure-left">
+  <img src="{{ site.url }}/assets/cvpr/attn_ko_cfactual.png" alt="Attention knockout: counterfactual samples">
+  <figcaption><strong>Figure 5b. Counterfactual samples.</strong> Blocking video (G↛V, orange) drops video fidelity (C) in deeper layers. Crucially, the same intervention <em>improves</em> audio fidelity (D) by ~50%.</figcaption>
+</figure>
+
+**Counterfactual samples:** Here the modalities conflict, so compensation is impossible. In plot C, blocking video (G↛V, orange) causes a clear drop in video understanding concentrated in mid-to-deep layers (15–30)—telling us where visual information transfers to generated text. For audio understanding, blocking audio (G↛A, blue in plot D) produces a similar drop in the same layers, confirming audio transfers there too. But the critical finding is in plot D: **blocking video (orange) actually improves audio understanding by ~50%**, recovering it to near factual-setting levels. When both modalities compete in those deeper layers, vision wins—and audio pays the price.
+
+<div class="clearfix"></div>
 
 ### Where does the vision bias originate?
 
