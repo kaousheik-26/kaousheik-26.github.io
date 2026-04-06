@@ -87,6 +87,134 @@ To test this, we compare the **output token distributions** of Qwen2.5-Omni (the
 
 ---
 
+## Qualitative Examples
+
+Below are two examples that vividly illustrate the visual-to-audio hallucination phenomenon. In each case, we show the **factual** (original matched audio) and **counterfactual** (swapped unrelated audio) conditions side by side. The model produces correct visual descriptions in both—but in the counterfactual setting, it fabricates audio based on what it *sees* rather than reporting what it actually *hears*.
+
+### Example 1: Person Typing on a Keyboard
+
+<div class="example-card">
+  <div class="example-header">
+    <div class="example-title">ID 151 — Office Keyboard Typing</div>
+    <span class="model-badge">Qwen2.5-Omni 7B</span>
+  </div>
+  <div class="pair-grid">
+    <!-- Factual -->
+    <div class="pair-cell">
+      <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
+      <div class="video-slot">
+        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          YouTube video embed (factual)
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Video Description</div>
+        <div class="info-text">A person typing on a keyboard at a desk in an office cubicle. The view is from the side, focusing on the hands and keyboard.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Audio (Ground Truth)</div>
+        <div class="info-text">Typing is occurring on a keyboard in a quiet environment.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Model Output</div>
+        <div class="model-output">I see a close-up of a person's hands typing on a black keyboard. There's a computer monitor in the background, and it seems like there's a piece of paper on the desk too. I can hear <span class="correct-audio">the sound of the keyboard keys clicking</span> as the person types. It's a pretty focused scene.</div>
+      </div>
+    </div>
+    <!-- Counterfactual -->
+    <div class="pair-cell">
+      <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
+      <div class="video-slot">
+        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          YouTube video embed (counterfactual)
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Video Description</div>
+        <div class="info-text">Same video — a person typing on a keyboard at a desk in an office cubicle.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Audio (Swapped — Ground Truth)</div>
+        <div class="info-text">A train running on railroad tracks, followed by a lawn mower engine, then a steam engine whistle blowing as a crowd of people talk.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Model Output</div>
+        <div class="model-output">I see a close-up of a person's hands typing on a black keyboard. There's a computer monitor in the background, and it seems like there's a piece of paper on the desk too. I can hear <span class="hallucinated">the sound of the keyboard keys clicking</span> as the person types. It's a pretty focused scene.</div>
+      </div>
+    </div>
+  </div>
+  <div class="analysis-box">
+    <div class="info-label">⚠ Analysis — Visual-to-Audio Hallucination</div>
+    <div class="analysis-text">The model produces <strong>identical outputs</strong> for both conditions. In the factual case, "keyboard keys clicking" is correct. In the counterfactual case, the audio has been replaced with trains, lawn mowers, and a steam whistle — yet the model still reports hearing keyboard clicks. It fabricates audio entirely from the visual content.</div>
+  </div>
+</div>
+
+### Example 2: Ducklings Swimming in a Pond
+
+<div class="example-card">
+  <div class="example-header">
+    <div class="example-title">ID 495 — Ducklings Swimming</div>
+    <span class="model-badge">Qwen2.5-Omni 3B</span>
+  </div>
+  <div class="pair-grid">
+    <!-- Factual -->
+    <div class="pair-cell">
+      <div class="condition-badge badge-factual"><span class="dot"></span> Factual</div>
+      <div class="video-slot">
+        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          YouTube video embed (factual)
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Video Description</div>
+        <div class="info-text">A group of ducklings swimming closely around an adult duck, likely their mother, in water.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Audio (Ground Truth)</div>
+        <div class="info-text">Birds are chirping, and ducks are making noises.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Model Output</div>
+        <div class="model-output">Well, from what I can see, there's a group of ducks in the water. They seem to be swimming around, maybe looking for food or just having fun. And there's a big duck among them, probably the mother duck. As for the sound, it's a bit hard to tell exactly what it is, but it could be <span class="correct-audio">the sound of water splashing or maybe some other water-related noise</span>.</div>
+      </div>
+    </div>
+    <!-- Counterfactual -->
+    <div class="pair-cell">
+      <div class="condition-badge badge-cf"><span class="dot"></span> Counterfactual</div>
+      <div class="video-slot">
+        <!-- REPLACE with: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          YouTube video embed (counterfactual)
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Video Description</div>
+        <div class="info-text">Same video — ducklings swimming closely around a mother duck in water.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Audio (Swapped — Ground Truth)</div>
+        <div class="info-text">A man speaks followed by a toilet flush.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Model Output</div>
+        <div class="model-output">Well, from what I can see, there's a group of ducks in the water. They seem to be swimming around, maybe looking for food or just having fun. And there's a big duck among them, probably the mother duck. As for the sound, it's a bit hard to tell exactly what it is, but it could be <span class="hallucinated">the sound of water splashing or maybe some other water-related noise</span>.</div>
+      </div>
+    </div>
+  </div>
+  <div class="analysis-box">
+    <div class="info-label">⚠ Analysis — Visual-to-Audio Hallucination</div>
+    <div class="analysis-text">Again, <strong>identical outputs</strong> across both conditions. In the factual case, guessing "water splashing" is a reasonable (if vague) interpretation. In the counterfactual case, the audio is a man speaking followed by a toilet flush — entirely unrelated. The model invents water sounds purely because it sees ducks swimming, revealing a <strong>double hallucination</strong>: fabricating both water splashing and duck-like sounds from the visual scene while completely ignoring the actual audio track.</div>
+  </div>
+</div>
+
+---
+
 ## Citation
 
 <div class="citation-block">

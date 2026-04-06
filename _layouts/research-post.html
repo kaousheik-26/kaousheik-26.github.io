@@ -22,6 +22,13 @@
             --sidebar-width: 220px;
             --finding-bg: #fdf6f3;
             --code-bg: #2b2b2b;
+            --factual: #1a7f37;
+            --factual-bg: rgba(26, 127, 55, 0.07);
+            --factual-border: rgba(26, 127, 55, 0.25);
+            --cf: #cf4e2e;
+            --cf-bg: rgba(207, 78, 46, 0.07);
+            --cf-border: rgba(207, 78, 46, 0.25);
+            --hallucination: #d1242f;
         }
 
         [data-theme="dark"] {
@@ -35,6 +42,13 @@
             --details-bg: rgba(255, 255, 255, 0.04);
             --finding-bg: rgba(240, 153, 123, 0.06);
             --code-bg: #111;
+            --factual: #3fb950;
+            --factual-bg: rgba(63, 185, 80, 0.08);
+            --factual-border: rgba(63, 185, 80, 0.25);
+            --cf: #f0997b;
+            --cf-bg: rgba(240, 153, 123, 0.08);
+            --cf-border: rgba(240, 153, 123, 0.25);
+            --hallucination: #ff6b6b;
         }
 
         /* ── Reset ────────────────────────────────────── */
@@ -200,7 +214,7 @@
             color: var(--text);
         }
 
-        /* ── Main Area: fills right of sidebar, centers content ── */
+        /* ── Main Area ───────────────────────────────── */
         .main-area {
             margin-left: var(--sidebar-width);
             min-height: 100vh;
@@ -543,6 +557,198 @@
             font-size: 17px;
         }
 
+        /* ══════════════════════════════════════════════
+           ── Example Cards (Qualitative Examples) ─────
+           ══════════════════════════════════════════════ */
+        .example-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin: 1.75rem 0 2.5rem;
+            overflow: hidden;
+        }
+
+        .example-header {
+            padding: 0.9rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--details-bg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .example-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .model-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            letter-spacing: 0.03em;
+            background: var(--bg);
+            color: var(--text2);
+            border: 1px solid var(--border);
+        }
+
+        .pair-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .pair-cell {
+            padding: 1.25rem;
+        }
+
+        .pair-cell+.pair-cell {
+            border-left: 1px solid var(--border);
+        }
+
+        /* Condition Badges */
+        .condition-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 0.22rem 0.65rem;
+            border-radius: 999px;
+            margin-bottom: 0.85rem;
+        }
+
+        .condition-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .badge-factual {
+            background: var(--factual-bg);
+            color: var(--factual);
+            border: 1px solid var(--factual-border);
+        }
+
+        .badge-factual .dot {
+            background: var(--factual);
+        }
+
+        .badge-cf {
+            background: var(--cf-bg);
+            color: var(--cf);
+            border: 1px solid var(--cf-border);
+        }
+
+        .badge-cf .dot {
+            background: var(--cf);
+        }
+
+        /* Video Embed Slot */
+        .video-slot {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 6px;
+            border: 1px dashed var(--border);
+            background: var(--details-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .video-slot iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .video-placeholder {
+            color: var(--text3);
+            font-size: 0.78rem;
+            text-align: center;
+            padding: 0.75rem;
+        }
+
+        .video-placeholder svg {
+            display: block;
+            margin: 0 auto 0.35rem;
+            opacity: 0.25;
+        }
+
+        /* Info Rows */
+        .info-block {
+            margin-bottom: 0.85rem;
+        }
+
+        .info-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 0.2rem;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: var(--text2);
+            line-height: 1.55;
+        }
+
+        /* Model Output Box */
+        .model-output {
+            background: var(--details-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.85rem 1rem;
+            margin-top: 0.35rem;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .model-output .hallucinated {
+            color: var(--hallucination);
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-style: wavy;
+            text-underline-offset: 3px;
+        }
+
+        .model-output .correct-audio {
+            color: var(--factual);
+            font-weight: 600;
+        }
+
+        /* Analysis Footer */
+        .analysis-box {
+            border-top: 1px solid var(--border);
+            padding: 1rem 1.25rem;
+            background: var(--finding-bg);
+        }
+
+        .analysis-box .info-label {
+            margin-bottom: 0.4rem;
+            color: var(--accent);
+        }
+
+        .analysis-text {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: var(--text2);
+        }
+
+        .analysis-text strong {
+            color: var(--text);
+        }
+
         /* ── Footer ──────────────────────────────────── */
         .site-footer {
             border-top: 1px solid var(--border);
@@ -647,6 +853,15 @@
                 top: 0.8rem;
                 right: 0.8rem;
             }
+
+            .pair-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pair-cell+.pair-cell {
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
         }
     </style>
 </head>
@@ -672,6 +887,7 @@
                         <li><a href="#where-does-the-vision-bias-originate">Vision Bias Origins</a></li>
                     </ul>
                 </li>
+                <li><a href="#qualitative-examples">Examples</a></li>
                 <li><a href="#citation">Citation</a></li>
             </ul>
         </nav>
@@ -697,7 +913,7 @@
         <span id="theme-lbl">Dark</span>
     </button>
 
-    <!-- Main Area: centers content in remaining viewport -->
+    <!-- Main Area -->
     <div class="main-area">
         <main class="main-content" id="top">
 
@@ -817,7 +1033,6 @@
         document.querySelectorAll('.citation-block').forEach(block => {
             const label = block.querySelector('.cite-label');
             if (!label) return;
-            // Wrap label in a header with a copy button
             const header = document.createElement('div');
             header.className = 'cite-header';
             const btn = document.createElement('button');
