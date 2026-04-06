@@ -97,13 +97,16 @@ To test this, we compare the **output token distributions** of Qwen2.5-Omni (the
 <div class="citation-block">
   <div class="cite-label">BibTeX</div>
 
-```
-@article{selvakumar2026avllm,
-  title={Do Audio-Visual Large Language Models Really See and Hear?},
-  author={Selvakumar, Ramaneswaran and Jayakumar, Kaousheik and
-          Sakshi, S and Ghosh, Sreyan and Gao, Ruohan and Manocha, Dinesh},
-  year={2026}
+
+@misc{selvakumar2026audiovisuallargelanguagemodels,
+      title={Do Audio-Visual Large Language Models Really See and Hear?}, 
+      author={Ramaneswaran Selvakumar and Kaousheik Jayakumar and S Sakshi and Sreyan Ghosh and Ruohan Gao and Dinesh Manocha},
+      year={2026},
+      eprint={2604.02605},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2604.02605}, 
 }
-```
+
 
 </div>
