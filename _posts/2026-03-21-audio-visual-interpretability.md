@@ -101,11 +101,11 @@ We can see this bias in action by visualizing the **cross-modal attention** duri
 
 <div class="figure-row">
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/attention_helicopter.png" alt="Attention heatmap: helicopter example">
+    <img src="{{ site.url }}/assets/cvpr/bias_origin_1.png" alt="Attention heatmap: helicopter example">
     <figcaption><strong>(a)</strong> The actual audio is a young boy talking as a baby yells — but the model generates "I hear <em>the sound of a helicopter</em>," with attention concentrated on the helicopter in the video frames.</figcaption>
   </figure>
   <figure>
-    <img src="{{ site.url }}/assets/cvpr/attention_speech.png" alt="Attention heatmap: speech example">
+    <img src="{{ site.url }}/assets/cvpr/bias_origin_2.png" alt="Attention heatmap: speech example">
     <figcaption><strong>(b)</strong> The actual audio is several motor vehicles accelerating — but the model generates "I hear <em>a man speaking into a microphone</em>," with attention locked onto the man and microphone in the video.</figcaption>
   </figure>
 </div>
