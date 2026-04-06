@@ -61,7 +61,7 @@ We've established that the model does attend to audio tokens, albeit briefly. Ne
 To find out, we probe audio representations using the **logit lens**. This technique decodes hidden states at each audio token position using the model's unembedding matrix, projecting them into probability distributions over the vocabulary. If the representations are meaningful, they should decode into tokens that describe the actual audio content.
 
 <figure>
-  <img src="{{ site.url }}/assets/cvpr/logit_lens_diagram.png" alt="Logit lens probing">
+  <img src="{{ site.url }}/assets/cvpr/probing.png" alt="Logit lens probing">
   <figcaption><strong>Figure 3.</strong> Probing audio representations. Audio tokens decode into meaningful sound concepts—including multilingual tokens like 键盘 (keyboard).</figcaption>
 </figure>
 
