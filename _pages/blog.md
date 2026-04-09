@@ -104,7 +104,7 @@ order: 3
 
 <div class="blog-list">
 
-<a class="blog-card" href="{{ site.url }}/blog/2026/audio-visual-interpretability/">
+<a class="blog-card" href="https://ramaneswaran.github.io/avllm_interpretability/">
   <div class="blog-card-body">
     <div class="blog-card-meta">Kaousheik Jayakumar</div>
     <h2 class="blog-card-title">Do Audio-Visual Large Language Models Really See and Hear?</h2>
