@@ -21,7 +21,7 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <col width="100px">
 <col width="650px">
 <tr><td><b>March 2026:</b></td><td> Released <a href="https://arxiv.org/abs/2603.14145">MMOU</a>: Massive Multitask Omni Understanding Benchmark in collaboration with NVIDIA </td></tr>
-<tr><td><b>February 2026:</b></td><td><a href="https://arxiv.org/abs/2604.02605">Paper</a>  on Audio-Visual Interpretability accepted at CVPR 2026 Findings </td></tr>
+<tr><td><b>February 2026:</b></td><td>First author <a href="https://arxiv.org/abs/2604.02605">Paper</a>  on Audio-Visual Interpretability accepted at CVPR 2026 Findings </td></tr>
 <tr><td><b>January 2026:</b></td><td> one new <a href="https://www.arxiv.org/abs/2601.18077">preprint</a> on Multi-turn RL analysing the cooperative capabilities of 17 SOTA LLMs</td></tr>
 <tr><td><b>October 2025:</b></td><td> 1 <a href="https://openreview.net/forum?id=MIhA9OQFxM#discussion">paper</a> accepted at Neurips Multi-turn intelligence workshop</td></tr>
 <tr><td><b>October 2025:</b></td><td> 1 <a href="https://openreview.net/forum?id=8apVsxtUqX">paper</a> accepted at Neurips Workshop on Scaling Environments for Agents</td></tr>
