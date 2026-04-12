@@ -28,6 +28,8 @@ nav_sections:
         id: "state-tracking-bottleneck"
       - title: "Cross-Play"
         id: "cross-play-interpolates"
+      - title: "Statistical Robustness (IQM)"
+        id: "statistical-robustness-iqm"
   - title: "Datasets & Fine-Tuning"
     id: "datasets-and-finetuning"
     children:
@@ -57,7 +59,17 @@ We designed three prompting scaffolds, each named after a Holmes brother of esca
 
 **Sherlock** adds programmatic deductions from the game engine — explicit "this card could be red, yellow, or green; it cannot be 4 or 5" belief states — plus a Bayesian-style step-by-step reasoning workflow. This is meant as an upper bound: the model gets the deductions handed to it, so any failure here is a failure of strategic reasoning rather than bookkeeping.
 
+<figure>
+  <img src="{{ '/assets/images/hanabi/fig1-watson-sherlock.png' | relative_url }}" alt="Watson vs Sherlock prompting scaffolds">
+  <figcaption><strong>Figure 1.</strong> The <em>Watson</em> setting (left) provides only the basic game state with explicit knowledge. The <em>Sherlock</em> setting (right) adds a "Deductive Context" block listing all valid color/rank possibilities for every card and enforces a step-by-step Bayesian reasoning workflow.</figcaption>
+</figure>
+
 **Mycroft** is the hardest setting and our novel contribution. Instead of receiving engine-computed belief states, the agent has to maintain them *itself* across turns, writing out a "working memory" scratchpad of what every player knows about every card. This is much closer to how humans actually play, and it's where multi-turn state tracking really gets stress-tested.
+
+<figure>
+  <img src="{{ '/assets/images/hanabi/fig20-mycroft-turn.png' | relative_url }}" alt="Mycroft turn from player 1's perspective">
+  <figcaption><strong>Figure 20.</strong> An example game state as viewed by Player 1 in the <em>Mycroft</em> setting. Each player maintains independent deduction blocks for every other player's hand, updated turn by turn from the agent's own scratchpad rather than from the game engine.</figcaption>
+</figure>
 
 Across 17 LLMs ranging from 4B to 600B+ parameters, we ran 2-, 3-, 4-, and 5-player games on fixed seeds — what we believe is the largest reproducible evaluation of LLMs as Hanabi agents to date.
 
@@ -69,7 +81,7 @@ Across the board, models with test-time reasoning (o3, o4-mini, Gemini 2.5 Pro, 
 
 ### Context engineering matters
 
-Different models react very differently to richer prompts. Gemini 2.5 Pro gained nearly 3 points on average moving from Watson to Sherlock; o4-mini barely budged. Some non-reasoning models actually got *worse* with the more elaborate Sherlock prompt because they couldn't juggle the probability calculations alongside the format requirements. Even frontier reasoning models remain surprisingly sensitive to how a task is framed — the intuition that "stronger model = robust to prompting" doesn't hold up. We also found that models given identical context often adopt entirely different play styles: o4-mini becomes more discard-happy under Sherlock, Gemini 2.5 Pro plays aggressively until it loses two life tokens then snaps to conservative, and Grok-3-mini grinds out steady, low-variance scores.
+Different models react very differently to richer prompts. Gemini 2.5 Pro gained nearly 3 points on average moving from Watson to Sherlock; o4-mini barely budged. Some non-reasoning models actually got *worse* with the more elaborate Sherlock prompt because they couldn't juggle the probability calculations alongside the format requirements. Even frontier reasoning models remain surprisingly sensitive to how a task is framed — the intuition that "stronger model = robust to prompting" doesn't hold up. Models given identical context often adopt entirely different play styles: o4-mini becomes more discard-happy under Sherlock, Gemini 2.5 Pro plays aggressively until it loses two life tokens then snaps to conservative, and Grok-3-mini grinds out steady, low-variance scores.
 
 ### State tracking bottleneck
 
@@ -77,7 +89,35 @@ When we forced models to maintain their own belief states in the Mycroft setting
 
 ### Cross play interpolates
 
-We also moved beyond self-play to **cross-play**, where mixed teams play together. Traditional self-play RL agents fall apart when paired with strangers. We tested mixed teams with one Grok-3-mini and several o4-minis, and team performance lands cleanly *between* the two self-play scores — adding a single stronger agent to a team of weaker ones lifted average scores by ≈1.7 points. That's a small but meaningful sign that LLMs carry more generalizable cooperative priors than specialized RL agents, which is exactly the property you want for ad-hoc human-AI teamwork.
+We also moved beyond self-play to **cross-play**, where mixed teams play together. Traditional self-play RL agents fall apart when paired with strangers. We tested mixed teams with one Grok-3-mini and several o4-minis, and team performance lands cleanly *between* the two self-play scores — adding a single stronger agent to a team of weaker ones lifted average scores by ≈1.7 points. To probe diversity-driven gains, we also built a Mixture-of-Agents system where five specialist agents (baseline, rank-focused, analyst, discard strategist, history analyst) feed into an aggregator that picks the final move.
+
+<div class="figure-row">
+<figure>
+  <img src="{{ '/assets/images/hanabi/fig19a-moa-architecture.png' | relative_url }}" alt="Mixture-of-Agents architecture">
+  <figcaption><strong>Figure 19a.</strong> The Mixture-of-Agents system: five parallel specialist agents generate diverse outputs that an Aggregator Agent synthesizes into a final move.</figcaption>
+</figure>
+<figure>
+  <img src="{{ '/assets/images/hanabi/fig19b-moa-scores.png' | relative_url }}" alt="Mixture-of-Agents scores across player counts">
+  <figcaption><strong>Figure 19b.</strong> Mixture-of-Agents average scores under Watson and Sherlock prompting strategies across 2–5 player settings.</figcaption>
+</figure>
+</div>
+
+The cross-play and MoA results together are a small but meaningful sign that LLMs carry more generalizable cooperative priors than specialized RL agents — exactly the property you want for ad-hoc human-AI teamwork.
+
+### Statistical robustness IQM
+
+Mean scores can be misleading on a benchmark with this much per-game variance, so we also report interquartile mean (IQM) scores with 95% confidence intervals across all 17 models and player counts. The IQM analysis confirms every trend in the main paper: reasoning models dominate, the Sherlock scaffold beats Watson and SPIN-Bench variants, and the cross-play interpolation effect holds up under the more conservative statistic.
+
+<div class="figure-row">
+<figure>
+  <img src="{{ '/assets/images/hanabi/fig9-iqm-watson-sherlock.png' | relative_url }}" alt="IQM scores across all 17 models">
+  <figcaption><strong>Figure 9.</strong> Interquartile mean (IQM) scores of all 17 LLM Hanabi agents across 2–5 player settings, with 95% confidence intervals.</figcaption>
+</figure>
+<figure>
+  <img src="{{ '/assets/images/hanabi/fig10-iqm-reasoning-models.png' | relative_url }}" alt="IQM scores for top reasoning models">
+  <figcaption><strong>Figure 10.</strong> IQM scores for the top reasoning LLMs broken down by player count (2P–5P) under both Watson and Sherlock settings.</figcaption>
+</figure>
+</div>
 
 ## Datasets and finetuning
 
