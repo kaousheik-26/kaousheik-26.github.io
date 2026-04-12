@@ -1206,19 +1206,23 @@
         <nav>
             <ul id="nav-menu">
                 <li><a href="#top" class="active">Overview</a></li>
-                <li><a href="#qualitative-examples">Examples</a></li>
-                <li><a href="#how-we-study-this">How We Study This</a></li>
-                <li><a href="#findings">Findings</a>
+                {% if page.nav_sections %}
+                {% for section in page.nav_sections %}
+                <li>
+                    <a href="#{{ section.id }}">{{ section.title }}</a>
+                    {% if section.children %}
                     <ul>
-                        <li><a href="#does-the-model-pay-attention-to-audio">Attention to Audio</a></li>
-                        <li><a href="#are-audio-representations-meaningful">Audio Representations</a></li>
-                        <li><a href="#how-does-cross-modal-information-flow">Cross-Modal Flow</a></li>
-                        <li><a href="#where-does-the-vision-bias-originate">Vision Bias Origins</a></li>
+                        {% for child in section.children %}
+                        <li><a href="#{{ child.id }}">{{ child.title }}</a></li>
+                        {% endfor %}
                     </ul>
+                    {% endif %}
                 </li>
-                <li><a href="#citation">Citation</a></li>
+                {% endfor %}
+                {% endif %}
             </ul>
         </nav>
+
         <div class="sidebar-bottom">
             <a href="{{ site.url }}/assets/kaousheik_CV.pdf">CV ↗</a>
         </div>
