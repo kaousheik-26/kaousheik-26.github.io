@@ -146,7 +146,7 @@ order: 2
 <!-- 1. AVF -->
 <div class="blog-card">
   <div class="blog-card-body">
-    <div class="blog-card-meta">Sreyan Ghosh, Arushi Goel, Kaousheik Jayakumar, et al. (in collaboration with NVIDIA)</div>
+    <div class="blog-card-meta">Sreyan Ghosh, Arushi Goel, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h2 class="blog-card-title">
       <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
     </h2>
@@ -166,7 +166,7 @@ order: 2
 <!-- 2. AF Next -->
 <div class="blog-card">
   <div class="blog-card-body">
-    <div class="blog-card-meta">Sreyan Ghosh, Arushi Goel, Kaousheik Jayakumar, et al. (in collaboration with NVIDIA)</div>
+    <div class="blog-card-meta">Sreyan Ghosh, Arushi Goel, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h2 class="blog-card-title">
       <a href="https://arxiv.org/abs/2604.10905">Audio Flamingo Next: Next-Generation Open Audio-Language Models for Speech, Sound, and Music</a>
     </h2>
@@ -187,9 +187,9 @@ order: 2
 <!-- 3. MMOU -->
 <div class="blog-card">
   <div class="blog-card-body">
-    <div class="blog-card-meta">Arushi Goel, Sreyan Ghosh, Vatsal Agarwal, Nishit Anand, Kaousheik Jayakumar, et al. (in collaboration with NVIDIA)</div>
+    <div class="blog-card-meta">Arushi Goel, Sreyan Ghosh, Vatsal Agarwal, Nishit Anand, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h2 class="blog-card-title">
-      <a href="https://arxiv.org/abs/2603.14145">MMOU: Massive Multitask Omni Understanding Benchmark</a>
+      <a href="https://arxiv.org/abs/2603.14145">MMOU - Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long and Complex Real-World Videos</a>
     </h2>
     <div class="blog-card-footer">
       <span class="blog-card-venue">Preprint · 2026</span>
@@ -208,7 +208,7 @@ order: 2
 <!-- 4. CVPR Paper -->
 <div class="blog-card">
   <div class="blog-card-body">
-    <div class="blog-card-meta">Ramaneswaran Selvakumar*, Kaousheik Jayakumar* et al.</div>
+    <div class="blog-card-meta">Ramaneswaran Selvakumar*, <strong>Kaousheik Jayakumar</strong>* et al.</div>
     <h2 class="blog-card-title">
       <a href="https://arxiv.org/abs/2604.02605">Do Audio-Visual Large Language Models Really See and Hear?</a>
     </h2>
@@ -228,7 +228,7 @@ order: 2
 <!-- 5. Sparks of Cooperative Reasoning -->
 <div class="blog-card">
   <div class="blog-card-body">
-    <div class="blog-card-meta">Mahesh Ramesh, Kaousheik Jayakumar, et al.</div>
+    <div class="blog-card-meta">Mahesh Ramesh, <strong>Kaousheik Jayakumar</strong>, et al.</div>
     <h2 class="blog-card-title">
       <a href="https://www.arxiv.org/abs/2601.18077">Sparks of Cooperative Reasoning: Multi-turn LLM Analysis through Hanabi</a>
     </h2>
@@ -248,7 +248,7 @@ order: 2
 <!-- 6. Interspeech Multilingual ASR -->
 <div class="blog-card">
   <div class="blog-card-body">
-    <div class="blog-card-meta">Kaousheik Jayakumar, et al.</div>
+    <div class="blog-card-meta"><strong>Kaousheik Jayakumar</strong>, et al.</div>
     <h2 class="blog-card-title">
       <a href="https://arxiv.org/abs/2305.19584">Multilingual ASR Systems for Indian Languages</a>
     </h2>

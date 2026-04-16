@@ -23,7 +23,7 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <tr><td><b>April 2026:</b></td><td> Releasing <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio Visual Flamingo</a>: Audio-Visual Flamingo: Open Audio-Visual
 Intelligence for Long and Complex Videos in collaboration with NVIDIA </td></tr>
 <tr><td><b>April 2026:</b></td><td> Released <a href="https://arxiv.org/abs/2604.10905">Audio Flamingo Next</a>: Next-Generation Open Audio-Language Models for Speech, Sound, and Music in collaboration with NVIDIA </td></tr>
-<tr><td><b>March 2026:</b></td><td> Released <a href="https://arxiv.org/abs/2603.14145">MMOU</a>: Massive Multitask Omni Understanding Benchmark in collaboration with NVIDIA </td></tr>
+<tr><td><b>March 2026:</b></td><td> Released <a href="https://arxiv.org/abs/2603.14145">MMOU</a> - Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long and Complex Real-World Videos in collaboration with NVIDIA </td></tr>
 <tr><td><b>February 2026:</b></td><td>First author <a href="https://arxiv.org/abs/2604.02605">Paper</a>  on Audio-Visual Interpretability accepted at CVPR 2026 Findings </td></tr>
 <tr><td><b>January 2026:</b></td><td> Released <a href="https://www.arxiv.org/abs/2601.18077">preprint</a> on Multi-turn RL analysing the cooperative capabilities of 17 SOTA LLMs</td></tr>
 <tr><td><b>October 2025:</b></td><td> 1 <a href="https://openreview.net/forum?id=MIhA9OQFxM#discussion">paper</a> accepted at Neurips Multi-turn intelligence workshop</td></tr>
