@@ -100,8 +100,7 @@ order: 2
 
 <div class="papers-container">
 
-<h1>Papers</h1>
-<p class="papers-subtitle">Selected publications and preprints.</p>
+<h1>Selected publications and preprints.</h1>
 
 <!-- 1. AVF -->
 <div class="paper-card">
