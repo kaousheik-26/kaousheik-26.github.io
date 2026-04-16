@@ -26,12 +26,45 @@ order: 2
 }
 
 .paper-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
   padding: 1.4rem 0;
   border-bottom: 1px solid #e6e6e6;
 }
 
 .paper-card:first-of-type {
   padding-top: 0;
+}
+
+.paper-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.paper-thumbnail {
+  width: 180px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #eaeaea; /* subtle border */
+}
+
+.paper-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .paper-card {
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+  .paper-thumbnail {
+    width: 60%;
+    margin: 0 auto;
+  }
 }
 
 .paper-venue {
@@ -104,91 +137,121 @@ order: 2
 
 <!-- 1. AVF -->
 <div class="paper-card">
-  <span class="paper-venue">Preprint · 2026</span>
-  <span class="paper-venue" style="background:#fff3cd; color:#856404;">Coming Soon</span>
-  <h2 class="paper-title">
-    <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
-  </h2>
-  <p class="paper-authors">
-    <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
-  </p>
-  <div class="paper-links">
-    <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">📄 Paper</a>
+  <div class="paper-content">
+    <span class="paper-venue">Preprint · 2026</span>
+    <span class="paper-venue" style="background:#fff3cd; color:#856404;">Coming Soon</span>
+    <h2 class="paper-title">
+      <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
+    </h2>
+    <p class="paper-authors">
+      <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
+    </p>
+    <div class="paper-links">
+      <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">📄 Paper</a>
+    </div>
+  </div>
+  <div class="paper-thumbnail">
+    <img src="{{ site.url }}/assets/logos/AVF.png" alt="Audio-Visual Flamingo Logo">
   </div>
 </div>
 
 <!-- 2. AF Next -->
 <div class="paper-card">
-  <span class="paper-venue">Preprint · 2026</span>
-  <h2 class="paper-title">
-    <a href="https://arxiv.org/abs/2604.10905">Audio Flamingo Next: Next-Generation Open Audio-Language Models for Speech, Sound, and Music</a>
-  </h2>
-  <p class="paper-authors">
-    <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
-  </p>
-  <div class="paper-links">
-    <a href="https://arxiv.org/abs/2604.10905">📄 arXiv</a>
-    <a href="https://afnext-umd-nvidia.github.io/">🌐 Project Page</a>
-    <a href="https://huggingface.co/nvidia/audio-flamingo-next-hf">🤗 HuggingFace</a>
+  <div class="paper-content">
+    <span class="paper-venue">Preprint · 2026</span>
+    <h2 class="paper-title">
+      <a href="https://arxiv.org/abs/2604.10905">Audio Flamingo Next: Next-Generation Open Audio-Language Models for Speech, Sound, and Music</a>
+    </h2>
+    <p class="paper-authors">
+      <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
+    </p>
+    <div class="paper-links">
+      <a href="https://arxiv.org/abs/2604.10905">📄 arXiv</a>
+      <a href="https://afnext-umd-nvidia.github.io/">🌐 Project Page</a>
+      <a href="https://huggingface.co/nvidia/audio-flamingo-next-hf">🤗 HuggingFace</a>
+    </div>
+  </div>
+  <div class="paper-thumbnail">
+    <img src="{{ site.url }}/assets/logos/af-next.png" alt="Audio Flamingo Next Logo">
   </div>
 </div>
 
 <!-- 3. MMOU -->
 <div class="paper-card">
-  <span class="paper-venue">Preprint · 2026</span>
-  <h2 class="paper-title">
-    <a href="https://arxiv.org/abs/2603.14145">MMOU: Massive Multitask Omni Understanding Benchmark</a>
-  </h2>
-  <p class="paper-authors">
-    <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
-  </p>
-  <div class="paper-links">
-    <a href="https://arxiv.org/abs/2603.14145">📄 arXiv</a>
-    <a href="https://mmou-bench.github.io/">🌐 Project Page</a>
-    <a href="https://huggingface.co/datasets/nvidia/MMOU">🤗 HuggingFace</a>
+  <div class="paper-content">
+    <span class="paper-venue">Preprint · 2026</span>
+    <h2 class="paper-title">
+      <a href="https://arxiv.org/abs/2603.14145">MMOU: Massive Multitask Omni Understanding Benchmark</a>
+    </h2>
+    <p class="paper-authors">
+      <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
+    </p>
+    <div class="paper-links">
+      <a href="https://arxiv.org/abs/2603.14145">📄 arXiv</a>
+      <a href="https://mmou-bench.github.io/">🌐 Project Page</a>
+      <a href="https://huggingface.co/datasets/nvidia/MMOU">🤗 HuggingFace</a>
+    </div>
+  </div>
+  <div class="paper-thumbnail">
+    <img src="{{ site.url }}/assets/logos/MMOU.png" alt="MMOU Logo">
   </div>
 </div>
 
 <!-- 4. CVPR Paper -->
 <div class="paper-card">
-  <span class="paper-venue">CVPR Findings · 2026</span>
-  <h2 class="paper-title">
-    <a href="https://arxiv.org/abs/2604.02605">Do Audio-Visual Large Language Models Really See and Hear?</a>
-  </h2>
-  <p class="paper-authors">
-    <strong>Kaousheik Jayakumar</strong>, et al.
-  </p>
-  <div class="paper-links">
-    <a href="https://arxiv.org/abs/2604.02605">📄 arXiv</a>
-    <a href="https://ramaneswaran.github.io/avllm_interpretability/">🌐 Project Page</a>
+  <div class="paper-content">
+    <span class="paper-venue">CVPR Findings · 2026</span>
+    <h2 class="paper-title">
+      <a href="https://arxiv.org/abs/2604.02605">Do Audio-Visual Large Language Models Really See and Hear?</a>
+    </h2>
+    <p class="paper-authors">
+      <strong>Kaousheik Jayakumar</strong>, et al.
+    </p>
+    <div class="paper-links">
+      <a href="https://arxiv.org/abs/2604.02605">📄 arXiv</a>
+      <a href="https://ramaneswaran.github.io/avllm_interpretability/">🌐 Project Page</a>
+    </div>
+  </div>
+  <div class="paper-thumbnail">
+    <img src="{{ site.url }}/assets/logos/cvpr.png" alt="CVPR Paper Logo">
   </div>
 </div>
 
-<!-- 4. Sparks of Cooperative Reasoning -->
+<!-- 5. Sparks of Cooperative Reasoning -->
 <div class="paper-card">
-  <span class="paper-venue">Preprint · 2026</span>
-  <h2 class="paper-title">
-    <a href="https://www.arxiv.org/abs/2601.18077">Sparks of Cooperative Reasoning: Multi-turn LLM Analysis through Hanabi</a>
-  </h2>
-  <p class="paper-authors">
-    <strong>Kaousheik Jayakumar</strong>, et al.
-  </p>
-  <div class="paper-links">
-    <a href="https://www.arxiv.org/abs/2601.18077">📄 arXiv</a>
+  <div class="paper-content">
+    <span class="paper-venue">Preprint · 2026</span>
+    <h2 class="paper-title">
+      <a href="https://www.arxiv.org/abs/2601.18077">Sparks of Cooperative Reasoning: Multi-turn LLM Analysis through Hanabi</a>
+    </h2>
+    <p class="paper-authors">
+      <strong>Kaousheik Jayakumar</strong>, et al.
+    </p>
+    <div class="paper-links">
+      <a href="https://www.arxiv.org/abs/2601.18077">📄 arXiv</a>
+    </div>
+  </div>
+  <div class="paper-thumbnail">
+    <img src="{{ site.url }}/assets/logos/hanabi.png" alt="Hanabi Logo">
   </div>
 </div>
 
-<!-- 5. Interspeech Multilingual ASR -->
+<!-- 6. Interspeech Multilingual ASR -->
 <div class="paper-card">
-  <span class="paper-venue">Interspeech · 2023</span>
-  <h2 class="paper-title">
-    <a href="https://arxiv.org/abs/2305.19584">Multilingual ASR Systems for Indian Languages</a>
-  </h2>
-  <p class="paper-authors">
-    <strong>Kaousheik Jayakumar</strong>, et al.
-  </p>
-  <div class="paper-links">
-    <a href="https://arxiv.org/abs/2305.19584">📄 arXiv</a>
+  <div class="paper-content">
+    <span class="paper-venue">Interspeech · 2023</span>
+    <h2 class="paper-title">
+      <a href="https://arxiv.org/abs/2305.19584">Multilingual ASR Systems for Indian Languages</a>
+    </h2>
+    <p class="paper-authors">
+      <strong>Kaousheik Jayakumar</strong>, et al.
+    </p>
+    <div class="paper-links">
+      <a href="https://arxiv.org/abs/2305.19584">📄 arXiv</a>
+    </div>
+  </div>
+  <div class="paper-thumbnail">
+    <img src="{{ site.url }}/assets/logos/tag-team.png" alt="Tag Team Logo">
   </div>
 </div>
 
