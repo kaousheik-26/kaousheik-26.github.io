@@ -20,6 +20,8 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <table>
 <col width="100px">
 <col width="650px">
+<tr><td><b>April 2026:</b></td><td> Releasing <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio Visual Flaming</a>: Audio-Visual Flamingo: Open Audio-Visual
+Intelligence for Long and Complex Videos in collaboration with NVIDIA </td></tr>
 <tr><td><b>April 2026:</b></td><td> Released <a href="https://arxiv.org/abs/2604.10905">Audio Flaming Next</a>: Next-Generation Open Audio-Language Models for Speech, Sound, and Music in collaboration with NVIDIA </td></tr>
 <tr><td><b>March 2026:</b></td><td> Released <a href="https://arxiv.org/abs/2603.14145">MMOU</a>: Massive Multitask Omni Understanding Benchmark in collaboration with NVIDIA </td></tr>
 <tr><td><b>February 2026:</b></td><td>First author <a href="https://arxiv.org/abs/2604.02605">Paper</a>  on Audio-Visual Interpretability accepted at CVPR 2026 Findings </td></tr>
