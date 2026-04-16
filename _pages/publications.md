@@ -159,7 +159,7 @@ order: 2
     </div>
   </div>
   <div class="blog-card-thumbnail">
-    <img src="{{ site.url }}/assets/logos/AVF.png" alt="Audio-Visual Flamingo Logo">
+    <img src="{{ site.url }}/assets/logos/AVF.png" alt="Audio-Visual Flamingo Logo" style="transform: scale(1.4);">
   </div>
 </div>
 
