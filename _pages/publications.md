@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Papers
-permalink: /papers/
+title: Publications
+permalink: /publications/
 order: 2
 ---
 
@@ -106,6 +106,7 @@ order: 2
 <!-- 1. AVF -->
 <div class="paper-card">
   <span class="paper-venue">Preprint · 2026</span>
+  <span class="paper-venue" style="background:#fff3cd; color:#856404;">Coming Soon</span>
   <h2 class="paper-title">
     <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
   </h2>
@@ -128,10 +129,28 @@ order: 2
   </p>
   <div class="paper-links">
     <a href="https://arxiv.org/abs/2604.10905">📄 arXiv</a>
+    <a href="https://afnext-umd-nvidia.github.io/">🌐 Project Page</a>
+    <a href="https://huggingface.co/nvidia/audio-flamingo-next-hf">🤗 HuggingFace</a>
   </div>
 </div>
 
-<!-- 3. CVPR Paper -->
+<!-- 3. MMOU -->
+<div class="paper-card">
+  <span class="paper-venue">Preprint · 2026</span>
+  <h2 class="paper-title">
+    <a href="https://arxiv.org/abs/2603.14145">MMOU: Massive Multitask Omni Understanding Benchmark</a>
+  </h2>
+  <p class="paper-authors">
+    <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)
+  </p>
+  <div class="paper-links">
+    <a href="https://arxiv.org/abs/2603.14145">📄 arXiv</a>
+    <a href="https://mmou-bench.github.io/">🌐 Project Page</a>
+    <a href="https://huggingface.co/datasets/nvidia/MMOU">🤗 HuggingFace</a>
+  </div>
+</div>
+
+<!-- 4. CVPR Paper -->
 <div class="paper-card">
   <span class="paper-venue">CVPR Findings · 2026</span>
   <h2 class="paper-title">
