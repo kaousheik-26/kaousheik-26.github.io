@@ -229,6 +229,7 @@ order: 2
     </p>
     <div class="paper-links">
       <a href="https://www.arxiv.org/abs/2601.18077">📄 arXiv</a>
+      <a href="https://app.primeintellect.ai/dashboard/environments/mahesh-ramesh/hanabi">🌐 Project Page</a>
     </div>
   </div>
   <div class="paper-thumbnail">
