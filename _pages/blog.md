@@ -105,6 +105,22 @@ order: 3
 
 <div class="blog-list">
 
+<a class="blog-card" href="{{ '/llms-hanabi-cooperative-reasoning' | relative_url }}">
+  <div class="blog-card-body">
+    <div class="blog-card-meta">Kaousheik Jayakumar</div>
+    <h2 class="blog-card-title">Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents</h2>
+    <p class="blog-card-subtitle">Even frontier reasoning models are sparks — not flames — of cooperative reasoning. We benchmark 17 LLMs on Hanabi across 2–5 players, introduce three prompting scaffolds and two new datasets, and show a 4B model finetuned on our data closes most of the gap to o4-mini.</p>
+    <div class="blog-card-footer">
+      <span class="blog-card-venue">ICML 2026</span>
+      <span>·</span>
+      <span>Apr 30, 2026</span>
+    </div>
+  </div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/icml/firework.png" alt="Hanabi firework teaser">
+  </div>
+</a>
+
 <a class="blog-card" href="https://ramaneswaran.github.io/avllm_interpretability/">
   <div class="blog-card-body">
     <div class="blog-card-meta">Kaousheik Jayakumar</div>
