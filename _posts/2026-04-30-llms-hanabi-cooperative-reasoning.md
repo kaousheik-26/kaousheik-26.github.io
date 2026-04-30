@@ -1,5 +1,6 @@
 ---
 layout: hanabi-post
+permalink: /llms-hanabi-cooperative-reasoning/
 title: "Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents"
 subtitle: "Even frontier reasoning models are sparks — not flames — of cooperative reasoning. We benchmark 17 LLMs on Hanabi across 2–5 players, introduce three prompting scaffolds and two new datasets, and show a 4B model finetuned on our data closes most of the gap to o4-mini while transferring to temporal reasoning, instruction following, and other cooperative tasks."
 authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswinkumar Ramkumar¹, Pavan Thodima¹, Aniket Rege¹, Emmanouil V. Vlatakis-Gkaragkounis¹"
