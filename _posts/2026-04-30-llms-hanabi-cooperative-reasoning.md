@@ -7,7 +7,7 @@ authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswink
 affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison &nbsp;·&nbsp; ²University of Maryland, College Park &nbsp;·&nbsp; †Equal advising"
 venue: "Preprint · 2026"
 paper_url: "https://arxiv.org/abs/2601.18077"
-code_url: "https://github.com/"
+code_url: "https://app.primeintellect.ai/dashboard/environments/mahesh-ramesh/hanabi"
 dataset_url: "https://huggingface.co/"
 date: 2026-03-21
 
