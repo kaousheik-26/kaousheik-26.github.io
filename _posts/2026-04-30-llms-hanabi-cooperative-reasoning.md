@@ -85,10 +85,7 @@ We progressively scale the context an agent receives, from minimal state to engi
 Watson and Sherlock differ in one thing: whether the agent receives a programmatic belief state. Sherlock's deductive context lists, for every card in every hand, the colors and ranks still consistent with the clue history. The agent is then prompted to do Bayesian-style probability reasoning over those candidates before acting.
 
 <figure>
-  <div class="img-placeholder tall">
-    <span class="icon">⚙</span>
-    <span class="label">Figure 1 — Watson vs Sherlock prompt comparison<br>(insert figure-1-watson-sherlock.png)</span>
-  </div>
+  <img src="{{ site.url }}/assets/icml/sherlock_watson_teaser.png" alt="Watson vs Sherlock prompt comparison">
   <figcaption><strong>Figure 1.</strong> Watson provides only explicit knowledge (clues received). Sherlock additionally provides a Deductive Context block — the per-card belief state — and enforces Bayesian-style step-by-step reasoning.</figcaption>
 </figure>
 
@@ -97,10 +94,7 @@ Watson and Sherlock differ in one thing: whether the agent receives a programmat
 Mycroft removes the engine crutch. Each turn the agent receives the previous turn's game state, its own deductions for every player, move ratings, chosen action, and reasoning — then must produce updated deductions, ratings, and an action. This forces the model to be its own Hanabi Learning Environment, tracking belief shifts and card position changes (cards slide left after a play or discard) across 60+ turns.
 
 <figure>
-  <div class="img-placeholder tall">
-    <span class="icon">⚙</span>
-    <span class="label">Figure 20 — Mycroft scratch pad example<br>(insert figure-20-mycroft.png)</span>
-  </div>
+  <img src="{{ site.url }}/assets/icml/mycroft_teaser.png" alt="Mycroft scratch pad example">
   <figcaption><strong>Figure 2.</strong> A Mycroft turn from Player 1's perspective. The agent maintains an independent deduction block for every other player and must update card positions implicitly after plays and discards.</figcaption>
 </figure>
 
