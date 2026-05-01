@@ -105,20 +105,14 @@ We evaluate **17 LLMs** (4B–600B+, both reasoning and non-reasoning) across 2�
 ### Watson {#watson-results}
 
 <figure>
-  <div class="img-placeholder">
-    <span class="icon">📊</span>
-    <span class="label">Figure 4 (left) — Watson scores, 17 LLMs averaged over 2–5 players<br>(insert figure-4-watson.png)</span>
-  </div>
+  <img src="{{ site.url }}/assets/icml/fig_4_watson.png" alt="Watson scores, 17 LLMs averaged over 2-5 players">
   <figcaption><strong>Figure 3.</strong> Watson average scores across 2–5 players. o3 (15.4) leads, with DeepSeek-R1, o4-mini, and Grok-3-mini clustered just behind. Non-reasoning models fall sharply below the 10/25 threshold.</figcaption>
 </figure>
 
 ### Sherlock {#sherlock-results}
 
 <figure>
-  <div class="img-placeholder">
-    <span class="icon">📊</span>
-    <span class="label">Figure 4 (right) — Sherlock scores, 17 LLMs averaged over 2–5 players<br>(insert figure-4-sherlock.png)</span>
-  </div>
+  <img src="{{ site.url }}/assets/icml/fig_4_sherlock.png" alt="Sherlock scores, 17 LLMs averaged over 2-5 players">
   <figcaption><strong>Figure 4.</strong> Sherlock scores. Reasoning models gain consistently from deductive context (o3: +1.5, Gemini 2.5 Flash: +4.4). Most non-reasoning models <em>regress</em> — added complexity overwhelms them rather than helping.</figcaption>
 </figure>
 
@@ -130,10 +124,7 @@ We evaluate **17 LLMs** (4B–600B+, both reasoning and non-reasoning) across 2�
 ### Mycroft {#mycroft-results}
 
 <figure>
-  <div class="img-placeholder">
-    <span class="icon">📊</span>
-    <span class="label">Figure 17 — Mycroft scores for top reasoning models, 2–5 players<br>(insert figure-17-mycroft.png)</span>
-  </div>
+  <img src="{{ site.url }}/assets/icml/mycroft_scores.png" alt="Mycroft scores for top reasoning models, 2-5 players">
   <figcaption><strong>Figure 5.</strong> Mycroft scores for the four best reasoning models. o3 retains state best (drop of only ~1.2 vs Sherlock); Gemini 2.5 Pro and o4-mini drop ~3.7. Even frontier models cannot reliably maintain beliefs across 60+ turns without engine help.</figcaption>
 </figure>
 
