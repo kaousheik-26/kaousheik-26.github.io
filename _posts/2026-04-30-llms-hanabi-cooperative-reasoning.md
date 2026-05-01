@@ -238,12 +238,13 @@ The temporal-reasoning lift on EventQA grows with context length (+1.6 → +4.2 
     <span class="lbl">BibTeX</span>
     <button><span>Copy</span></button>
   </div>
-<pre>@article{ramesh2026sparks,
-  title   = {Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents},
-  author  = {Ramesh, Mahesh and Jayakumar, Kaousheik and Ramkumar, Aswinkumar
-             and Thodima, Pavan and Rege, Aniket
-             and Vlatakis-Gkaragkounis, Emmanouil V.},
-  journal = {arXiv preprint arXiv:2601.18077},
-  year    = {2026}
+<pre>@misc{ramesh2026sparkscooperativereasoningllms,
+      title={Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents}, 
+      author={Mahesh Ramesh and Kaousheik Jayakumar and Aswinkumar Ramkumar and Pavan Thodima and Aniket Rege and Emmanouil-Vasileios Vlatakis-Gkaragkounis},
+      year={2026},
+      eprint={2601.18077},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.18077}, 
 }</pre>
 </div>
