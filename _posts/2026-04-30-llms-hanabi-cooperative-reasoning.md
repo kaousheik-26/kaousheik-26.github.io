@@ -134,17 +134,11 @@ Mean ± std can be misleading on small game counts. We report interquartile mean
 
 <div class="img-row">
   <figure>
-    <div class="img-placeholder">
-      <span class="icon">📈</span>
-      <span class="label">Figure 9 — IQM, all 17 models<br>(insert figure-9-iqm.png)</span>
-    </div>
+    <img src="{{ site.url }}/assets/icml/IQM_Sherlock.png" alt="IQM scores across all 17 models">
     <figcaption><strong>Figure 6.</strong> IQM scores across all 17 models, both scaffolds. The Watson → Sherlock lift for reasoning models is robust to outlier games.</figcaption>
   </figure>
   <figure>
-    <div class="img-placeholder">
-      <span class="icon">📈</span>
-      <span class="label">Figure 10 — IQM, top reasoning models per player count<br>(insert figure-10-iqm-top.png)</span>
-    </div>
+    <img src="{{ site.url }}/assets/icml/IQM_Reasoning.png" alt="IQM for top reasoning models per player count">
     <figcaption><strong>Figure 7.</strong> IQM for the five strongest reasoning models broken down by player count. Performance degrades smoothly with team size.</figcaption>
   </figure>
 </div>
@@ -156,10 +150,7 @@ Mean ± std can be misleading on small game counts. We report interquartile mean
 Self-play is generous; real cooperation is ad hoc. We compose teams with one Grok-3-mini agent and the rest o4-mini (the weaker model in Mycroft, 14.9 vs 11.3). Across all 2–5 player settings, **adding one stronger agent lifts team scores by ~1.7 points** — performance smoothly interpolates between the weak and strong self-play baselines, unlike specialized RL agents which collapse with unfamiliar partners.
 
 <figure>
-  <div class="img-placeholder">
-    <span class="icon">📊</span>
-    <span class="label">Figure 6 — Cross-play interpolation (insert figure-6-crossplay.png)</span>
-  </div>
+  <img src="{{ site.url }}/assets/icml/cross_play.png" alt="Cross-play interpolation">
   <figcaption><strong>Figure 8.</strong> Mixed teams score between weak (all o4-mini) and strong (all Grok-3-mini) self-play, demonstrating that LLM agents cooperate gracefully with unfamiliar partners — a meaningful contrast with traditional self-play RL.</figcaption>
 </figure>
 
@@ -181,9 +172,9 @@ To validate our datasets, we post-train **Qwen3-4B-Instruct-2507** — a small, 
 The base model scores 1.7 in Mycroft. After RL on HanabiRewards: **8.3** — a +388% jump that lands within ~3 points of o4-mini (11.3) and surpasses GPT-4.1 (the best non-reasoning baseline) by +88%. In Sherlock, the same model jumps from 4.8 to 12.3 (+156%), comparable to Grok-3 and beating GPT-4o.
 
 <figure>
-  <div class="img-placeholder">
-    <span class="icon">📊</span>
-    <span class="label">Figure 7 — Sherlock & Mycroft post-training results<br>(insert figure-7-finetune.png)</span>
+  <div class="img-row" style="margin: 0;">
+    <img src="{{ site.url }}/assets/icml/Sherlock_finetune.png" alt="Sherlock post-training results">
+    <img src="{{ site.url }}/assets/icml/mycroft_finetuned.png" alt="Mycroft post-training results">
   </div>
   <figcaption><strong>Figure 9.</strong> Qwen3-4B before and after instruction tuning (Ours-SFT) and RLVR (Ours-RL), versus larger proprietary models. Evaluated on held-out seeds to avoid leakage.</figcaption>
 </figure>
