@@ -295,6 +295,14 @@
             border-top: 1px solid var(--border);
             border-right: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .tldr-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .tldr-label {
@@ -313,6 +321,20 @@
             line-height: 1.55;
             color: var(--text);
             font-style: italic;
+        }
+
+        .tldr-teaser {
+            flex-shrink: 0;
+            width: 260px;
+        }
+
+        .tldr-teaser img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: var(--shadow-sm);
         }
 
         /* ── TOC Sidebar ──────────────────────────────── */
@@ -1082,6 +1104,14 @@
                 grid-template-columns: 1fr;
             }
 
+            .tldr {
+                flex-direction: column;
+            }
+
+            .tldr-teaser {
+                width: 100%;
+            }
+
             .topbar {
                 padding: 0.6rem 1rem;
             }
@@ -1168,8 +1198,15 @@
             <!-- TL;DR -->
             {% if page.subtitle %}
             <aside class="tldr">
-                <div class="tldr-label">TL;DR</div>
-                <div class="tldr-body">{{ page.subtitle }}</div>
+                <div class="tldr-content">
+                    <div class="tldr-label">TL;DR</div>
+                    <div class="tldr-body">{{ page.subtitle }}</div>
+                </div>
+                {% if page.teaser_img %}
+                <div class="tldr-teaser">
+                    <img src="{{ site.url }}{{ page.teaser_img }}" alt="Teaser figure">
+                </div>
+                {% endif %}
             </aside>
             {% endif %}
 

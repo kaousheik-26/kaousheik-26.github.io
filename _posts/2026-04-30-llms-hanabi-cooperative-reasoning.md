@@ -2,7 +2,8 @@
 layout: hanabi-post
 permalink: /llms-hanabi-cooperative-reasoning/
 title: "Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents"
-subtitle: "Even frontier reasoning models are sparks — not flames — of cooperative reasoning. We benchmark 17 LLMs on Hanabi across 2–5 players, introduce three prompting scaffolds and two new datasets, and show a 4B model finetuned on our data closes most of the gap to o4-mini while transferring to temporal reasoning, instruction following, and other cooperative tasks."
+subtitle: "Even frontier reasoning models are not as cooperative as humans, although the gap is getting closer. We benchmark 17 LLMs (reasoning and non-reasoning) on Hanabi across all 2–5 player settings. We also release a training dataset, which when trained on by a Qwen3-4B model, beats SOTA reasoning models. We also show that the gained knowledge transfers to other cooperative tasks."
+teaser_img: "/assets/icml/gemin_teaser.jpeg"
 authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswinkumar Ramkumar¹, Pavan Thodima¹, Aniket Rege¹†, Emmanouil V. Vlatakis-Gkaragkounis¹†"
 affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison &nbsp;·&nbsp; ²University of Maryland, College Park &nbsp;·&nbsp; †Equal advising"
 venue: "ICML 2026"
