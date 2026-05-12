@@ -23,9 +23,6 @@ nav_sections:
         id: "mycroft"
   - title: "Benchmark Results"
     id: "benchmark-results"
-    children:
-      - title: "Statistical Significance"
-        id: "iqm-results"
   - title: "Ablations"
     id: "ablations"
     children:
@@ -206,20 +203,7 @@ We evaluate **17 LLMs** (4B–600B+, both reasoning and non-reasoning) across 2�
 
 <figcaption style="margin-top: -0.5rem; font-size: 0.8rem; color: var(--text3); line-height: 1.5;"><strong style="color: var(--text2);">Table 2.</strong> Average scores (out of 25) across all three scaffolds. Watson provides minimal context; Sherlock adds deductive beliefs; Mycroft requires fully implicit state tracking. Best in each column is highlighted.</figcaption>
 
-### Statistical significance {#iqm-results}
 
-Mean ± std can be misleading on small game counts. We report interquartile mean (IQM) with 95% CI throughout. The trends hold.
-
-<div class="img-row">
-  <figure>
-    <img src="{{ site.url }}/assets/icml/IQM_Sherlock.png" alt="IQM scores across all 17 models">
-    <figcaption><strong>Figure 6.</strong> IQM scores across all 17 models, both scaffolds. The Watson → Sherlock lift for reasoning models is robust to outlier games.</figcaption>
-  </figure>
-  <figure>
-    <img src="{{ site.url }}/assets/icml/IQM_Reasoning.png" alt="IQM for top reasoning models per player count">
-    <figcaption><strong>Figure 7.</strong> IQM for the five strongest reasoning models broken down by player count. Performance degrades smoothly with team size.</figcaption>
-  </figure>
-</div>
 
 ## Ablations {#ablations}
 
