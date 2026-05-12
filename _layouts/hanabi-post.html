@@ -650,6 +650,204 @@
             color: var(--text3);
         }
 
+        /* ── Tabbed Results Table ─────────────────────── */
+        .results-tabbed {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+            background: var(--bg-elevated);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .results-tabs {
+            display: flex;
+            flex-direction: column;
+            background: var(--table-stripe);
+            border-right: 1px solid var(--border);
+            flex-shrink: 0;
+            min-width: 120px;
+        }
+
+        .results-tab {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text3);
+            padding: 0.85rem 1.1rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            text-align: left;
+            transition: all 0.18s;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+
+        .results-tab:not(:last-child) {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .results-tab:hover {
+            color: var(--text);
+            background: var(--accent-soft);
+        }
+
+        .results-tab.active {
+            color: var(--accent);
+            font-weight: 600;
+            background: var(--bg-elevated);
+            border-left-color: var(--accent);
+        }
+
+        .results-tab .tab-ord {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            margin-bottom: 0.15rem;
+            text-transform: uppercase;
+        }
+
+        .results-tab.active .tab-ord {
+            color: var(--accent);
+            opacity: 0.7;
+        }
+
+        .results-panels {
+            flex: 1;
+            min-width: 0;
+            overflow-x: auto;
+        }
+
+        .results-panel {
+            display: none;
+        }
+
+        .results-panel.active {
+            display: block;
+        }
+
+        .results-panel table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            background: var(--bg-elevated);
+        }
+
+        .results-panel table thead {
+            background: var(--table-stripe);
+        }
+
+        .results-panel table th,
+        .results-panel table td {
+            padding: 0.55rem 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .results-panel table th {
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text2);
+            white-space: nowrap;
+        }
+
+        .results-panel table th:first-child,
+        .results-panel table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text);
+            position: sticky;
+            left: 0;
+            background: var(--bg-elevated);
+            min-width: 140px;
+            border-right: 1px solid var(--border);
+        }
+
+        .results-panel table thead th:first-child {
+            background: var(--table-stripe);
+        }
+
+        .results-panel table td {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text2);
+        }
+
+        .results-panel table td.best {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .results-panel table tbody tr:hover {
+            background: var(--accent-soft);
+        }
+
+        .results-panel table tbody tr:hover td:first-child {
+            background: var(--accent-soft);
+        }
+
+        .results-panel table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-panel table td.na-cell {
+            color: var(--text3);
+            opacity: 0.4;
+            font-style: italic;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Reasoning model separator row */
+        .results-panel table tr.separator td {
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .results-panel .panel-note {
+            font-size: 0.72rem;
+            color: var(--text3);
+            padding: 0.5rem 0.85rem;
+            border-top: 1px solid var(--border);
+            background: var(--table-stripe);
+        }
+
+        @media (max-width: 640px) {
+            .results-tabbed {
+                flex-direction: column;
+            }
+
+            .results-tabs {
+                flex-direction: row;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                min-width: 0;
+            }
+
+            .results-tab {
+                flex: 1;
+                text-align: center;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                padding: 0.65rem 0.5rem;
+            }
+
+            .results-tab:not(:last-child) {
+                border-bottom: 3px solid transparent;
+                border-right: 1px solid var(--border);
+            }
+
+            .results-tab.active {
+                border-bottom-color: var(--accent);
+                border-left-color: transparent;
+            }
+        }
+
         /* ── Code ────────────────────────────────────── */
         .post-content code {
             font-family: 'JetBrains Mono', monospace;
@@ -986,6 +1184,38 @@
                     }, 1800);
                 });
             };
+        });
+
+        // ── Results table tab switching ─────────────
+        document.querySelectorAll('.results-tabbed').forEach(tabbed => {
+            const tabs = tabbed.querySelectorAll('.results-tab');
+            const panels = tabbed.querySelectorAll('.results-panel');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    tabbed.querySelector('#' + tab.dataset.panel).classList.add('active');
+                });
+            });
+            // Highlight best in each column
+            panels.forEach(panel => {
+                const rows = panel.querySelectorAll('tbody tr');
+                if (rows.length === 0) return;
+                const numCols = rows[0].querySelectorAll('td').length;
+                for (let c = 1; c < numCols; c++) {
+                    let best = -Infinity, bestCells = [];
+                    rows.forEach(row => {
+                        const cell = row.querySelectorAll('td')[c];
+                        if (!cell) return;
+                        const val = parseFloat(cell.textContent);
+                        if (isNaN(val)) return;
+                        if (val > best) { best = val; bestCells = [cell]; }
+                        else if (val === best) { bestCells.push(cell); }
+                    });
+                    bestCells.forEach(cell => cell.classList.add('best'));
+                }
+            });
         });
     </script>
 

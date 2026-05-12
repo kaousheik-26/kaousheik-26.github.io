@@ -24,12 +24,6 @@ nav_sections:
   - title: "Benchmark Results"
     id: "benchmark-results"
     children:
-      - title: "Watson"
-        id: "watson-results"
-      - title: "Sherlock"
-        id: "sherlock-results"
-      - title: "Mycroft"
-        id: "mycroft-results"
       - title: "Statistical Significance"
         id: "iqm-results"
   - title: "Ablations"
@@ -102,31 +96,104 @@ Mycroft removes the engine crutch. Each turn the agent receives the previous tur
 
 We evaluate **17 LLMs** (4B–600B+, both reasoning and non-reasoning) across 2–5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models mostly stall below 10/25.
 
-### Watson {#watson-results}
 
-<figure>
-  <img src="{{ site.url }}/assets/icml/fig_4_watson.png" alt="Watson scores, 17 LLMs averaged over 2-5 players">
-  <figcaption><strong>Figure 3.</strong> Watson average scores across 2–5 players. o3 (15.4) leads, with DeepSeek-R1, o4-mini, and Grok-3-mini clustered just behind. Non-reasoning models fall sharply below the 10/25 threshold.</figcaption>
-</figure>
+<div class="results-tabbed" id="results-table">
 
-### Sherlock {#sherlock-results}
+  <!-- Left-side tabs -->
+  <div class="results-tabs">
+    <button class="results-tab active" data-panel="panel-watson">
+      <span class="tab-ord">01 · Baseline</span> Watson
+    </button>
+    <button class="results-tab" data-panel="panel-sherlock">
+      <span class="tab-ord">02 · Scaffolded</span> Sherlock
+    </button>
+    <button class="results-tab" data-panel="panel-mycroft">
+      <span class="tab-ord">03 · Implicit</span> Mycroft
+    </button>
+  </div>
 
-<figure>
-  <img src="{{ site.url }}/assets/icml/fig_4_sherlock.png" alt="Sherlock scores, 17 LLMs averaged over 2-5 players">
-  <figcaption><strong>Figure 4.</strong> Sherlock scores. Reasoning models gain consistently from deductive context (o3: +1.5, Gemini 2.5 Flash: +4.4). Most non-reasoning models <em>regress</em> — added complexity overwhelms them rather than helping.</figcaption>
-</figure>
+  <!-- Panels -->
+  <div class="results-panels">
 
-<div class="callout">
-  <div class="callout-title">Key finding</div>
-  <p><strong>Deductive scaffolding helps reasoning models but hurts non-reasoning ones.</strong> Sherlock asks for probability calculation; non-reasoning models confuse themselves trying to do it, while reasoning models cleanly absorb the extra structure.</p>
+    <!-- ─── Watson ─── -->
+    <div class="results-panel active" id="panel-watson">
+      <table>
+        <thead>
+          <tr><th>Model</th><th>2-Player</th><th>3-Player</th><th>4-Player</th><th>5-Player</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mistral Medium 3</td><td>2.2</td><td>1.9</td><td>1.7</td><td>1.2</td></tr>
+          <tr><td>Gemini 2.0 Flash</td><td>4.5</td><td>3.7</td><td>3.3</td><td>3.6</td></tr>
+          <tr><td>Llama-4 Maverick</td><td>3.8</td><td>4.4</td><td>5.9</td><td>4.8</td></tr>
+          <tr><td>GPT-4o</td><td>5.3</td><td>4.6</td><td>5.3</td><td>4.9</td></tr>
+          <tr><td>DeepSeek-V3</td><td>5.9</td><td>6.3</td><td>4.3</td><td>5.0</td></tr>
+          <tr><td>GPT-4.1 mini</td><td>10.8</td><td>8.3</td><td>8.2</td><td>7.2</td></tr>
+          <tr><td>Claude Sonnet 3.7</td><td>10.7</td><td>9.2</td><td>8.5</td><td>6.9</td></tr>
+          <tr><td>Qwen-32B</td><td>9.9</td><td>9.0</td><td>8.8</td><td>9.2</td></tr>
+          <tr class="separator"><td>Grok-3</td><td>9.9</td><td>10.6</td><td>9.3</td><td>8.0</td></tr>
+          <tr><td>GPT-4.1</td><td>12.1</td><td>11.8</td><td>10.0</td><td>8.2</td></tr>
+          <tr><td>Gemini 2.5 Flash</td><td>12.8</td><td>13.8</td><td>13.0</td><td>12.7</td></tr>
+          <tr><td>Gemini 2.5 Pro</td><td>13.2</td><td>13.9</td><td>12.9</td><td>12.9</td></tr>
+          <tr><td>Qwen-235B-A22B</td><td>15.0</td><td>14.6</td><td>13.0</td><td>12.9</td></tr>
+          <tr><td>Grok-3 Mini</td><td>14.2</td><td>13.9</td><td>14.5</td><td>14.8</td></tr>
+          <tr><td>DeepSeek-R1</td><td>14.2</td><td>15.3</td><td>14.1</td><td>13.4</td></tr>
+          <tr><td>o4-mini</td><td>15.0</td><td>15.5</td><td>14.5</td><td>13.9</td></tr>
+          <tr><td>o3</td><td>15.9</td><td>15.3</td><td>16.4</td><td>13.9</td></tr>
+        </tbody>
+      </table>
+      <div class="panel-note">Average scores over 10 seeds per configuration. Line separates non-reasoning (above) from reasoning models (below).</div>
+    </div>
+
+    <!-- ─── Sherlock ─── -->
+    <div class="results-panel" id="panel-sherlock">
+      <table>
+        <thead>
+          <tr><th>Model</th><th>2-Player</th><th>3-Player</th><th>4-Player</th><th>5-Player</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mistral Medium 3</td><td>4.1</td><td>4.8</td><td>5.3</td><td>5.4</td></tr>
+          <tr><td>Gemini 2.0 Flash</td><td>4.2</td><td>3.3</td><td>4.0</td><td>4.3</td></tr>
+          <tr><td>Llama-4 Maverick</td><td>4.9</td><td>5.2</td><td>5.4</td><td>5.6</td></tr>
+          <tr><td>GPT-4o</td><td>4.4</td><td>4.1</td><td>4.5</td><td>4.6</td></tr>
+          <tr><td>DeepSeek-V3</td><td>3.9</td><td>4.2</td><td>5.4</td><td>5.8</td></tr>
+          <tr><td>GPT-4.1 mini</td><td>6.5</td><td>6.1</td><td>5.1</td><td>5.8</td></tr>
+          <tr><td>Claude Sonnet 3.7</td><td>5.4</td><td>5.4</td><td>5.4</td><td>5.6</td></tr>
+          <tr><td>Qwen-32B</td><td>5.6</td><td>13.1</td><td>5.4</td><td>12.1</td></tr>
+          <tr class="separator"><td>Grok-3</td><td>12.8</td><td>8.0</td><td>13.3</td><td>5.6</td></tr>
+          <tr><td>GPT-4.1</td><td>14.8</td><td>16.4</td><td>15.5</td><td>14.4</td></tr>
+          <tr><td>Gemini 2.5 Flash</td><td>8.4</td><td>6.6</td><td>7.7</td><td>5.6</td></tr>
+          <tr><td>Gemini 2.5 Pro</td><td>12.8</td><td>16.2</td><td>16.9</td><td>14.4</td></tr>
+          <tr><td>Qwen-235B-A22B</td><td>14.6</td><td>16.6</td><td>16.7</td><td>13.3</td></tr>
+          <tr><td>Grok-3 Mini</td><td>14.4</td><td>16.6</td><td>17.4</td><td>15.5</td></tr>
+          <tr><td>DeepSeek-R1</td><td>17.5</td><td>16.6</td><td>15.6</td><td>15.1</td></tr>
+          <tr><td>o4-mini</td><td>14.6</td><td>18.0</td><td>14.1</td><td>13.0</td></tr>
+          <tr><td>o3</td><td>17.6</td><td>17.6</td><td>16.8</td><td>15.7</td></tr>
+        </tbody>
+      </table>
+      <div class="panel-note">Average scores over 10 seeds per configuration. Line separates non-reasoning (above) from reasoning models (below).</div>
+    </div>
+
+    <!-- ─── Mycroft ─── -->
+    <div class="results-panel" id="panel-mycroft">
+      <table>
+        <thead>
+          <tr><th>Model</th><th>2-Player</th><th>3-Player</th><th>4-Player</th><th>5-Player</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>o4-mini</td><td>10.8</td><td>12.4</td><td>11.3</td><td>10.9</td></tr>
+          <tr><td>Grok-3 Mini</td><td>14.2</td><td>16.5</td><td>14.5</td><td>14.4</td></tr>
+          <tr><td>Gemini 2.5 Pro</td><td>10.2</td><td>13.4</td><td>14.1</td><td>11.6</td></tr>
+          <tr><td>Gemini 2.5 Flash</td><td>11.8</td><td>13.2</td><td>12.3</td><td>9.8</td></tr>
+          <tr><td>o3</td><td>16.3</td><td>16.4</td><td>15.5</td><td>14.7</td></tr>
+        </tbody>
+      </table>
+      <div class="panel-note">Mycroft evaluated on the top 5 reasoning models only. Average scores over 10 seeds per configuration.</div>
+    </div>
+
+  </div>
 </div>
 
-### Mycroft {#mycroft-results}
-
-<figure>
-  <img src="{{ site.url }}/assets/icml/mycroft_scores.png" alt="Mycroft scores for top reasoning models, 2-5 players">
-  <figcaption><strong>Figure 5.</strong> Mycroft scores for the four best reasoning models. o3 retains state best (drop of only ~1.2 vs Sherlock); Gemini 2.5 Pro and o4-mini drop ~3.7. Even frontier models cannot reliably maintain beliefs across 60+ turns without engine help.</figcaption>
-</figure>
+<figcaption style="margin-top: -0.5rem; font-size: 0.8rem; color: var(--text3); line-height: 1.5;"><strong style="color: var(--text2);">Table 2.</strong> Average scores (out of 25) across all three scaffolds. Watson provides minimal context; Sherlock adds deductive beliefs; Mycroft requires fully implicit state tracking. Best in each column is highlighted.</figcaption>
 
 ### Statistical significance {#iqm-results}
 
