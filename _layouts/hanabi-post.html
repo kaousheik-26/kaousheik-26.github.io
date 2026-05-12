@@ -536,6 +536,28 @@
             margin: 0;
         }
 
+        /* ── Text + Image Side-by-Side ──────────────── */
+        .text-img-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .text-img-row .text-side p {
+            margin-bottom: 0.8rem;
+        }
+
+        .text-img-row .img-side img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
         /* ── Settings Cards (Watson/Sherlock/Mycroft) ── */
         .settings-grid {
             display: grid;
@@ -1101,6 +1123,10 @@
             }
 
             .img-row {
+                grid-template-columns: 1fr;
+            }
+
+            .text-img-row {
                 grid-template-columns: 1fr;
             }
 

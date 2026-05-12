@@ -2,7 +2,7 @@
 layout: hanabi-post
 permalink: /llms-hanabi-cooperative-reasoning/
 title: "Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents"
-subtitle: "Even frontier reasoning models are not as cooperative as humans, although the gap is getting closer. We benchmark 17 LLMs (reasoning and non-reasoning) on Hanabi across all 2–5 player settings. We also release a training dataset, which when trained on by a Qwen3-4B model, beats SOTA reasoning models. We also show that the gained knowledge transfers to other cooperative tasks."
+subtitle: "Even frontier reasoning models are not as cooperative as humans, although the gap is getting closer. We benchmark 17 LLMs (reasoning and non-reasoning) on Hanabi across all 2 to 5 player settings. We also release a training dataset, which when trained on by a Qwen3-4B model, beats SOTA reasoning models. We also show that the gained knowledge transfers to other cooperative tasks."
 teaser_img: "/assets/icml/gemin_teaser.jpeg"
 authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswinkumar Ramkumar¹, Pavan Thodima¹, Aniket Rege¹†, Emmanouil V. Vlatakis-Gkaragkounis¹†"
 affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison &nbsp;·&nbsp; ²University of Maryland, College Park &nbsp;·&nbsp; †Equal advising"
@@ -46,7 +46,7 @@ nav_sections:
 
 ## Why Hanabi {#why-hanabi}
 
-Cooperative coordination under partial information is the part of intelligence that single-agent benchmarks miss. **Hanabi** is the canonical testbed: 2–5 players hold cards facing outward — visible to everyone but themselves — and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success demands theory-of-mind, convention building, and inference under sparse signals.
+Cooperative coordination under partial information is the part of intelligence that single-agent benchmarks miss. **Hanabi** is the canonical testbed: 2 to 5 players hold cards facing outward, visible to everyone but themselves, and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success demands theory-of-mind, convention building, and inference under sparse signals.
 
 Specialized RL agents reach ~24/25 in 2-player self-play but degrade sharply with more players or unfamiliar partners. We ask a different question: **how good are general-purpose LLMs as cooperative agents, and what limits them?**
 
@@ -58,7 +58,7 @@ We progressively scale the context an agent receives, from minimal state to engi
   <div class="setting-card">
     <div class="ord">01 · BASELINE</div>
     <h4>Watson</h4>
-    <p>Minimal context. Game state, visible hands, explicit knowledge from clues — and nothing else. Establishes a lower bound on what LLMs can do without scaffolding.</p>
+    <p>Minimal context: game state, visible hands, and explicit knowledge from clues. Nothing else. This establishes a lower bound on what LLMs can do without scaffolding.</p>
   </div>
   <div class="setting-card">
     <div class="ord">02 · SCAFFOLDED</div>
@@ -68,7 +68,7 @@ We progressively scale the context an agent receives, from minimal state to engi
   <div class="setting-card">
     <div class="ord">03 · IMPLICIT</div>
     <h4>Mycroft</h4>
-    <p>No engine deductions. The agent must implicitly track its own and teammates' beliefs across turns via a structured "scratch pad" — closer to how humans actually play.</p>
+    <p>No engine deductions. The agent must implicitly track its own and teammates' beliefs across turns via a structured "scratch pad," closer to how humans actually play.</p>
   </div>
 </div>
 
@@ -78,12 +78,12 @@ Watson and Sherlock differ in one thing: whether the agent receives a programmat
 
 <figure>
   <img src="{{ site.url }}/assets/icml/sherlock_watson_teaser.png" alt="Watson vs Sherlock prompt comparison">
-  <figcaption><strong>Figure 1.</strong> Watson provides only explicit knowledge (clues received). Sherlock additionally provides a Deductive Context block — the per-card belief state — and enforces Bayesian-style step-by-step reasoning.</figcaption>
+  <figcaption><strong>Figure 1.</strong> Watson provides only explicit knowledge (clues received). Sherlock additionally provides a Deductive Context block (the per-card belief state) and enforces Bayesian-style step-by-step reasoning.</figcaption>
 </figure>
 
 ### Mycroft {#mycroft}
 
-Mycroft removes the engine crutch. Each turn the agent receives the previous turn's game state, its own deductions for every player, move ratings, chosen action, and reasoning — then must produce updated deductions, ratings, and an action. This forces the model to be its own Hanabi Learning Environment, tracking belief shifts and card position changes (cards slide left after a play or discard) across 60+ turns.
+Mycroft removes the engine crutch. Each turn, the agent receives the previous turn's game state, its own deductions for every player, move ratings, chosen action, and reasoning. It must then produce updated deductions, ratings, and an action. This forces the model to be its own Hanabi Learning Environment, tracking belief shifts and card position changes (cards slide left after a play or discard) across 60+ turns.
 
 <figure>
   <img src="{{ site.url }}/assets/icml/mycroft_teaser.png" alt="Mycroft scratch pad example">
@@ -92,7 +92,7 @@ Mycroft removes the engine crutch. Each turn the agent receives the previous tur
 
 ## Benchmark results {#benchmark-results}
 
-We evaluate **17 LLMs** (4B–600B+, both reasoning and non-reasoning) across 2–5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models mostly stall below 10/25.
+We evaluate **17 LLMs** (4B to 600B+, both reasoning and non-reasoning) across 2 to 5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models mostly stall below 10/25.
 
 
 <div class="results-tabbed" id="results-table">
@@ -210,29 +210,37 @@ We evaluate **17 LLMs** (4B–600B+, both reasoning and non-reasoning) across 2�
 
 ### Cross-play {#cross-play}
 
-Self-play is generous; real cooperation is ad hoc. We compose teams with one Grok-3-mini agent and the rest o4-mini (the weaker model in Mycroft, 14.9 vs 11.3). Across all 2–5 player settings, **adding one stronger agent lifts team scores by ~1.7 points** — performance smoothly interpolates between the weak and strong self-play baselines, unlike specialized RL agents which collapse with unfamiliar partners.
+Self-play is generous; real cooperation is ad hoc. We compose teams with one Grok-3-mini agent and the rest o4-mini (the weaker model in Mycroft, 14.9 vs 11.3). Across all 2 to 5 player settings, **adding one stronger agent lifts team scores by ~1.7 points**. Performance smoothly interpolates between the weak and strong self-play baselines, unlike specialized RL agents which collapse with unfamiliar partners.
 
 <figure>
   <img src="{{ site.url }}/assets/icml/cross_play.png" alt="Cross-play interpolation">
-  <figcaption><strong>Figure 8.</strong> Mixed teams score between weak (all o4-mini) and strong (all Grok-3-mini) self-play, demonstrating that LLM agents cooperate gracefully with unfamiliar partners — a meaningful contrast with traditional self-play RL.</figcaption>
+  <figcaption><strong>Figure 8.</strong> Mixed teams score between weak (all o4-mini) and strong (all Grok-3-mini) self-play, demonstrating that LLM agents cooperate gracefully with unfamiliar partners, in meaningful contrast with traditional self-play RL.</figcaption>
 </figure>
 
 ### Best-of-K {#best-of-k}
 
-Sample the agent K times per turn and ask it to pick its best candidate. With Watson, performance climbs through K=5 (+1.5 on average) then plateaus. With Sherlock, gains are negligible (+0.1) — a well-engineered prompt mostly converges to the same action across samples, so naive scaling does not help. **Better context beats more samples.**
+Sample the agent K times per turn and ask it to pick its best candidate. With Watson, performance climbs through K=5 (+1.5 on average) then plateaus. With Sherlock, gains are negligible (+0.1) because a well-engineered prompt mostly converges to the same action across samples, so naive scaling does not help. **Better context beats more samples.**
 
 ### Mixture of agents {#moa}
 
-To break sample homogeneity, we run five role-specialized agents in parallel — Baseline, Rank-Focused, Analyst, Discard Strategist, History Analyst — and aggregate their proposals via a sixth "finalizer" agent. MoA modestly improves the 5-player setting (+1.1 with Watson, +0.8 with Sherlock over Best-of-5) but introduces high variance: speculative agents (especially the History Analyst) occasionally mislead the aggregator and tank a run. Diversity helps when it lands; reliability remains the open problem.
+<div class="text-img-row">
+  <div class="text-side">
+    <p>To break sample homogeneity, we run five role-specialized agents in parallel (Baseline, Rank-Focused, Analyst, Discard Strategist, History Analyst) and aggregate their proposals via a sixth "finalizer" agent.</p>
+    <p>MoA modestly improves the 5-player setting (+1.1 with Watson, +0.8 with Sherlock over Best-of-5) but introduces high variance: speculative agents (especially the History Analyst) occasionally mislead the aggregator and tank a run. Diversity helps when it lands; reliability remains the open problem.</p>
+  </div>
+  <div class="img-side">
+    <img src="{{ site.url }}/assets/icml/moa.png" alt="Mixture of Agents architecture">
+  </div>
+</div>
 
 ## Post-training: closing the gap with a 4B model {#post-training}
 
-To validate our datasets, we post-train **Qwen3-4B-Instruct-2507** — a small, non-reasoning model — on data collected from o3 and Grok-3-mini.
+To validate our datasets, we post-train **Qwen3-4B-Instruct-2507**, a small non-reasoning model, on data collected from o3 and Grok-3-mini.
 
-- **HanabiLogs** (1,520+ trajectories) — for supervised finetuning.
-- **HanabiRewards** (560+ games with dense move-level utility annotations) — for RLVR via GRPO.
+- **HanabiLogs** (1,520+ trajectories): used for supervised finetuning.
+- **HanabiRewards** (560+ games with dense move-level utility annotations): used for RLVR via GRPO.
 
-The base model scores 1.7 in Mycroft. After RL on HanabiRewards: **8.3** — a +388% jump that lands within ~3 points of o4-mini (11.3) and surpasses GPT-4.1 (the best non-reasoning baseline) by +88%. In Sherlock, the same model jumps from 4.8 to 12.3 (+156%), comparable to Grok-3 and beating GPT-4o.
+The base model scores 1.7 in Mycroft. After RL on HanabiRewards it reaches **8.3**, a +388% jump that lands within ~3 points of o4-mini (11.3) and surpasses GPT-4.1 (the best non-reasoning baseline) by +88%. In Sherlock, the same model jumps from 4.8 to 12.3 (+156%), comparable to Grok-3 and beating GPT-4o.
 
 <figure>
   <div class="img-row" style="margin: 0;">
@@ -248,7 +256,7 @@ The interesting result isn't just "we got better at Hanabi." Training on HanabiR
 
 <div class="table-wrap">
   <table>
-    <caption>Table 1 — Qwen3-4B base vs. our RL-finetuned model. Group Guessing is wins/200 games (cooperative); EventQA is 6-way MCQ accuracy at increasing context lengths (temporal reasoning); IFBench is strict instruction-following; AIME 2025 measures math reasoning.</caption>
+    <caption>Table 1. Qwen3-4B base vs. our RL-finetuned model. Group Guessing is wins/200 games (cooperative); EventQA is 6-way MCQ accuracy at increasing context lengths (temporal reasoning); IFBench is strict instruction-following; AIME 2025 measures math reasoning.</caption>
     <thead>
       <tr>
         <th>Model</th>
@@ -284,14 +292,14 @@ The interesting result isn't just "we got better at Hanabi." Training on HanabiR
   </table>
 </div>
 
-The temporal-reasoning lift on EventQA grows with context length (+1.6 → +4.2 → +6.4 from 64K to 800K), which we read as evidence that learning to implicitly track Hanabi state generalizes to long-horizon belief tracking elsewhere. AIME stays flat — no catastrophic forgetting on math.
+The temporal-reasoning lift on EventQA grows with context length (+1.6, +4.2, +6.4 from 64K to 800K), which we read as evidence that learning to implicitly track Hanabi state generalizes to long-horizon belief tracking elsewhere. AIME stays flat, with no catastrophic forgetting on math.
 
 ## Takeaways {#takeaways}
 
-1. **Modern reasoning LLMs are sparks of cooperative reasoning, not flames.** The best score ~15–18/25 in self-play, comfortably below specialized agents (>23) and the median human Hanabi player (~18–21).
-2. **Scaffold design matters more than model scale.** Watson → Sherlock improves reasoning models by +2.0 on average; the same scaffold *hurts* most non-reasoning models. Different families respond differently to identical context.
+1. **Modern reasoning LLMs are sparks of cooperative reasoning, not flames.** The best score ~15 to 18/25 in self-play, comfortably below specialized agents (>23) and the median human Hanabi player (~18 to 21).
+2. **Scaffold design matters more than model scale.** Moving from Watson to Sherlock improves reasoning models by +2.0 on average; the same scaffold *hurts* most non-reasoning models. Different families respond differently to identical context.
 3. **Implicit state tracking is the open problem.** Even o3 drops 1.2 points moving from engine-provided deductions to self-tracking; Gemini 2.5 Pro drops 3.7. Multi-turn belief maintenance is where current models break.
-4. **Cross-play is graceful.** Unlike specialized RL agents, LLMs interpolate smoothly between weak and strong teammates — a small but real "spark" of cooperative generalization.
+4. **Cross-play is graceful.** Unlike specialized RL agents, LLMs interpolate smoothly between weak and strong teammates, showing a small but real "spark" of cooperative generalization.
 5. **A 4B model can carry surprising weight.** Post-training on our datasets closes most of the gap to frontier reasoning models on Hanabi *and* transfers to temporal reasoning, instruction following, and out-of-domain cooperation.
 
 ## Citation {#citation}
