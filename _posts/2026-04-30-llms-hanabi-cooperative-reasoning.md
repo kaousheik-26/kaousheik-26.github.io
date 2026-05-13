@@ -2,13 +2,13 @@
 layout: hanabi-post
 permalink: /llms-hanabi-cooperative-reasoning/
 title: "Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents"
-subtitle: "Even frontier reasoning models are not as cooperative as humans, although the gap is getting closer. We benchmark 17 LLMs (reasoning and non-reasoning) on Hanabi across all 2 to 5 player settings. We also release a training dataset, which when trained on by a Qwen3-4B model, beats SOTA reasoning models. We also show that the gained knowledge transfers to other cooperative tasks."
+subtitle: "We benchmark 17 LLMs as strategic agents in Hanabi across 2–5 player settings and three scaffolds: Watson, Sherlock, and Mycroft. Our main scaffold, Mycroft, tests whether LLMs can maintain their own evolving belief state across turns without engine-provided deductions. Recent reasoning models show promising cooperative behavior, but still lag behind strong human and specialized Hanabi agents. We also release Hanabi trajectories and move-level judge data for training, and show that a post-trained Qwen3-4B model can substantially close the gap while transferring to other tasks."
 teaser_img: "/assets/icml/gemin_teaser.jpeg"
-authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswinkumar Ramkumar¹, Pavan Thodima¹, Aniket Rege¹†, Emmanouil V. Vlatakis-Gkaragkounis¹†"
-affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison &nbsp;·&nbsp; ²University of Maryland, College Park &nbsp;·&nbsp; †Equal advising"
+authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswinkumar Ramkumar¹, Pavan Thodima¹, Aniket Rege¹†, Emmanouil V. Vlatakis-Gkaragkounis¹†<br><span style='font-size: 0.85em; font-weight: normal; color: var(--text2);'>†Equal advising</span>"
+affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison &nbsp;·&nbsp; ²University of Maryland, College Park"
 venue: "ICML 2026"
 paper_url: "https://arxiv.org/abs/2601.18077"
-code_url: "https://app.primeintellect.ai/dashboard/environments/mahesh-ramesh/hanabi"
+env_url: "https://app.primeintellect.ai/dashboard/environments/mahesh-ramesh/hanabi"
 dataset_url: "https://huggingface.co/"
 date: 2026-03-21
 
@@ -44,9 +44,29 @@ nav_sections:
     id: "citation"
 ---
 
+<div class="contributions-box" style="background: var(--bg-elevated); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; border-radius: 6px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <h4 style="margin-top: 0; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Contributions</h4>
+  <ol style="margin-bottom: 0; padding-left: 1.25rem;">
+    <li style="margin-bottom: 0.4rem;">Benchmark 17 LLMs as Hanabi agents across 2–5 player settings.</li>
+    <li style="margin-bottom: 0.4rem;">Introduce Mycroft, a scaffold for implicit multi-turn state tracking.</li>
+    <li style="margin-bottom: 0.4rem;">Study self-play, cross-play, best-of-K, and mixture-of-agent settings.</li>
+    <li style="margin-bottom: 0.4rem;">Release trajectories and move-rated data for SFT/RL training.</li>
+    <li>Post-train Qwen3-4B and show gains in Hanabi and transfer tasks.</li>
+  </ol>
+</div>
+
+<div class="dataset-card" style="background: var(--bg-elevated); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 6px; margin-bottom: 2.5rem; box-shadow: var(--shadow-sm);">
+  <h4 style="margin-top: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;"><span style="margin-right: 6px;">🗂️</span> Released data</h4>
+  <ul style="margin-bottom: 0; padding-left: 1.25rem; list-style-type: none;">
+    <li style="margin-bottom: 0.4rem; position: relative;"><span style="position: absolute; left: -1.25rem; color: var(--accent);">•</span> <strong>HanabiLogs:</strong> LLM gameplay trajectories for SFT</li>
+    <li style="margin-bottom: 0.4rem; position: relative;"><span style="position: absolute; left: -1.25rem; color: var(--accent);">•</span> <strong>HanabiRewards:</strong> move-level ratings / judge scores for RL-style training</li>
+    <li style="position: relative;"><span style="position: absolute; left: -1.25rem; color: var(--accent);">•</span> Models include o3, Gemini 2.5 Pro, o4-mini, Grok, DeepSeek, Qwen, and others.</li>
+  </ul>
+</div>
+
 ## Why Hanabi {#why-hanabi}
 
-Cooperative coordination under partial information is the part of intelligence that single-agent benchmarks miss. **Hanabi** is the canonical testbed: 2 to 5 players hold cards facing outward, visible to everyone but themselves, and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success demands theory-of-mind, convention building, and inference under sparse signals.
+Cooperative coordination under partial information is the part of intelligence that single-agent benchmarks miss. **Hanabi** is the canonical testbed: 2 to 5 players hold cards facing outward, visible to everyone but themselves, and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success requires tracking hidden information, inferring teammate intent, and coordinating through sparse signals.
 
 Specialized RL agents reach ~24/25 in 2-player self-play but degrade sharply with more players or unfamiliar partners. We ask a different question: **how good are general-purpose LLMs as cooperative agents, and what limits them?**
 
@@ -296,7 +316,7 @@ The temporal-reasoning lift on EventQA grows with context length (+1.6, +4.2, +6
 
 ## Takeaways {#takeaways}
 
-1. **Modern reasoning LLMs are sparks of cooperative reasoning, not flames.** The best score ~15 to 18/25 in self-play, comfortably below specialized agents (>23) and the median human Hanabi player (~18 to 21).
+1. **Modern reasoning LLMs show sparks of cooperative reasoning, but reliable multi-agent coordination remains unsolved.** The best score ~15 to 18/25 in self-play, comfortably below specialized agents (>23) and the median human Hanabi player (~18 to 21).
 2. **Scaffold design matters more than model scale.** Moving from Watson to Sherlock improves reasoning models by +2.0 on average; the same scaffold *hurts* most non-reasoning models. Different families respond differently to identical context.
 3. **Implicit state tracking is the open problem.** Even o3 drops 1.2 points moving from engine-provided deductions to self-tracking; Gemini 2.5 Pro drops 3.7. Multi-turn belief maintenance is where current models break.
 4. **Cross-play is graceful.** Unlike specialized RL agents, LLMs interpolate smoothly between weak and strong teammates, showing a small but real "spark" of cooperative generalization.

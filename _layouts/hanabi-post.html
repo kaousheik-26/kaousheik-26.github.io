@@ -1153,6 +1153,8 @@
         <a href="{{ site.url }}/" class="home-link">{{ site.full_name | default: "kaousheik jayakumar" }}</a>
         <div class="topbar-right">
             {% if page.paper_url %}<a href="{{ page.paper_url }}" class="topbar-link">Paper</a>{% endif %}
+            {% if page.dataset_url %}<a href="{{ page.dataset_url }}" class="topbar-link">Dataset</a>{% endif %}
+            {% if page.env_url %}<a href="{{ page.env_url }}" class="topbar-link">Environment</a>{% endif %}
             {% if page.code_url %}<a href="{{ page.code_url }}" class="topbar-link">Code</a>{% endif %}
             <button class="theme-btn" onclick="toggleTheme()" id="theme-toggle">
                 <span id="theme-lbl">Dark</span>
@@ -1189,15 +1191,6 @@
                         Paper
                     </a>
                     {% endif %}
-                    {% if page.code_url %}
-                    <a href="{{ page.code_url }}" class="pill">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6" />
-                            <polyline points="8 6 2 12 8 18" />
-                        </svg>
-                        Code
-                    </a>
-                    {% endif %}
                     {% if page.dataset_url %}
                     <a href="{{ page.dataset_url }}" class="pill">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1205,7 +1198,26 @@
                             <path d="M3 5v14a9 3 0 0 0 18 0V5" />
                             <path d="M3 12a9 3 0 0 0 18 0" />
                         </svg>
-                        Datasets
+                        Dataset
+                    </a>
+                    {% endif %}
+                    {% if page.env_url %}
+                    <a href="{{ page.env_url }}" class="pill">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                        Environment
+                    </a>
+                    {% endif %}
+                    {% if page.code_url %}
+                    <a href="{{ page.code_url }}" class="pill">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                        Code
                     </a>
                     {% endif %}
                     {% if page.project_url %}
