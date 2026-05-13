@@ -109,7 +109,7 @@ order: 3
   <div class="blog-card-body">
     <div class="blog-card-meta">Kaousheik Jayakumar</div>
     <h2 class="blog-card-title">Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents</h2>
-    <p class="blog-card-subtitle">Even frontier reasoning models are sparks — not flames — of cooperative reasoning. We benchmark 17 LLMs on Hanabi across 2–5 players, introduce three prompting scaffolds and two new datasets, and show a 4B model finetuned on our data closes most of the gap to o4-mini.</p>
+    <p class="blog-card-subtitle">We benchmark 17 LLMs as strategic agents in Hanabi across 2–5 player settings and three scaffolds: Watson, Sherlock, and Mycroft. Our main scaffold, Mycroft, tests whether LLMs can maintain their own evolving belief state across turns without engine-provided deductions. Recent reasoning models show promising cooperative behavior, but still lag behind strong human and specialized Hanabi agents. We also release Hanabi trajectories and move-level judge data for training, and show that a post-trained Qwen3-4B model can substantially close the gap while transferring to other tasks.</p>
     <div class="blog-card-footer">
       <span class="blog-card-venue">ICML 2026</span>
       <span>·</span>
