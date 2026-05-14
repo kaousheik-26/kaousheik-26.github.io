@@ -234,9 +234,29 @@
             margin-bottom: 0.4rem;
         }
 
+        .authors-line a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.15s, border-color 0.15s;
+        }
+
+        .authors-line a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent-soft);
+        }
+
         .authors-line .me {
             color: var(--accent);
             font-weight: 600;
+        }
+
+        .authors-line .me a {
+            color: inherit;
+        }
+
+        .authors-line .me a:hover {
+            color: var(--accent);
         }
 
         .affil-line {
@@ -391,6 +411,54 @@
         .toc-col nav ul ul a {
             font-size: 0.74rem;
             padding: 0.28rem 0.55rem;
+        }
+
+        /* Blog authors (sidebar + narrow-screen mirror) */
+        .blog-authors-sidebar {
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-authors-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.35rem 0.25rem;
+            border-radius: 4px;
+            transition: background 0.15s, color 0.15s;
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+
+        .blog-authors-row:hover {
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .blog-authors-row img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-strong);
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .blog-authors-mobile {
+            display: none;
+            margin-bottom: 1.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-authors-mobile .toc-label {
+            margin-bottom: 0.65rem;
         }
 
         /* ── Typography ───────────────────────────────── */
@@ -1114,6 +1182,10 @@
                 display: none;
             }
 
+            .blog-authors-mobile {
+                display: block;
+            }
+
             .hero h1 {
                 font-size: 1.75rem;
             }
@@ -1248,6 +1320,12 @@
             </aside>
             {% endif %}
 
+            {% if page.blog_sidebar_authors %}
+            <aside class="blog-authors-mobile" aria-label="Blog authors">
+                {% include blog-authors.html authors=page.blog_sidebar_authors %}
+            </aside>
+            {% endif %}
+
             <!-- Body -->
             <article class="post-content">
                 {{ content }}
@@ -1267,6 +1345,11 @@
 
         <!-- Sticky TOC -->
         <aside class="toc-col">
+            {% if page.blog_sidebar_authors %}
+            <div class="blog-authors-sidebar" aria-label="Blog authors">
+                {% include blog-authors.html authors=page.blog_sidebar_authors %}
+            </div>
+            {% endif %}
             <div class="toc-label">On this page</div>
             <nav>
                 <ul id="nav-menu">

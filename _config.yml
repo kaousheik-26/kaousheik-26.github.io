@@ -27,3 +27,7 @@ markdown: kramdown
 gems:
   - jekyll-seo-tag
   - jekyll-redirect-from
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-redirect-from

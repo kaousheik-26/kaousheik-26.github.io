@@ -2,9 +2,9 @@
 layout: hanabi-post
 permalink: /llms-hanabi-cooperative-reasoning/
 title: "Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents"
-subtitle: "We benchmark 17 LLMs as strategic agents in Hanabi across 2–5 player settings and three scaffolds: Watson, Sherlock, and Mycroft. Our main scaffold, Mycroft, tests whether LLMs can maintain their own evolving belief state across turns without engine-provided deductions. Recent reasoning models show promising cooperative behavior, but still lag behind strong human and specialized Hanabi agents. We also release Hanabi trajectories and move-level judge data for training, and show that a post-trained Qwen3-4B model can substantially close the gap while transferring to other tasks."
-teaser_img: "/assets/icml/gemin_teaser.jpeg"
-authors: "Mahesh Ramesh¹, <span class='me'>Kaousheik Jayakumar²</span>, Aswinkumar Ramkumar¹, Pavan Thodima¹, Aniket Rege¹†, Emmanouil V. Vlatakis-Gkaragkounis¹†<br><span style='font-size: 0.85em; font-weight: normal; color: var(--text2);'>†Equal advising</span>"
+subtitle: "We introduce a reproducible Hanabi benchmark for cooperative LLM reasoning across 17 models, 2–5 players, and three Holmesian scaffolds that vary the amount of information agents can query from the environment and their deductive reasoning capabilities (Watson, Sherlock, Mycroft). Our key insight is that performance depends strongly on modeling belief-state, with Mycroft isolating true multi-turn implicit state tracking. We release Hanabi trajectories and move-level judge data to support SFT/RL post-training. We show that posttraining Qwen3-4B on our new dataset can substantially close the gap to frontier LLMs on Hanabi (+21% with SFT and +156% with RL) while transferring to out-of-domain tasks (AIME 2025, EventQA, IFBench)."
+teaser_img: "/assets/icml/project_pg_teaser.jpg"
+authors: "<a href='https://maheshram1.github.io/'>Mahesh Ramesh</a>¹, <span class='me'><a href='https://kaousheik-26.github.io/'>Kaousheik Jayakumar</a>²</span>, <a href='https://aswinkumar.me/'>Aswinkumar Ramkumar</a>¹, <a href='https://pthodima.github.io/'>Pavan Thodima</a>¹, <a href='https://aniketrege.github.io/'>Aniket Rege</a>¹†, <a href='https://pages.cs.wisc.edu/~vlatakis/'>Manolis Vlatakis</a>¹†<br><span style='font-size: 0.85em; font-weight: normal; color: var(--text2);'>†Equal advising</span>"
 affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison &nbsp;·&nbsp; ²University of Maryland, College Park"
 venue: "ICML 2026"
 paper_url: "https://arxiv.org/abs/2601.18077"
@@ -12,11 +12,19 @@ env_url: "https://app.primeintellect.ai/dashboard/environments/mahesh-ramesh/han
 dataset_url: "https://huggingface.co/"
 date: 2026-03-21
 
+blog_sidebar_authors:
+  - name: Kaousheik Jayakumar
+    url: https://kaousheik-26.github.io/
+    avatar: https://github.com/kaousheik-26.png?size=80
+  - name: Aniket Rege
+    url: https://aniketrege.github.io/
+    avatar: https://aniketrege.github.io/assets/img/prof_pic.png?size=80
+
 nav_sections:
   - title: "Why Hanabi"
     id: "why-hanabi"
   - title: "Three Scaffolds"
-    id: "three-scaffolds"
+    id: "holmesian-scaffolds"
     children:
       - title: "Watson & Sherlock"
         id: "watson-sherlock"
@@ -47,30 +55,21 @@ nav_sections:
 <div class="contributions-box" style="background: var(--bg-elevated); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; border-radius: 6px; margin-bottom: 2rem; box-shadow: var(--shadow-sm); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <h4 style="margin-top: 0; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Contributions</h4>
   <ol style="margin-bottom: 0; padding-left: 1.25rem;">
-    <li style="margin-bottom: 0.4rem;">Benchmark 17 LLMs as Hanabi agents across 2–5 player settings.</li>
-    <li style="margin-bottom: 0.4rem;">Introduce Mycroft, a scaffold for implicit multi-turn state tracking.</li>
-    <li style="margin-bottom: 0.4rem;">Study self-play, cross-play, best-of-K, and mixture-of-agent settings.</li>
-    <li style="margin-bottom: 0.4rem;">Release trajectories and move-rated data for SFT/RL training.</li>
-    <li>Post-train Qwen3-4B and show gains in Hanabi and transfer tasks.</li>
+    <li style="margin-bottom: 0.4rem;"><strong>Benchmark protocol:</strong> a reproducible evaluation suite for cooperative LLM play in Hanabi (17 open weight and proprietary models, 2–5 players, fixed-seed settings, self-play + cross-play).</li>
+    <li style="margin-bottom: 0.4rem;"><strong>Scaffolded diagnosis:</strong> Our Holmesian scaffolds (Watson/Sherlock/Mycroft) distinguish between LLMs that reason with provided deductions and those that can maintain implicit beliefs over long horizons.</li>
+    <li style="margin-bottom: 0.4rem;"><strong>🗂️ New training data release:</strong> HanabiLogs (LLM game playing trajectories for SFT) and HanabiRewards (move-level utility annotations as rewards for RL).</li>
+    <li style="margin-bottom: 0.4rem;"><strong>Actionable post-training baseline:</strong> Qwen3-4B improvements quantify what small open models gain from cooperative trajectory and reward supervision.</li>
+    <li><strong>Transfer signal:</strong> cooperative-reasoning post-training improves multiple out-of-domain tasks, supporting Hanabi as a practical post-training substrate.</li>
   </ol>
 </div>
 
-<div class="dataset-card" style="background: var(--bg-elevated); border: 1px solid var(--border); padding: 1.25rem 1.5rem; border-radius: 6px; margin-bottom: 2.5rem; box-shadow: var(--shadow-sm);">
-  <h4 style="margin-top: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;"><span style="margin-right: 6px;">🗂️</span> Released data</h4>
-  <ul style="margin-bottom: 0; padding-left: 1.25rem; list-style-type: none;">
-    <li style="margin-bottom: 0.4rem; position: relative;"><span style="position: absolute; left: -1.25rem; color: var(--accent);">•</span> <strong>HanabiLogs:</strong> LLM gameplay trajectories for SFT</li>
-    <li style="margin-bottom: 0.4rem; position: relative;"><span style="position: absolute; left: -1.25rem; color: var(--accent);">•</span> <strong>HanabiRewards:</strong> move-level ratings / judge scores for RL-style training</li>
-    <li style="position: relative;"><span style="position: absolute; left: -1.25rem; color: var(--accent);">•</span> Models include o3, Gemini 2.5 Pro, o4-mini, Grok, DeepSeek, Qwen, and others.</li>
-  </ul>
-</div>
+## Why Hanabi? {#why-hanabi}
 
-## Why Hanabi {#why-hanabi}
-
-Cooperative coordination under partial information is the part of intelligence that single-agent benchmarks miss. **Hanabi** is the canonical testbed: 2 to 5 players hold cards facing outward, visible to everyone but themselves, and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success requires tracking hidden information, inferring teammate intent, and coordinating through sparse signals.
+Popular single-agent benchmarks currently do not evaluate a specific but important type of intelligence: multiple LLM agents cooperating to solve a single task with partial or incomplete information about their environment and other agents. **Hanabi** is extremely well suited to this task: between 2 and 5 players hold cards facing outward, visible to everyone but themselves, and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success requires tracking hidden information, inferring teammate intent, and coordinating through sparse signals.
 
 Specialized RL agents reach ~24/25 in 2-player self-play but degrade sharply with more players or unfamiliar partners. We ask a different question: **how good are general-purpose LLMs as cooperative agents, and what limits them?**
 
-## Three scaffolds {#three-scaffolds}
+## Holmesian Scaffolds {#holmesian-scaffolds}
 
 We progressively scale the context an agent receives, from minimal state to engine-provided deductions to fully implicit multi-turn state tracking. Each scaffold isolates a different capability.
 
@@ -83,27 +82,29 @@ We progressively scale the context an agent receives, from minimal state to engi
   <div class="setting-card">
     <div class="ord">02 · SCAFFOLDED</div>
     <h4>Sherlock</h4>
-    <p>Adds engine-computed deductive context (per-card "could be" possibilities), Hanabi strategy notes, and a Bayesian step-by-step prompt. Establishes an upper bound with rich prefill.</p>
+    <p>Adds engine-computed deductions (per-card "could be" possibilities), Hanabi strategies, and a Bayesian step-by-step prompt. This establishes an upper bound with rich prefill.</p>
   </div>
   <div class="setting-card">
     <div class="ord">03 · IMPLICIT</div>
     <h4>Mycroft</h4>
-    <p>No engine deductions. The agent must implicitly track its own and teammates' beliefs across turns via a structured "scratch pad," closer to how humans actually play.</p>
+    <p>No engine deductions. The agent must implicitly track its own and teammates' beliefs across turns via a structured "scratch pad," closer to how humans actually play Hanabi.</p>
   </div>
 </div>
 
 ### Watson & Sherlock {#watson-sherlock}
 
-Watson and Sherlock differ in one thing: whether the agent receives a programmatic belief state. Sherlock's deductive context lists, for every card in every hand, the colors and ranks still consistent with the clue history. The agent is then prompted to do Bayesian-style probability reasoning over those candidates before acting.
+Watson and Sherlock differ in one key way, i.e., whether the agent receives a programmatic belief state. Sherlock is provided, for every card in every hand, the colors and ranks still consistent with the clue history.[^hle] The agent is then prompted to do Bayesian-style probabilistic reasoning over these candidates before acting.
 
 <figure>
   <img src="{{ site.url }}/assets/icml/sherlock_watson_teaser.png" alt="Watson vs Sherlock prompt comparison">
   <figcaption><strong>Figure 1.</strong> Watson provides only explicit knowledge (clues received). Sherlock additionally provides a Deductive Context block (the per-card belief state) and enforces Bayesian-style step-by-step reasoning.</figcaption>
 </figure>
 
+[^hle]: Sherlock's programmatic candidate sets are computed with [Google DeepMind's Hanabi Learning Environment](https://github.com/google-deepmind/hanabi-learning-environment).
+
 ### Mycroft {#mycroft}
 
-Mycroft removes the engine crutch. Each turn, the agent receives the previous turn's game state, its own deductions for every player, move ratings, chosen action, and reasoning. It must then produce updated deductions, ratings, and an action. This forces the model to be its own Hanabi Learning Environment, tracking belief shifts and card position changes (cards slide left after a play or discard) across 60+ turns.
+Mycroft removes Sherlock's dependency on deductions from an external game engine[^hle]. Each turn, the agent receives the previous turn's game state, its own deductions for every player, move ratings, its chosen action, and the reasoning for its choice. It must then produce updated deductions, ratings, and an action for that turn. This forces the LLM to be its own deductive game engine, tracking belief shifts and card position changes (cards slide left after a play or discard) across 60+ turns.
 
 <figure>
   <img src="{{ site.url }}/assets/icml/mycroft_teaser.png" alt="Mycroft scratch pad example">
@@ -112,7 +113,7 @@ Mycroft removes the engine crutch. Each turn, the agent receives the previous tu
 
 ## Benchmark results {#benchmark-results}
 
-We evaluate **17 LLMs** (4B to 600B+, both reasoning and non-reasoning) across 2 to 5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models mostly stall below 10/25.
+We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoning and non-reasoning) across 2 to 5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models generally stall below 10/25. Performance tends to drop as the number of players increase (tracking information is harder!), though there are exceptions (e.g. grok 3 mini).
 
 
 <div class="results-tabbed" id="results-table">
