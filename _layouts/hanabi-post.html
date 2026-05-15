@@ -745,6 +745,21 @@
             text-align: right;
         }
 
+        /* Generalization / summary tables: center data under centered metric headers */
+        .post-content .table-align-col-headers table th:first-child,
+        .post-content .table-align-col-headers table td:first-child {
+            text-align: left;
+        }
+
+        .post-content .table-align-col-headers table th:not(:first-child),
+        .post-content .table-align-col-headers table td:not(:first-child) {
+            text-align: center;
+        }
+
+        .post-content .table-align-col-headers table td.num {
+            text-align: center;
+        }
+
         .post-content table tbody tr:last-child td {
             border-bottom: none;
         }
@@ -760,6 +775,10 @@
 
         .post-content table .delta-neutral {
             color: var(--text3);
+        }
+
+        .post-content table .delta-split {
+            color: var(--text);
         }
 
         /* ── Tabbed Results Table ─────────────────────── */

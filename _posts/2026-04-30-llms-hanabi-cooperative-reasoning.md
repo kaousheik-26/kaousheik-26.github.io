@@ -23,7 +23,7 @@ blog_sidebar_authors:
 nav_sections:
   - title: "Why Hanabi"
     id: "why-hanabi"
-  - title: "Three Scaffolds"
+  - title: "Our Holmesian Scaffolds"
     id: "holmesian-scaffolds"
     children:
       - title: "Watson & Sherlock"
@@ -67,7 +67,9 @@ nav_sections:
 
 Popular single-agent benchmarks currently do not evaluate a specific but important type of intelligence: multiple LLM agents cooperating to solve a single task with partial or incomplete information about their environment and other agents. **Hanabi** is extremely well suited to this task: between 2 and 5 players hold cards facing outward, visible to everyone but themselves, and must build five color-ordered "fireworks" using only color or rank hints from a finite pool of information tokens. Success requires tracking hidden information, inferring teammate intent, and coordinating through sparse signals.
 
-Specialized RL agents reach ~24/25 in 2-player self-play but degrade sharply with more players or unfamiliar partners. We ask a different question: **how good are general-purpose LLMs as cooperative agents, and what limits them?**
+Specialized RL agents reach ~24/25 in 2-player self-play[^selfplay] but degrade sharply with more players or unfamiliar partners. In this work, we focus on the question: **how good are general-purpose LLMs as cooperative agents, and what limits them?**
+
+[^selfplay]: Self-Play refers to a Hanabi game where all players/agents have the same LLM backbone (e.g. GPT-4o).
 
 ## Holmesian Scaffolds {#holmesian-scaffolds}
 
@@ -113,7 +115,7 @@ Mycroft removes Sherlock's dependency on deductions from an external game engine
 
 ## Benchmark results {#benchmark-results}
 
-We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoning and non-reasoning) across 2 to 5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models generally stall below 10/25. Performance tends to drop as the number of players increase (tracking information is harder!), though there are exceptions (e.g. grok 3 mini).
+We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoning and non-reasoning) across 2 to 5 player self-play, with 10 fixed seeds per configuration. Reasoning models clear ~13/25 in Watson; non-reasoning models generally stall below 10/25. Performance tends to drop as the number of players increase (tracking information is harder!), though there are exceptions (e.g. Grok 3 Mini).
 
 
 <div class="results-tabbed" id="results-table">
@@ -153,12 +155,12 @@ We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoni
           <tr class="non-reasoning"><td>GPT-4.1 mini</td><td>10.8</td><td>8.3</td><td>8.2</td><td>7.2</td></tr>
           <tr class="non-reasoning"><td>Claude Sonnet 3.7</td><td>10.7</td><td>9.2</td><td>8.5</td><td>6.9</td></tr>
           <tr class="non-reasoning"><td>Qwen-32B</td><td>9.9</td><td>9.0</td><td>8.8</td><td>9.2</td></tr>
-          <tr class="non-reasoning"><td>Grok-3</td><td>9.9</td><td>10.6</td><td>9.3</td><td>8.0</td></tr>
+          <tr class="non-reasoning"><td>Grok 3</td><td>9.9</td><td>10.6</td><td>9.3</td><td>8.0</td></tr>
           <tr class="reasoning"><td>GPT-4.1</td><td>12.1</td><td>11.8</td><td>10.0</td><td>8.2</td></tr>
           <tr class="reasoning"><td>Gemini 2.5 Flash</td><td>12.8</td><td>13.8</td><td>13.0</td><td>12.7</td></tr>
           <tr class="reasoning"><td>Gemini 2.5 Pro</td><td>13.2</td><td>13.9</td><td>12.9</td><td>12.9</td></tr>
           <tr class="reasoning"><td>Qwen-235B-A22B</td><td>15.0</td><td>14.6</td><td>13.0</td><td>12.9</td></tr>
-          <tr class="reasoning"><td>Grok-3 Mini</td><td>14.2</td><td>13.9</td><td>14.5</td><td>14.8</td></tr>
+          <tr class="reasoning"><td>Grok 3 Mini</td><td>14.2</td><td>13.9</td><td>14.5</td><td>14.8</td></tr>
           <tr class="reasoning"><td>DeepSeek-R1</td><td>14.2</td><td>15.3</td><td>14.1</td><td>13.4</td></tr>
           <tr class="reasoning"><td>o4-mini</td><td>15.0</td><td>15.5</td><td>14.5</td><td>13.9</td></tr>
           <tr class="reasoning"><td>o3</td><td>15.9</td><td>15.3</td><td>16.4</td><td>13.9</td></tr>
@@ -186,12 +188,12 @@ We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoni
           <tr class="non-reasoning"><td>GPT-4.1 mini</td><td>6.5</td><td>6.1</td><td>5.1</td><td>5.8</td></tr>
           <tr class="non-reasoning"><td>Claude Sonnet 3.7</td><td>5.4</td><td>5.4</td><td>5.4</td><td>5.6</td></tr>
           <tr class="non-reasoning"><td>Qwen-32B</td><td>5.6</td><td>13.1</td><td>5.4</td><td>12.1</td></tr>
-          <tr class="non-reasoning"><td>Grok-3</td><td>12.8</td><td>8.0</td><td>13.3</td><td>5.6</td></tr>
+          <tr class="non-reasoning"><td>Grok 3</td><td>12.8</td><td>8.0</td><td>13.3</td><td>5.6</td></tr>
           <tr class="reasoning"><td>GPT-4.1</td><td>14.8</td><td>16.4</td><td>15.5</td><td>14.4</td></tr>
           <tr class="reasoning"><td>Gemini 2.5 Flash</td><td>8.4</td><td>6.6</td><td>7.7</td><td>5.6</td></tr>
           <tr class="reasoning"><td>Gemini 2.5 Pro</td><td>12.8</td><td>16.2</td><td>16.9</td><td>14.4</td></tr>
           <tr class="reasoning"><td>Qwen-235B-A22B</td><td>14.6</td><td>16.6</td><td>16.7</td><td>13.3</td></tr>
-          <tr class="reasoning"><td>Grok-3 Mini</td><td>14.4</td><td>16.6</td><td>17.4</td><td>15.5</td></tr>
+          <tr class="reasoning"><td>Grok 3 Mini</td><td>14.4</td><td>16.6</td><td>17.4</td><td>15.5</td></tr>
           <tr class="reasoning"><td>DeepSeek-R1</td><td>17.5</td><td>16.6</td><td>15.6</td><td>15.1</td></tr>
           <tr class="reasoning"><td>o4-mini</td><td>14.6</td><td>18.0</td><td>14.1</td><td>13.0</td></tr>
           <tr class="reasoning"><td>o3</td><td>17.6</td><td>17.6</td><td>16.8</td><td>15.7</td></tr>
@@ -211,7 +213,7 @@ We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoni
         </thead>
         <tbody>
           <tr class="reasoning"><td>o4-mini</td><td>10.8</td><td>12.4</td><td>11.3</td><td>10.9</td></tr>
-          <tr class="reasoning"><td>Grok-3 Mini</td><td>14.2</td><td>16.5</td><td>14.5</td><td>14.4</td></tr>
+          <tr class="reasoning"><td>Grok 3 Mini</td><td>14.2</td><td>16.5</td><td>14.5</td><td>14.4</td></tr>
           <tr class="reasoning"><td>Gemini 2.5 Pro</td><td>10.2</td><td>13.4</td><td>14.1</td><td>11.6</td></tr>
           <tr class="reasoning"><td>Gemini 2.5 Flash</td><td>11.8</td><td>13.2</td><td>12.3</td><td>9.8</td></tr>
           <tr class="reasoning"><td>o3</td><td>16.3</td><td>16.4</td><td>15.5</td><td>14.7</td></tr>
@@ -231,37 +233,38 @@ We evaluate **17 LLMs** (open-weights and proprietary, 4B to 600B+, both reasoni
 
 ### Cross-play {#cross-play}
 
-Self-play is generous; real cooperation is ad hoc. We compose teams with one Grok-3-mini agent and the rest o4-mini (the weaker model in Mycroft, 14.9 vs 11.3). Across all 2 to 5 player settings, **adding one stronger agent lifts team scores by ~1.7 points**. Performance smoothly interpolates between the weak and strong self-play baselines, unlike specialized RL agents which collapse with unfamiliar partners.
+The self-play assumption that all players are essentially identical (the same LLM) is strong and does not hold in real-world ad hoc cooperative settings (no humans are identical!). We thus extend our evaluation to "cross-play", i.e., teams with LLMs of disparate Hanabi playing competence. Specifically, we compose 2-5 player teams of one strong LLM (Grok 3 Mini) and the rest, a weaker LLM (o4-mini). Across all player counts, **adding one stronger agent improves a team's score by 1.7 points on average** (see Fig. 8 below). Performance smoothly interpolates between the weak and strong self-play baselines (o4-mini and Grok 3 Mini respectively), unlike specialized RL agents which collapse with unfamiliar partners.
 
 <figure>
   <img src="{{ site.url }}/assets/icml/cross_play.png" alt="Cross-play interpolation">
-  <figcaption><strong>Figure 8.</strong> Mixed teams score between weak (all o4-mini) and strong (all Grok-3-mini) self-play, demonstrating that LLM agents cooperate gracefully with unfamiliar partners, in meaningful contrast with traditional self-play RL.</figcaption>
+  <figcaption><strong>Figure 8.</strong> Mixed teams score between weak (all o4-mini) and strong (all Grok 3 Mini) self-play, demonstrating that LLM agents cooperate gracefully with unfamiliar partners, in meaningful contrast with traditional self-play RL.</figcaption>
 </figure>
 
 ### Best-of-K {#best-of-k}
 
-Sample the agent K times per turn and ask it to pick its best candidate. With Watson, performance climbs through K=5 (+1.5 on average) then plateaus. With Sherlock, gains are negligible (+0.1) because a well-engineered prompt mostly converges to the same action across samples, so naive scaling does not help. **Better context beats more samples.**
+Can we get better performance by majority voting over K move candidates by sampling the agent k times? We provide these K chosen moves and reasoning to the agent and ask it to pick the optimal move with the best strategic thinking. With Watson, performance climbs through K=5 (+1.5 on average) and then plateaus. With Sherlock, gains are negligible (+0.1) because a well-designed scaffold with verifiable deductive reasoning tends to converge to the same chosen action regardless of how many times we sample the LLM. **Better context beats best-of-k sampling!**
 
-### Mixture of agents {#moa}
+### Mixture of Agents {#moa}
 
 <div class="text-img-row">
   <div class="text-side">
-    <p>To break sample homogeneity, we run five role-specialized agents in parallel (Baseline, Rank-Focused, Analyst, Discard Strategist, History Analyst) and aggregate their proposals via a sixth "finalizer" agent.</p>
-    <p>MoA modestly improves the 5-player setting (+1.1 with Watson, +0.8 with Sherlock over Best-of-5) but introduces high variance: speculative agents (especially the History Analyst) occasionally mislead the aggregator and tank a run. Diversity helps when it lands; reliability remains the open problem.</p>
+    <p>Inspired by <a href='https://arxiv.org/abs/2406.04692'>Mixture of Agents</a>, we assign five specialized roles to sub-agents that execute in parallel (Baseline, Rank-Focused, Analyst, Discard Strategist, History Analyst) and aggregate their proposals via a sixth "Aggregator" agent.</p>
+    <p>MoA modestly improves the 5-player setting (+1.1 with Watson, +0.8 with Sherlock over Best-of-5) but introduces high variance: speculative high-risk sub-agents (especially the History Analyst) occasionally mislead the aggregator and tank a run.</p>
   </div>
   <div class="img-side">
     <img src="{{ site.url }}/assets/icml/moa.png" alt="Mixture of Agents architecture">
   </div>
 </div>
+**Encouraging agent move selection diversity can sometimes help, but there is a fine line between diversity and unreliability.**
 
-## Post-training: closing the gap with a 4B model {#post-training}
+## Post-training on a 4B LLM closes the gap to Frontier models {#post-training}
 
-To validate our datasets, we post-train **Qwen3-4B-Instruct-2507**, a small non-reasoning model, on data collected from o3 and Grok-3-mini.
+To validate our datasets, we post-train **Qwen3-4B-Instruct-2507**, a small non-reasoning model, on data we collect from o3 and Grok 3 Mini:
 
-- **HanabiLogs** (1,520+ trajectories): used for supervised finetuning.
-- **HanabiRewards** (560+ games with dense move-level utility annotations): used for RLVR via GRPO.
+- **HanabiLogs** (1,520+ game trajectories): used for supervised finetuning (SFT).
+- **HanabiRewards** (560+ games with dense move-level utility annotations): used for Reinforcement Learning with Verifiable Rewards via GRPO.
 
-The base model scores 1.7 in Mycroft. After RL on HanabiRewards it reaches **8.3**, a +388% jump that lands within ~3 points of o4-mini (11.3) and surpasses GPT-4.1 (the best non-reasoning baseline) by +88%. In Sherlock, the same model jumps from 4.8 to 12.3 (+156%), comparable to Grok-3 and beating GPT-4o.
+The Mycroft base model scores a very low 1.7/25, indicating low base Hanabi competence. After RL on HanabiRewards it reaches **8.3/25**, a +388% jump that lands within ~3 points of o4-mini (11.3) and surpasses GPT-4.1 (the best non-reasoning baseline) by +88%. In Sherlock, the same model jumps from 4.8 to 12.3 (+156%), comparable to Grok 3 and beating GPT-4o.
 
 <figure>
   <div class="img-row" style="margin: 0;">
@@ -271,20 +274,20 @@ The base model scores 1.7 in Mycroft. After RL on HanabiRewards it reaches **8.3
   <figcaption><strong>Figure 9.</strong> Qwen3-4B before and after instruction tuning (Ours-SFT) and RLVR (Ours-RL), versus larger proprietary models. Evaluated on held-out seeds to avoid leakage.</figcaption>
 </figure>
 
-### Generalization beyond Hanabi {#generalization}
+### Generalizing Beyond Hanabi {#generalization}
 
-The interesting result isn't just "we got better at Hanabi." Training on HanabiRewards transfers to four out-of-domain benchmarks, with no degradation on math.
+Now for the big (and fun) question: what else does getting really good at Hanabi teach the LLM? As it turns out, training on our new HanabiRewards data improves scores on four out-of-domain benchmarks:
 
-<div class="table-wrap">
+<div class="table-wrap table-align-col-headers">
   <table>
     <caption>Table 1. Qwen3-4B base vs. our RL-finetuned model. Group Guessing is wins/200 games (cooperative); EventQA is 6-way MCQ accuracy at increasing context lengths (temporal reasoning); IFBench is strict instruction-following; AIME 2025 measures math reasoning.</caption>
     <thead>
       <tr>
-        <th>Model</th>
-        <th>Group Guess<br><span style="font-weight:400;font-size:0.7rem;">(1st / 2nd run)</span></th>
-        <th>EventQA<br><span style="font-weight:400;font-size:0.7rem;">(64K / 128K / 800K)</span></th>
-        <th>IFBench<br><span style="font-weight:400;font-size:0.7rem;">(Avg / Pass@10)</span></th>
-        <th>AIME 2025<br><span style="font-weight:400;font-size:0.7rem;">(Avg / Pass@10)</span></th>
+        <th style="vertical-align: middle;">Model</th>
+        <th style="vertical-align: middle;"><a href="https://arxiv.org/abs/2510.05174">Group Guess</a><br><span style="font-weight:400;font-size:0.7rem;">(1st / 2nd run)</span></th>
+        <th style="vertical-align: middle;"><a href="https://arxiv.org/abs/2507.05257">EventQA</a><br><span style="font-weight:400;font-size:0.7rem;">(64K / 128K / 800K)</span></th>
+        <th style="vertical-align: middle;"><a href="https://arxiv.org/abs/2507.02833">IFBench</a><br><span style="font-weight:400;font-size:0.7rem;">(Avg / Pass@10)</span></th>
+        <th style="vertical-align: middle;"><a href="https://huggingface.co/datasets/opencompass/AIME2025">AIME 2025</a><br><span style="font-weight:400;font-size:0.7rem;">(Avg / Pass@10)</span></th>
       </tr>
     </thead>
     <tbody>
@@ -297,9 +300,9 @@ The interesting result isn't just "we got better at Hanabi." Training on HanabiR
       </tr>
       <tr>
         <td><strong>Ours-RL</strong></td>
-        <td class="num delta-pos">73.0 / 71.5</td>
-        <td class="num delta-pos">85.6 / 66.8 / 43.6</td>
-        <td class="num delta-pos">31.5 / 44.6</td>
+        <td class="num">73.0 / 71.5</td>
+        <td class="num">85.6 / 66.8 / 43.6</td>
+        <td class="num">31.5 / 44.6</td>
         <td class="num">50.0 / 73.3</td>
       </tr>
       <tr>
@@ -307,21 +310,21 @@ The interesting result isn't just "we got better at Hanabi." Training on HanabiR
         <td class="num delta-pos">+12.0 / +11.0</td>
         <td class="num delta-pos">+1.6 / +4.2 / +6.4</td>
         <td class="num delta-pos">+0.6 / +1.7</td>
-        <td class="num delta-neutral">+1.3 / +0.0</td>
+        <td class="num"><span class="delta-pos">+1.3 / </span><span class="delta-neutral">+0.0</span></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-The temporal-reasoning lift on EventQA grows with context length (+1.6, +4.2, +6.4 from 64K to 800K), which we read as evidence that learning to implicitly track Hanabi state generalizes to long-horizon belief tracking elsewhere. AIME stays flat, with no catastrophic forgetting on math.
+Our post-trained model's temporal-reasoning ability (EventQA) grows with context length (+1.6 &rarr; +4.2 &rarr; +6.4 from 64K &rarr; 128K &rarr; 800K), providing evidence that encouraging the LLM to implicitly track Hanabi state over long games (60+ turns) generalizes to long-horizon belief tracking in other tasks. Our post-trained model also shows strong gains on a held-out cooperative task (Group Guessing game) and general instruction-following capabilities (IFBench), with small mathematical reasoning improvements (AIME 2025).
 
 ## Takeaways {#takeaways}
 
-1. **Modern reasoning LLMs show sparks of cooperative reasoning, but reliable multi-agent coordination remains unsolved.** The best score ~15 to 18/25 in self-play, comfortably below specialized agents (>23) and the median human Hanabi player (~18 to 21).
+1. **Modern reasoning LLMs show sparks of cooperative reasoning, but reliable multi-agent coordination remains unsolved.** The best LLMs score  between 15 and 18 out of 25 in self-play, comfortably below specialized RL agents (>23) and the median human Hanabi player (~18 to 21).
 2. **Scaffold design matters more than model scale.** Moving from Watson to Sherlock improves reasoning models by +2.0 on average; the same scaffold *hurts* most non-reasoning models. Different families respond differently to identical context.
-3. **Implicit state tracking is the open problem.** Even o3 drops 1.2 points moving from engine-provided deductions to self-tracking; Gemini 2.5 Pro drops 3.7. Multi-turn belief maintenance is where current models break.
-4. **Cross-play is graceful.** Unlike specialized RL agents, LLMs interpolate smoothly between weak and strong teammates, showing a small but real "spark" of cooperative generalization.
-5. **A 4B model can carry surprising weight.** Post-training on our datasets closes most of the gap to frontier reasoning models on Hanabi *and* transfers to temporal reasoning, instruction following, and out-of-domain cooperation.
+3. **Implicit state and belief tracking is an open and important problem, especially over many turns.** Even a strong reasoning model like o3 drops 1.2 points when moving from engine-provided deductions to self-tracking and Gemini 2.5 Pro drops 3.7 points. current models break.
+4. **Cross-play interpolates gracefully.** Unlike specialized RL agents, LLMs interpolate smoothly between weak and strong teammates, showing a small but real "spark" of cooperative generalization.
+5. **A 4B model can carry surprising weight.** Post-training on our new datasets closes most of the gap to frontier reasoning models on Hanabi *and* transfers to general-purpose temporal reasoning, instruction following and mathematical reasoning, as well as out-of-domain cooperative tasks.
 
 ## Citation {#citation}
 
