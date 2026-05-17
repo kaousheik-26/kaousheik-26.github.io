@@ -320,9 +320,9 @@ Our post-trained model's temporal-reasoning ability (EventQA) grows with context
 
 ## Takeaways {#takeaways}
 
-1. **Modern reasoning LLMs show sparks of cooperative reasoning, but reliable multi-agent coordination remains unsolved.** The best LLMs score  between 15 and 18 out of 25 in self-play, comfortably below specialized RL agents (>23) and the median human Hanabi player (~18 to 21).
+1. **Modern reasoning LLMs show sparks of cooperative reasoning, but reliable multi-agent coordination remains unsolved.** The best LLMs score between 15 and 18 out of 25 in self-play, comfortably below specialized RL agents (>23) and the median human Hanabi player (~18 to 21).
 2. **Scaffold design matters more than model scale.** Moving from Watson to Sherlock improves reasoning models by +2.0 on average; the same scaffold *hurts* most non-reasoning models. Different families respond differently to identical context.
-3. **Implicit state and belief tracking is an open and important problem, especially over many turns.** Even a strong reasoning model like o3 drops 1.2 points when moving from engine-provided deductions to self-tracking and Gemini 2.5 Pro drops 3.7 points. current models break.
+3. **Implicit state and belief tracking is an open and important problem, especially over many turns.** Even a strong reasoning model like o3 drops 1.2 points when moving from engine-provided deductions to self-tracking and Gemini 2.5 Pro drops 3.7 points. Multi-turn belief maintenance is where current models break.
 4. **Cross-play interpolates gracefully.** Unlike specialized RL agents, LLMs interpolate smoothly between weak and strong teammates, showing a small but real "spark" of cooperative generalization.
 5. **A 4B model can carry surprising weight.** Post-training on our new datasets closes most of the gap to frontier reasoning models on Hanabi *and* transfers to general-purpose temporal reasoning, instruction following and mathematical reasoning, as well as out-of-domain cooperative tasks.
 
