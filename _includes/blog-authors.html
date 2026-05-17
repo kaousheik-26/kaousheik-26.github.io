@@ -1,0 +1,7 @@
+<div class="toc-label">Blog Authors</div>
+{% for author in include.authors %}
+<a href="{{ author.url }}" class="blog-authors-row">
+    <img src="{{ author.avatar }}" alt="" width="34" height="34" decoding="async" loading="lazy">
+    <span>{{ author.name }}</span>
+</a>
+{% endfor %}
