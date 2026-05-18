@@ -9,7 +9,7 @@ affiliation: "<span class='star'>★</span> ¹University of Wisconsin–Madison 
 venue: "ICML 2026"
 paper_url: "https://arxiv.org/abs/2601.18077"
 env_url: "https://app.primeintellect.ai/dashboard/environments/mahesh-ramesh/hanabi"
-dataset_url: "https://huggingface.co/"
+dataset_url: "https://huggingface.co/datasets/Mahesh111000/Hanabi_data"
 date: 2026-03-21
 
 blog_sidebar_authors:
