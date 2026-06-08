@@ -57,6 +57,11 @@ We designed three foundational tasks, each targeting a different aspect of tempo
 
 These are prerequisites for any higher-order temporal reasoning. A model that can't reliably answer "which event started first?" is unlikely to answer more complex relational questions about time.
 
+<figure>
+  <img src="{{ site.url }}/assets/interspeech/task_examples_horizontal.png" alt="Example questions from the three temporal reasoning tasks with event timelines">
+  <figcaption><strong>Figure 1.</strong> Example questions from the three tasks. Sound events are shown as timeline bars across a shared time axis; the model must identify the correct event. Correct answers are highlighted in purple.</figcaption>
+</figure>
+
 Real-world audio makes this genuinely hard: sound events may overlap, occur intermittently, or repeat within the same clip. The EO and LO tasks require the correct event to be separated from all others by at least one second; for LD, the correct event must be at least one second longer than all alternatives. Distractor options are drawn from other events in the same clip where available, and from different sound categories when not.
 
 ### Audio Is Required {#audio-required}
@@ -92,7 +97,17 @@ The results are striking. For most models and tasks, **CQA outperforms AQA** —
 
 <figcaption><strong>Table 2.</strong> Performance (%) across input conditions. CQA consistently outperforms AQA for most models and tasks, revealing a strong reliance on textual cues over audio.</figcaption>
 
-Layer-wise attention analysis confirms this picture. Plotting the proportion of attention allocated to audio versus text tokens from the final input token at each layer, we see text-dominant attention patterns across most layers for all models — consistent with prior observations of modality imbalance. **But this analysis is correlational.** We can't tell from attention patterns alone whether fixing the imbalance would fix the accuracy. That requires causal intervention.
+Layer-wise attention analysis confirms this picture. Plotting the proportion of attention allocated to audio versus text tokens from the final input token at each layer, we see text-dominant attention patterns across most layers for all models — consistent with prior observations of modality imbalance.
+
+<figure>
+  <div class="img-row" style="display: flex; gap: 1rem; margin: 0;">
+    <img src="{{ site.url }}/assets/interspeech/af3_attention_plot.png" alt="Audio vs text attention share by layer for Audio-Flamingo-3" style="width: 50%;">
+    <img src="{{ site.url }}/assets/interspeech/desta_attention_plot.png" alt="Audio vs text attention share by layer for DeSTA2.5-Audio" style="width: 50%;">
+  </div>
+  <figcaption><strong>Figure 2.</strong> Layer-wise audio (red) vs. text (blue) attention share for Audio-Flamingo-3 (left) and DeSTA2.5-Audio (right). Audio receives less than 5% of attention in nearly every layer of both models, with a brief spike around Layer 4.</figcaption>
+</figure>
+
+**But this analysis is correlational.** We can't tell from attention patterns alone whether fixing the imbalance would fix the accuracy. That requires causal intervention.
 
 ## Mechanistic Analysis {#mechanistic-analysis}
 
@@ -124,7 +139,17 @@ Combining both yields the highest fix rates for both models. Keyword-only interv
 
 The fix rate experiments tell us attention redistribution can correct errors. The next question is whether this can be a practical inference-time strategy. We first test applying the best scaling intervention **uniformly across all layers**: this consistently degrades performance, hurting correctly-predicted examples more than it helps incorrectly-predicted ones.
 
-We then apply scaling at a **single layer** and sweep all layers. Audio-Flamingo-3 shows a clear localized peak at Layer 20 under sharpening (α = 2.0). DeSTA-2.5-Audio shows peak improvement at Layer 9 under smoothing (α = 0.2). Averaging across both models, **layer-targeted scaling improves temporal reasoning accuracy by 3.2%** (from 55.9% to 59.1%) — with no additional training data, fine-tuning, or architectural modifications.
+We then apply scaling at a **single layer** and sweep all layers. Audio-Flamingo-3 shows a clear localized peak at Layer 20 under sharpening (α = 2.0). DeSTA-2.5-Audio shows peak improvement at Layer 9 under smoothing (α = 0.2).
+
+<figure>
+  <div class="img-row" style="display: flex; gap: 1rem; margin: 0;">
+    <img src="{{ site.url }}/assets/interspeech/af3_layerwise_avg.png" alt="Audio-Flamingo-3 average accuracy change by layer" style="width: 50%;">
+    <img src="{{ site.url }}/assets/interspeech/desta_layerwise_avg.png" alt="DeSTA2.5-Audio average accuracy change by layer" style="width: 50%;">
+  </div>
+  <figcaption><strong>Figure 3.</strong> Average accuracy change (Δ%) across tasks when scaling is applied at each individual layer. Audio-Flamingo-3 (left) peaks at Layer 20 (+4.6%); DeSTA2.5-Audio (right) peaks at Layer 9 (+1.8%). Bars below zero indicate layers where intervention hurts.</figcaption>
+</figure>
+
+Averaging across both models, **layer-targeted scaling improves temporal reasoning accuracy by 3.2%** (from 55.9% to 59.1%) — with no additional training data, fine-tuning, or architectural modifications.
 
 The gains are modest but demonstrate that inference-time attention redistribution is a viable direction. They also reinforce the diagnostic finding: there are specific layers where temporal reasoning bottlenecks, and targeted intervention at those layers is what moves the needle.
 
