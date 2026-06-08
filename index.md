@@ -20,6 +20,9 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <table>
 <col width="100px">
 <col width="650px">
+<tr><td><b>June 2026:</b></td><td> A Closer Look at Failure Modes in Temporal Understanding of
+Large Audio-Language Models paper accepted at Interspeech 2026, Sydney </td></tr>
+<tr><td><b>May 2026:</b></td><td> Playing with Fire : What Transfers When RL Trains a Language Agent? accepted at ICML Workshop on RL from World Feedback </td></tr>
 <tr><td><b>April 2026:</b></td><td> <a href="https://arxiv.org/abs/2601.18077">Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents</a> accepted at ICML 2026 </td></tr>
 <tr><td><b>April 2026:</b></td><td> Releasing <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio Visual Flamingo</a>: Audio-Visual Flamingo: Open Audio-Visual
 Intelligence for Long and Complex Videos in collaboration with NVIDIA </td></tr>
