@@ -6,6 +6,7 @@ authors: "Apoorva Kulkarni¹, <span class='me'>Kaousheik Jayakumar¹</span>, Sre
 author_note: "¹University of Maryland, College Park"
 venue: "Interspeech 2026"
 paper_url: "#"
+permalink: /temporal-reasoning-lalms/
 date: 2026-06-07
 
 nav_sections:

@@ -105,6 +105,22 @@ order: 3
 
 <div class="blog-list">
 
+<a class="blog-card" href="{{ '/temporal-reasoning-lalms' | relative_url }}">
+  <div class="blog-card-body">
+    <div class="blog-card-meta">Kaousheik Jayakumar</div>
+    <h2 class="blog-card-title">A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models</h2>
+    <p class="blog-card-subtitle">LALMs consistently fail at foundational temporal tasks — identifying which sound started first, ended last, or lasted longest. We introduce a 1,657-question benchmark for mechanistic diagnosis and find that the problem isn't just modality imbalance: redistributing attention across audio tokens (scaling) outperforms simply increasing audio attention (upweighting). Layer-targeted scaling improves accuracy by 3.2% with no fine-tuning.</p>
+    <div class="blog-card-footer">
+      <span class="blog-card-venue">Interspeech 2026</span>
+      <span>·</span>
+      <span>Jun 7, 2026</span>
+    </div>
+  </div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/interspeech/task_examples_horizontal.png" alt="Temporal reasoning task examples">
+  </div>
+</a>
+
 <a class="blog-card" href="{{ '/llms-hanabi-cooperative-reasoning' | relative_url }}">
   <div class="blog-card-body">
     <div class="blog-card-meta">Kaousheik Jayakumar</div>
