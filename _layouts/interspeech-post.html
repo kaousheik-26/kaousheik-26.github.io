@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <meta name="description" content="{{ page.subtitle | default: page.title }}">
+    {% seo %}
+    <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── Variables ─────────────────────────────── */
+        :root {
+            --bg:          #f8f9fb;
+            --surface:     #ffffff;
+            --surface2:    #f1f3f7;
+            --text:        #0f1117;
+            --text2:       #4b5261;
+            --text3:       #9299a8;
+            --border:      #e3e6ed;
+            --border-md:   #cdd1db;
+            --accent:      #2563eb;
+            --accent-dim:  rgba(37,99,235,0.09);
+            --accent-hover:#1d4ed8;
+            --tag-bg:      rgba(37,99,235,0.08);
+            --tag-text:    #1e40af;
+            --code-bg:     #1c1f26;
+            --code-text:   #e2e4e9;
+            --shadow:      0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md:   0 4px 12px rgba(0,0,0,0.08);
+            --toc-width:   220px;
+            --topbar-h:    52px;
+        }
+
+        [data-theme="dark"] {
+            --bg:          #0d0f14;
+            --surface:     #161921;
+            --surface2:    #1e2230;
+            --text:        #eceef3;
+            --text2:       #9ba3b8;
+            --text3:       #5a6278;
+            --border:      rgba(255,255,255,0.08);
+            --border-md:   rgba(255,255,255,0.14);
+            --accent:      #60a5fa;
+            --accent-dim:  rgba(96,165,250,0.1);
+            --accent-hover:#93c5fd;
+            --tag-bg:      rgba(96,165,250,0.1);
+            --tag-text:    #93c5fd;
+            --code-bg:     #0a0c12;
+            --code-text:   #dde1ea;
+        }
+
+        /* ── Reset ──────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--topbar-h) + 24px);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.25s, color 0.25s;
+        }
+
+        /* ── Read progress ──────────────────────────── */
+        #progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 9999;
+            transition: width 60ms linear;
+        }
+
+        /* ── Top bar ────────────────────────────────── */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            height: var(--topbar-h);
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            gap: 1rem;
+            transition: background 0.25s, border-color 0.25s;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text3);
+            text-decoration: none;
+            transition: color 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .back-link:hover { color: var(--text); }
+
+        .topbar-divider {
+            width: 1px;
+            height: 18px;
+            background: var(--border-md);
+            flex-shrink: 0;
+        }
+
+        .topbar-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text2);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text2);
+            background: transparent;
+            border: 1px solid var(--border-md);
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .topbar-btn:hover {
+            color: var(--text);
+            border-color: var(--text3);
+            background: var(--surface2);
+        }
+
+        .topbar-btn.accent {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .topbar-btn.accent:hover {
+            background: var(--accent);
+            color: var(--surface);
+        }
+
+        /* ── Page grid ──────────────────────────────── */
+        .page-grid {
+            display: grid;
+            grid-template-columns: minmax(0,1fr) var(--toc-width);
+            gap: 3.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+        }
+
+        /* ── Main column ────────────────────────────── */
+        .main-col { min-width: 0; }
+
+        /* ── Paper header ───────────────────────────── */
+        .paper-header {
+            padding-bottom: 2.25rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .venue-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--tag-text);
+            background: var(--tag-bg);
+            border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            margin-bottom: 1.1rem;
+        }
+
+        .paper-title {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+        }
+
+        .authors-block {
+            font-size: 0.88rem;
+            color: var(--text2);
+            line-height: 1.65;
+            margin-bottom: 0.3rem;
+        }
+
+        .authors-block .me {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .authors-block a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .authors-block a:hover { color: var(--accent); }
+
+        .affil-block {
+            font-size: 0.78rem;
+            color: var(--text3);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .paper-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.15s;
+            border: 1px solid var(--border-md);
+            color: var(--text2);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .paper-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .paper-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+        /* ── TL;DR ──────────────────────────────────── */
+        .tldr {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 2.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .tldr-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.4rem;
+        }
+
+        .tldr-text {
+            font-size: 0.95rem;
+            color: var(--text2);
+            line-height: 1.65;
+            font-style: italic;
+        }
+
+        /* ── Article typography ─────────────────────── */
+        .post-content p {
+            margin-bottom: 1.3rem;
+            color: var(--text);
+        }
+
+        .post-content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+            transition: border-color 0.15s;
+        }
+
+        .post-content a:hover { border-bottom-color: var(--accent); }
+
+        .post-content h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin: 3rem 0 0.9rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .post-content h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 2rem 0 0.65rem;
+        }
+
+        .post-content strong { font-weight: 600; color: var(--text); }
+        .post-content em { font-style: italic; }
+
+        .post-content ul, .post-content ol {
+            padding-left: 1.35rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .post-content li { margin-bottom: 0.4rem; }
+
+        /* ── Figures ────────────────────────────────── */
+        .post-content figure {
+            margin: 2rem 0;
+        }
+
+        .post-content figure img {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: var(--shadow);
+        }
+
+        .post-content figcaption {
+            margin-top: 0.6rem;
+            font-size: 0.78rem;
+            color: var(--text3);
+            line-height: 1.55;
+        }
+
+        .post-content figcaption strong { color: var(--text2); }
+
+        /* side-by-side figures */
+        .post-content .img-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .post-content .img-row img {
+            width: 100% !important;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: var(--shadow);
+            display: block;
+        }
+
+        /* ── Tables ─────────────────────────────────── */
+        .post-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.84rem;
+            margin: 1.75rem 0;
+            background: var(--surface);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .post-content table thead {
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border-md);
+        }
+
+        .post-content table th {
+            padding: 0.6rem 0.9rem;
+            text-align: left;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text2);
+            white-space: nowrap;
+        }
+
+        .post-content table td {
+            padding: 0.6rem 0.9rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.81rem;
+        }
+
+        .post-content table td:first-child {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .post-content table tbody tr:last-child td { border-bottom: none; }
+
+        .post-content table tbody tr:hover { background: var(--accent-dim); }
+
+        /* ── Blockquotes ─────────────────────────────── */
+        .post-content blockquote {
+            border-left: 3px solid var(--accent);
+            background: var(--accent-dim);
+            padding: 0.9rem 1.2rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.5rem 0;
+        }
+
+        .post-content blockquote p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: var(--text2);
+            font-style: italic;
+        }
+
+        /* ── Code ───────────────────────────────────── */
+        .post-content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.83em;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 0.1em 0.35em;
+            border-radius: 4px;
+        }
+
+        .post-content pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            border: 1px solid var(--border);
+        }
+
+        .post-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        /* ── Citation block ─────────────────────────── */
+        .citation-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .citation-block .cite-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1rem;
+            background: var(--surface2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .citation-block .cite-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text3);
+        }
+
+        .citation-block .cite-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text3);
+            background: transparent;
+            border: 1px solid var(--border-md);
+            border-radius: 5px;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .citation-block .cite-copy:hover { color: var(--text); border-color: var(--text3); }
+        .citation-block .cite-copy.copied { color: var(--accent); border-color: var(--accent); }
+
+        .citation-block pre {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            background: var(--surface);
+            color: var(--text2);
+            padding: 0.9rem 1rem;
+            font-size: 0.78rem;
+        }
+
+        /* ── TOC column ─────────────────────────────── */
+        .toc-col {
+            position: sticky;
+            top: calc(var(--topbar-h) + 2rem);
+            align-self: start;
+            max-height: calc(100vh - var(--topbar-h) - 4rem);
+            overflow-y: auto;
+        }
+
+        .toc-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text3);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+        }
+
+        .toc-col nav ul { list-style: none; }
+        .toc-col nav li { margin-bottom: 1px; }
+
+        .toc-col nav a {
+            display: block;
+            padding: 0.32rem 0.6rem;
+            font-size: 0.76rem;
+            color: var(--text3);
+            text-decoration: none;
+            border-radius: 4px;
+            border-left: 2px solid transparent;
+            line-height: 1.45;
+            transition: all 0.15s;
+        }
+
+        .toc-col nav a:hover { color: var(--text); background: var(--surface2); }
+
+        .toc-col nav a.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .toc-col nav ul ul {
+            padding-left: 0.6rem;
+            margin-top: 1px;
+            border-left: 1px solid var(--border);
+            margin-left: 0.6rem;
+        }
+
+        .toc-col nav ul ul a { font-size: 0.72rem; padding: 0.25rem 0.5rem; }
+
+        /* ── Footer ─────────────────────────────────── */
+        .site-footer {
+            margin-top: 3.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text3);
+        }
+
+        .footer-name { font-weight: 600; color: var(--text2); }
+
+        .footer-links { display: flex; gap: 1rem; }
+
+        .footer-links a {
+            color: var(--text3);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ── Responsive ─────────────────────────────── */
+        @media (max-width: 900px) {
+            .page-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+                padding: 2rem 1.25rem 4rem;
+            }
+
+            .toc-col { display: none; }
+
+            .paper-title { font-size: 1.55rem; }
+
+            .topbar { padding: 0 1.25rem; }
+
+            .topbar-title { display: none; }
+
+            .post-content .img-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="progress"></div>
+
+<!-- Top bar -->
+<header class="topbar">
+    <div class="topbar-left">
+        <a href="{{ site.url }}/" class="back-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M10 12L6 8l4-4"/>
+            </svg>
+            {{ site.full_name | default: "Kaousheik Jayakumar" }}
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-title">{{ page.title }}</span>
+    </div>
+    <div class="topbar-right">
+        {% if page.paper_url and page.paper_url != "#" %}
+        <a href="{{ page.paper_url }}" class="topbar-btn accent">Paper</a>
+        {% endif %}
+        {% if page.code_url %}
+        <a href="{{ page.code_url }}" class="topbar-btn">Code</a>
+        {% endif %}
+        <button class="topbar-btn" id="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-lbl">Dark</span>
+        </button>
+    </div>
+</header>
+
+<!-- Two-column layout -->
+<div class="page-grid">
+
+    <!-- Main content -->
+    <main class="main-col" id="top">
+
+        <!-- Paper header -->
+        <header class="paper-header">
+            {% if page.venue %}
+            <div class="venue-chip">{{ page.venue }}</div>
+            {% endif %}
+
+            <h1 class="paper-title">{{ page.title }}</h1>
+
+            {% if page.authors %}
+            <div class="authors-block">{{ page.authors }}</div>
+            {% endif %}
+
+            {% if page.author_note %}
+            <div class="affil-block">{{ page.author_note }}</div>
+            {% endif %}
+
+            <div class="paper-links">
+                {% if page.paper_url and page.paper_url != "#" %}
+                <a href="{{ page.paper_url }}" class="paper-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    Paper
+                </a>
+                {% endif %}
+                {% if page.code_url %}
+                <a href="{{ page.code_url }}" class="paper-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                    Code
+                </a>
+                {% endif %}
+                {% if page.dataset_url %}
+                <a href="{{ page.dataset_url }}" class="paper-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M3 5v14a9 3 0 0 0 18 0V5"/>
+                        <path d="M3 12a9 3 0 0 0 18 0"/>
+                    </svg>
+                    Dataset
+                </a>
+                {% endif %}
+                {% if page.project_url %}
+                <a href="{{ page.project_url }}" class="paper-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/>
+                    </svg>
+                    Project
+                </a>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if page.subtitle %}
+        <div class="tldr">
+            <div class="tldr-label">TL;DR</div>
+            <div class="tldr-text">{{ page.subtitle }}</div>
+        </div>
+        {% endif %}
+
+        <article class="post-content">
+            {{ content }}
+        </article>
+
+        <footer class="site-footer">
+            <span class="footer-name">{{ site.full_name | default: "Kaousheik Jayakumar" }}</span>
+            <div class="footer-links">
+                <a href="mailto:kajayaku@umd.edu">Email</a>
+                <a href="https://github.com/{{ site.github_username }}">GitHub</a>
+                <a href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
+                <a href="https://linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- TOC -->
+    <aside class="toc-col">
+        <div class="toc-label">On this page</div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#top" class="active">Overview</a></li>
+                {% if page.nav_sections %}
+                {% for section in page.nav_sections %}
+                <li>
+                    <a href="#{{ section.id }}">{{ section.title }}</a>
+                    {% if section.children %}
+                    <ul>
+                        {% for child in section.children %}
+                        <li><a href="#{{ child.id }}">{{ child.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </nav>
+    </aside>
+
+</div>
+
+<script>
+    // progress bar
+    window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        document.getElementById('progress').style.width =
+            (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    });
+
+    // scroll spy
+    const navLinks = document.querySelectorAll('#nav-menu a');
+    const navHrefs = Array.from(navLinks).map(l => l.getAttribute('href').slice(1));
+    const allIds   = document.querySelectorAll('[id]');
+
+    function updateNav() {
+        let current = 'top';
+        allIds.forEach(el => {
+            if (navHrefs.includes(el.id) && el.getBoundingClientRect().top <= 120) current = el.id;
+        });
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    // theme toggle
+    let dark = false;
+    function toggleTheme() {
+        dark = !dark;
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+        document.getElementById('theme-lbl').textContent = dark ? 'Light' : 'Dark';
+    }
+
+    // citation copy
+    document.querySelectorAll('.citation-block').forEach(block => {
+        const label = block.querySelector('.cite-label');
+        if (!label) return;
+        const header = document.createElement('div');
+        header.className = 'cite-header';
+        const btn = document.createElement('button');
+        btn.className = 'cite-copy';
+        btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span>';
+        btn.onclick = () => {
+            const pre = block.querySelector('pre');
+            if (!pre) return;
+            navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+                btn.classList.add('copied');
+                btn.querySelector('span').textContent = 'Copied!';
+                setTimeout(() => { btn.classList.remove('copied'); btn.querySelector('span').textContent = 'Copy'; }, 2000);
+            });
+        };
+        label.parentNode.insertBefore(header, label);
+        header.appendChild(label);
+        header.appendChild(btn);
+    });
+</script>
+
+{% include analytics.html %}
+</body>
+</html>

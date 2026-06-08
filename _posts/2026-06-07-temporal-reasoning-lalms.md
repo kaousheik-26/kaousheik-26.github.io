@@ -1,5 +1,5 @@
 ---
-layout: research-post
+layout: interspeech-post
 title: "A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models"
 subtitle: "LALMs consistently struggle with temporal reasoning even on simple tasks. We trace the cause not to how much attention audio receives, but to how that attention is distributed — and show that training-free attention redistribution improves accuracy by 3.2% with no fine-tuning."
 authors: "Apoorva Kulkarni, <span class='me'>Kaousheik Jayakumar</span>, Sreyan Ghosh, Sarah Wiegreffe, Dinesh Manocha, Ramani Duraiswami"
