@@ -2,8 +2,8 @@
 layout: research-post
 title: "A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models"
 subtitle: "LALMs consistently struggle with temporal reasoning even on simple tasks. We trace the cause not to how much attention audio receives, but to how that attention is distributed — and show that training-free attention redistribution improves accuracy by 3.2% with no fine-tuning."
-authors: "Apoorva Kulkarni¹, <span class='me'>Kaousheik Jayakumar¹</span>, Sreyan Ghosh¹, Sarah Wiegreffe¹, Dinesh Manocha¹, Ramani Duraiswami¹"
-author_note: "¹University of Maryland, College Park"
+authors: "Apoorva Kulkarni, <span class='me'>Kaousheik Jayakumar</span>, Sreyan Ghosh, Sarah Wiegreffe, Dinesh Manocha, Ramani Duraiswami"
+author_note: "University of Maryland, College Park"
 venue: "Interspeech 2026"
 paper_url: "#"
 permalink: /temporal-reasoning-lalms/
