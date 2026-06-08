@@ -101,9 +101,9 @@ The results are striking. For most models and tasks, **CQA outperforms AQA** —
 Layer-wise attention analysis confirms this picture. Plotting the proportion of attention allocated to audio versus text tokens from the final input token at each layer, we see text-dominant attention patterns across most layers for all models — consistent with prior observations of modality imbalance.
 
 <figure>
-  <div class="img-row" style="display: flex; gap: 1rem; margin: 0;">
-    <img src="{{ site.url }}/assets/interspeech/af3_attention_plot.png" alt="Audio vs text attention share by layer for Audio-Flamingo-3" style="width: 50%;">
-    <img src="{{ site.url }}/assets/interspeech/desta_attention_plot.png" alt="Audio vs text attention share by layer for DeSTA2.5-Audio" style="width: 50%;">
+  <div class="img-row">
+    <img src="{{ site.url }}/assets/interspeech/af3_attention_plot.png" alt="Audio vs text attention share by layer for Audio-Flamingo-3">
+    <img src="{{ site.url }}/assets/interspeech/desta_attention_plot.png" alt="Audio vs text attention share by layer for DeSTA2.5-Audio">
   </div>
   <figcaption><strong>Figure 2.</strong> Layer-wise audio (red) vs. text (blue) attention share for Audio-Flamingo-3 (left) and DeSTA2.5-Audio (right). Audio receives less than 5% of attention in nearly every layer of both models, with a brief spike around Layer 4.</figcaption>
 </figure>
@@ -143,9 +143,9 @@ The fix rate experiments tell us attention redistribution can correct errors. Th
 We then apply scaling at a **single layer** and sweep all layers. Audio-Flamingo-3 shows a clear localized peak at Layer 20 under sharpening (α = 2.0). DeSTA-2.5-Audio shows peak improvement at Layer 9 under smoothing (α = 0.2).
 
 <figure>
-  <div class="img-row" style="display: flex; gap: 1rem; margin: 0;">
-    <img src="{{ site.url }}/assets/interspeech/af3_layerwise_avg.png" alt="Audio-Flamingo-3 average accuracy change by layer" style="width: 50%;">
-    <img src="{{ site.url }}/assets/interspeech/desta_layerwise_avg.png" alt="DeSTA2.5-Audio average accuracy change by layer" style="width: 50%;">
+  <div class="img-row">
+    <img src="{{ site.url }}/assets/interspeech/af3_layerwise_avg.png" alt="Audio-Flamingo-3 average accuracy change by layer">
+    <img src="{{ site.url }}/assets/interspeech/desta_layerwise_avg.png" alt="DeSTA2.5-Audio average accuracy change by layer">
   </div>
   <figcaption><strong>Figure 3.</strong> Average accuracy change (Δ%) across tasks when scaling is applied at each individual layer. Audio-Flamingo-3 (left) peaks at Layer 20 (+4.6%); DeSTA2.5-Audio (right) peaks at Layer 9 (+1.8%). Bars below zero indicate layers where intervention hurts.</figcaption>
 </figure>
