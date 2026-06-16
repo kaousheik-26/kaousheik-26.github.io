@@ -164,9 +164,9 @@ order: 1
 <div class="research-intro">
 <h1>Research</h1>
 
-<p>My research centers on building <strong>multimodal intelligence</strong> — machines that can perceive, reason over, and ground language in what they hear and see. Most of my recent work focuses on <strong>Large Audio(-Visual)-Language Models</strong>: how they fuse audio, vision, and text, where that fusion fails (temporal grounding, modality bias), and how to post-train them for stronger reasoning over long and complex real-world videos.</p>
+<p>My research centers on building <strong>multimodal intelligence</strong>; machines that can perceive, reason over, and ground language in what they hear and see. Most of my recent work focuses on <strong>Large Audio(-Visual)-Language Models</strong>: how they fuse audio, vision, and text, where that fusion fails (temporal grounding, modality bias), and how to post-train them for stronger reasoning over long and complex real-world videos.</p>
 
-<p>Alongside this, I study <strong>reasoning and reinforcement learning in language agents</strong> — what cooperative and strategic capabilities emerge in LLMs, and what actually transfers when RL trains an agent. My earlier work at IIT Madras and on the Govt. of India Bhashini project built robust multilingual speech systems for low-resource Indian languages.</p>
+<p>Alongside this, I study <strong>reasoning and reinforcement learning in language agents</strong>;  what cooperative and strategic capabilities emerge in LLMs, and what actually transfers when RL trains an agent. My earlier work at IIT Madras and on the Govt. of India Bhashini project built robust multilingual speech systems for low-resource Indian languages.</p>
 
 <div class="research-profiles">
   <a href="https://scholar.google.com/citations?user=Yc8bSDIAAAAJ&hl=en">📚 Google Scholar</a>
@@ -227,7 +227,7 @@ order: 1
 </a>
 
 <!-- Audio Flamingo Next -->
-<a class="blog-card" href="https://afnext-umd-nvidia.github.io/">
+<a class="blog-card" href="https://huggingface.co/nvidia/audio-flamingo-next-hf">
   <div class="blog-card-body">
     <div class="blog-card-meta">Sreyan Ghosh*, Arushi Goel*, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h3 class="blog-card-title">Audio Flamingo Next: Next-Generation Open Audio-Language Models for Speech, Sound, and Music</h3>
@@ -242,7 +242,7 @@ order: 1
 </a>
 
 <!-- MMOU -->
-<a class="blog-card" href="https://mmou-bench.github.io/">
+<a class="blog-card" href="https://mmou.pages.dev/">
   <div class="blog-card-body">
     <div class="blog-card-meta">Arushi Goel*, Sreyan Ghosh*, Vatsal Agarwal*, Nishit Anand*, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h3 class="blog-card-title">Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long Real-World Videos</h3>
@@ -302,7 +302,7 @@ order: 1
     </div>
   </div>
   <div class="blog-card-thumbnail">
-    <img src="{{ site.url }}/assets/neurips_2026/playing_with_fire_teaser.jpeg" alt="Playing with Fire teaser">
+    <img src="{{ site.url }}/assets/neurips_2026/playing_with_fire_sq.jpeg" alt="Playing with Fire teaser">
   </div>
 </a>
 
