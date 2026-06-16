@@ -117,7 +117,7 @@ order: 3
     </div>
   </div>
   <div class="blog-card-thumbnail">
-    <img src="{{ site.url }}/assets/interspeech/task_examples_horizontal.png" alt="Temporal reasoning task examples">
+    <img src="{{ site.url }}/assets/interspeech/task_examples.png" alt="Temporal reasoning task examples">
   </div>
 </a>
 
