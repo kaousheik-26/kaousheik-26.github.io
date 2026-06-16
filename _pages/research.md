@@ -302,7 +302,7 @@ order: 1
     </div>
   </div>
   <div class="blog-card-thumbnail">
-    <img src="{{ site.url }}/assets/neurips_2026/playing_with_fire_sq.jpeg" alt="Playing with Fire teaser">
+    <img src="{{ site.url }}/assets/neurips_2026/playing_with_fire_teaser.jpeg" alt="Playing with Fire teaser">
   </div>
 </a>
 
