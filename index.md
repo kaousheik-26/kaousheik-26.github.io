@@ -20,6 +20,7 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <table>
 <col width="100px">
 <col width="650px">
+<tr><td><b>June 2026:</b></td><td> Playing with Fire: What Transfers When RL Trains a Language Agent? accepted at Reinforcement Learning from World Feedback workshop at ICML 2026, Seoul </td></tr>
 <tr><td><b>June 2026:</b></td><td> A Closer Look at Failure Modes in Temporal Understanding of
 Large Audio-Language Models paper accepted at Interspeech 2026, Sydney </td></tr>
 <tr><td><b>May 2026:</b></td><td> Playing with Fire : What Transfers When RL Trains a Language Agent? accepted at ICML Workshop on RL from World Feedback </td></tr>
