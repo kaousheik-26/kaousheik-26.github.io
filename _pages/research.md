@@ -179,7 +179,6 @@ order: 1
 <!-- SECTION 1: Audio Understanding and Processing -->
 <!-- ============================================================= -->
 <h2 class="research-section-title">Audio Understanding and Processing</h2>
-<p class="research-section-blurb">Large audio-language and audio-visual models, temporal grounding and modality bias, omni understanding of long videos, and multilingual speech recognition.</p>
 
 <!-- Do AV LLMs See and Hear? (CVPR Findings) -->
 <a class="blog-card" href="https://ramaneswaran.github.io/avllm_interpretability/">
@@ -276,7 +275,6 @@ order: 1
 <!-- SECTION 2: Natural Language Processing -->
 <!-- ============================================================= -->
 <h2 class="research-section-title">Natural Language Processing</h2>
-<p class="research-section-blurb">Reasoning and reinforcement learning in language agents — emergent cooperative and strategic behavior, multi-turn analysis, and what transfers when RL trains an LLM.</p>
 
 <!-- Sparks of Cooperative Reasoning (ICML 2026) -->
 <a class="blog-card" href="{{ '/llms-hanabi-cooperative-reasoning' | relative_url }}">
@@ -293,17 +291,19 @@ order: 1
   </div>
 </a>
 
-<!-- Playing with Fire (Under Review) -->
-<div class="blog-card">
+<!-- Playing with Fire -->
+<a class="blog-card" href="https://icml.cc/virtual/2026/78184">
   <div class="blog-card-body">
     <div class="blog-card-meta">Mahesh Ramesh*, <strong>Kaousheik Jayakumar</strong>*, Hemanth Ram, Pavan Thodima, Ramani Duraiswami, Dinesh Manocha, Aniket Rege, Emmanouil-Vasileios Vlatakis-Gkaragkounis</div>
     <h3 class="blog-card-title">Playing with Fire: What Transfers When RL Trains a Language Agent?</h3>
     <p class="blog-card-subtitle">We study what actually transfers when reinforcement learning trains a language agent — separating the skills that generalize to out-of-domain tasks from those that overfit to the training environment.</p>
     <div class="blog-card-footer">
-      <span class="blog-card-venue">Under Review · 2026</span>
-      <span class="blog-card-venue">ICML Workshop on RL from World Feedback</span>
+      <span class="blog-card-venue">ICML Workshop on RL from World Feedback · 2026</span>
     </div>
   </div>
-</div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/neurips_2026/playing_with_fire_teaser.jpeg" alt="Playing with Fire teaser">
+  </div>
+</a>
 
 </div>
