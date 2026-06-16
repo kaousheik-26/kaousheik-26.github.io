@@ -166,6 +166,97 @@ order: 1
     width: 100%;
   }
 }
+
+/* blog-post cards (moved over from the old blog page) */
+.blog-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #e6e6e6;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+}
+
+.blog-card:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-card:hover .blog-card-title {
+  text-decoration: underline;
+}
+
+.blog-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.blog-card-meta {
+  font-size: 0.75rem;
+  color: #757575;
+  margin-bottom: 0.3rem;
+}
+
+.blog-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 0.35rem 0;
+  color: #111;
+}
+
+.blog-card-subtitle {
+  font-size: 0.82rem;
+  color: #555;
+  line-height: 1.45;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: #757575;
+}
+
+.blog-card-venue {
+  background: #f2f2f2;
+  padding: 0.12rem 0.45rem;
+  border-radius: 100px;
+  font-weight: 500;
+  color: #444;
+}
+
+.blog-card-thumbnail {
+  width: 140px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.blog-card-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .blog-card {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  .blog-card-thumbnail {
+    width: 100%;
+  }
+}
 </style>
 
 <div class="research-list">
@@ -375,5 +466,59 @@ order: 1
     </div>
   </div>
 </div>
+
+<!-- ============================================================= -->
+<!-- SECTION 3: Blog Posts -->
+<!-- ============================================================= -->
+<h2 class="research-section-title">Blog Posts</h2>
+<p class="research-section-blurb">Longer-form write-ups and project pages for selected papers.</p>
+
+<a class="blog-card" href="{{ '/temporal-reasoning-lalms' | relative_url }}">
+  <div class="blog-card-body">
+    <div class="blog-card-meta">Kaousheik Jayakumar</div>
+    <h3 class="blog-card-title">A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models</h3>
+    <p class="blog-card-subtitle">LALMs consistently fail at foundational temporal tasks — identifying which sound started first, ended last, or lasted longest. We introduce a 1,657-question benchmark for mechanistic diagnosis and find that the problem isn't just modality imbalance: redistributing attention across audio tokens (scaling) outperforms simply increasing audio attention (upweighting). Layer-targeted scaling improves accuracy by 3.2% with no fine-tuning.</p>
+    <div class="blog-card-footer">
+      <span class="blog-card-venue">Interspeech 2026</span>
+      <span>·</span>
+      <span>Jun 7, 2026</span>
+    </div>
+  </div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/interspeech/task_examples.png" alt="Temporal reasoning task examples">
+  </div>
+</a>
+
+<a class="blog-card" href="{{ '/llms-hanabi-cooperative-reasoning' | relative_url }}">
+  <div class="blog-card-body">
+    <div class="blog-card-meta">Kaousheik Jayakumar</div>
+    <h3 class="blog-card-title">Sparks of Cooperative Reasoning: LLMs as Strategic Hanabi Agents</h3>
+    <p class="blog-card-subtitle">We benchmark 17 LLMs as strategic agents in Hanabi across 2–5 player settings and three scaffolds: Watson, Sherlock, and Mycroft. Our main scaffold, Mycroft, tests whether LLMs can maintain their own evolving belief state across turns without engine-provided deductions. Recent reasoning models show promising cooperative behavior, but still lag behind strong human and specialized Hanabi agents. We also release Hanabi trajectories and move-level judge data for training, and show that a post-trained Qwen3-4B model can substantially close the gap while transferring to other tasks.</p>
+    <div class="blog-card-footer">
+      <span class="blog-card-venue">ICML 2026</span>
+      <span>·</span>
+      <span>Apr 30, 2026</span>
+    </div>
+  </div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/icml/firework.png" alt="Hanabi firework teaser">
+  </div>
+</a>
+
+<a class="blog-card" href="https://ramaneswaran.github.io/avllm_interpretability/">
+  <div class="blog-card-body">
+    <div class="blog-card-meta">Kaousheik Jayakumar</div>
+    <h3 class="blog-card-title">Do Audio-Visual Large Language Models Really See and Hear?</h3>
+    <p class="blog-card-subtitle">AVLLMs exhibit a strong vision bias in audio understanding, hallucinating sounds from what they see rather than what they hear. We conduct mechanistic interpretability experiments showing that rich audio semantics exist internally, cross-modal transfer occurs in mid-to-deep layers where vision dominates, and this bias likely stems from vision-centric training.</p>
+    <div class="blog-card-footer">
+      <span class="blog-card-venue">CVPR Findings 2026</span>
+      <span>·</span>
+      <span>Apr 6, 2026</span>
+    </div>
+  </div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/cvpr/teaser.png" alt="Audio-Visual Interpretability teaser">
+  </div>
+</a>
 
 </div>
