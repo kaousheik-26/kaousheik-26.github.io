@@ -5,7 +5,8 @@ subtitle: "LALMs consistently struggle with temporal reasoning even on simple ta
 authors: "Apoorva Kulkarni, <span class='me'>Kaousheik Jayakumar</span>, Sreyan Ghosh, Sarah Wiegreffe, Dinesh Manocha, Ramani Duraiswami"
 author_note: "University of Maryland, College Park"
 venue: "Interspeech 2026"
-paper_url: "#"
+paper_url: "https://arxiv.org/abs/2606.17417"
+dataset_url: "https://huggingface.co/datasets/Kaousheik/temporal-lalm"
 permalink: /temporal-reasoning-lalms/
 date: 2026-06-07
 
@@ -170,10 +171,13 @@ The gains are modest but demonstrate that inference-time attention redistributio
 
 <div class="citation-block">
 <span class="cite-label">BibTeX</span>
-<pre>@inproceedings{kulkarni2026temporal,
+<pre>@misc{kulkarni2026closerlookfailuremodes,
   title={A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models},
-  author={Kulkarni, Apoorva and Jayakumar, Kaousheik and Ghosh, Sreyan and Wiegreffe, Sarah and Manocha, Dinesh and Duraiswami, Ramani},
-  booktitle={Interspeech},
-  year={2026}
+  author={Apoorva Kulkarni and Kaousheik Jayakumar and Sreyan Ghosh and Sarah Wiegreffe and Dinesh Manocha and Ramani Duraiswami},
+  year={2026},
+  eprint={2606.17417},
+  archivePrefix={arXiv},
+  primaryClass={cs.SD},
+  url={https://arxiv.org/abs/2606.17417},
 }</pre>
 </div>
