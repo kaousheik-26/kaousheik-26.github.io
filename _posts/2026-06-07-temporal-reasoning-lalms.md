@@ -1,7 +1,7 @@
 ---
 layout: interspeech-post
 title: "A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models"
-subtitle: "LALMs consistently struggle with temporal reasoning even on simple tasks. We trace the cause not to how much attention audio receives, but to how that attention is distributed — and show that training-free attention redistribution improves accuracy by 3.2% with no fine-tuning."
+subtitle: "LALMs consistently struggle with temporal reasoning even on simple tasks. We trace the cause not to how much attention audio receives, but to how that attention is distributed, and show that training-free attention redistribution improves accuracy by 3.2% with no fine-tuning."
 authors: "Apoorva Kulkarni, <span class='me'>Kaousheik Jayakumar</span>, Sreyan Ghosh, Sarah Wiegreffe, Dinesh Manocha, Ramani Duraiswami"
 author_note: "University of Maryland, College Park"
 venue: "Interspeech 2026"
@@ -39,11 +39,11 @@ nav_sections:
 
 ## Motivation {#motivation}
 
-Large Audio Language Models (LALMs) — Qwen2-Audio, Kimi-Audio, Audio-Flamingo, and others — have shown impressive performance across a wide range of audio understanding tasks. But there is a specific capability these models consistently fall short on: **temporal reasoning**. Understanding when a sound starts, when it ends, and how long it lasts is fundamental to human auditory perception, yet it remains a persistent blind spot for current systems.
+Large Audio Language Models (LALMs) such as Qwen2-Audio, Kimi-Audio, and Audio-Flamingo have shown impressive performance across a wide range of audio understanding tasks. But there is a specific capability these models consistently fall short on: **temporal reasoning**. Understanding when a sound starts, when it ends, and how long it lasts is fundamental to human auditory perception, yet it remains a persistent blind spot for current systems.
 
-Prior benchmarks have documented these gaps, but largely through aggregate scores. What they don't answer is *why* models fail at temporal reasoning. Is it a modality imbalance problem — models paying too little attention to audio? Is it the audio encoder producing weak representations? Is it something about how attention is distributed within the audio signal itself?
+Prior benchmarks have documented these gaps, but largely through aggregate scores. What they don't answer is *why* models fail at temporal reasoning. Is it a modality imbalance problem, with models paying too little attention to audio? Is it the audio encoder producing weak representations? Is it something about how attention is distributed within the audio signal itself?
 
-In this work, we introduce a targeted benchmark for **mechanistic diagnosis** of temporal reasoning failures, and go beyond behavioral observation to perform the first causal attention interventions for temporal reasoning in LALMs. Our central finding: the problem is not simply that models don't pay enough attention to audio. It's that they don't distribute that attention correctly across audio tokens — and fixing the distribution, not just the quantity, is what actually helps.
+In this work, we introduce a targeted benchmark for **mechanistic diagnosis** of temporal reasoning failures, and go beyond behavioral observation to perform the first causal attention interventions for temporal reasoning in LALMs. Our central finding: the problem is not simply that models don't pay enough attention to audio. It's that they don't distribute that attention correctly across audio tokens, and fixing the distribution, not just the quantity, is what actually helps.
 
 ## Benchmark {#benchmark}
 
@@ -88,7 +88,7 @@ We evaluate four state-of-the-art open-source LALMs across three input condition
 - **CQA (Caption-only):** weak text caption + question, no audio
 - **ACQA (Audio + Caption):** both audio and caption + question
 
-The results are striking. For most models and tasks, **CQA outperforms AQA** — the caption alone beats the audio alone. Worse, ACQA provides minimal benefit over CQA in most cases, sometimes hurting. Models with strong overall benchmark scores (Audio-Flamingo-3 achieves 72.4% on MMAU; Kimi-Audio achieves 64.4%) underperform substantially on our temporal tasks, revealing that general audio competence does not translate to reliable temporal reasoning.
+The results are striking. For most models and tasks, **CQA outperforms AQA**: the caption alone beats the audio alone. Worse, ACQA provides minimal benefit over CQA in most cases, sometimes hurting. Models with strong overall benchmark scores (Audio-Flamingo-3 achieves 72.4% on MMAU; Kimi-Audio achieves 64.4%) underperform substantially on our temporal tasks, revealing that general audio competence does not translate to reliable temporal reasoning.
 
 | Model | EO: AQA / CQA / ACQA | LO: AQA / CQA / ACQA | LD: AQA / CQA / ACQA |
 |---|---|---|---|
@@ -99,10 +99,10 @@ The results are striking. For most models and tasks, **CQA outperforms AQA** —
 
 <figcaption><strong>Table 2.</strong> Performance (%) across input conditions. CQA consistently outperforms AQA for most models and tasks, revealing a strong reliance on textual cues over audio.</figcaption>
 
-Layer-wise attention analysis confirms this picture. Plotting the proportion of attention allocated to audio versus text tokens from the final input token at each layer, we see text-dominant attention patterns across most layers for all models — consistent with prior observations of modality imbalance.
+Layer-wise attention analysis confirms this picture. Plotting the proportion of attention allocated to audio versus text tokens from the final input token at each layer, we see text-dominant attention patterns across most layers for all models, consistent with prior observations of modality imbalance.
 
 <figure>
-  <div class="img-row">
+  <div class="img-row equal-h">
     <img src="{{ site.url }}/assets/interspeech/af3_attention_plot.png" alt="Audio vs text attention share by layer for Audio-Flamingo-3">
     <img src="{{ site.url }}/assets/interspeech/desta_attention_plot.png" alt="Audio vs text attention share by layer for DeSTA2.5-Audio">
   </div>
@@ -113,11 +113,11 @@ Layer-wise attention analysis confirms this picture. Plotting the proportion of 
 
 ## Mechanistic Analysis {#mechanistic-analysis}
 
-For mechanistic analysis we focus on **Audio-Flamingo-3** and **DeSTA2.5-Audio-Llama-3.1-8B** — the only state-of-the-art LALMs with fully open-source weights, training code, and training data, making reproducible causal analysis possible. We compare two training-free attention interventions.
+For mechanistic analysis we focus on **Audio-Flamingo-3** and **DeSTA2.5-Audio-Llama-3.1-8B**, the only state-of-the-art LALMs with fully open-source weights, training code, and training data, making reproducible causal analysis possible. We compare two training-free attention interventions.
 
 ### Attention Upweighting vs. Scaling {#upweighting-vs-scaling}
 
-**Attention Upweighting** increases the total attention mass on audio tokens by adding a bias to pre-softmax logits for all audio token positions. If the modality imbalance hypothesis is correct — that models simply don't pay enough attention to audio — then boosting audio attention should help.
+**Attention Upweighting** increases the total attention mass on audio tokens by adding a bias to pre-softmax logits for all audio token positions. If the modality imbalance hypothesis is correct, meaning models simply don't pay enough attention to audio, then boosting audio attention should help.
 
 **Attention Scaling** instead *redistributes* attention across audio tokens by multiplicatively scaling their logits. With α > 1, this sharpens the distribution (concentrating attention on already-attended audio tokens). With α < 1, this smooths it (spreading attention more evenly). The total amount of attention on audio can go either direction, but crucially, how it lands across individual tokens changes.
 
@@ -132,10 +132,10 @@ This is the paper's central finding: **modality imbalance alone cannot explain t
 We also vary which query positions we intervene from:
 
 - **Last:** the final prompt token only (following prior work on vision-language models)
-- **Keyword:** task-relevant keyword tokens only — "earliest", "latest", "longest"
+- **Keyword:** task-relevant keyword tokens only ("earliest", "latest", "longest")
 - **Kwd+Last:** both keyword and final prompt tokens combined
 
-Combining both yields the highest fix rates for both models. Keyword-only interventions underperform final-token-only, but the two sources provide complementary signal — targeting the tokens that semantically anchor what the model is being asked, alongside the final query position, is strictly better than either alone.
+Combining both yields the highest fix rates for both models. Keyword-only interventions underperform final-token-only, but the two sources provide complementary signal: targeting the tokens that semantically anchor what the model is being asked, alongside the final query position, is strictly better than either alone.
 
 ### Layer-Targeted Intervention {#layer-targeted}
 
@@ -151,21 +151,21 @@ We then apply scaling at a **single layer** and sweep all layers. Audio-Flamingo
   <figcaption><strong>Figure 3.</strong> Average accuracy change (Δ%) across tasks when scaling is applied at each individual layer. Audio-Flamingo-3 (left) peaks at Layer 20 (+4.6%); DeSTA2.5-Audio (right) peaks at Layer 9 (+1.8%). Bars below zero indicate layers where intervention hurts.</figcaption>
 </figure>
 
-Averaging across both models, **layer-targeted scaling improves temporal reasoning accuracy by 3.2%** (from 55.9% to 59.1%) — with no additional training data, fine-tuning, or architectural modifications.
+Averaging across both models, **layer-targeted scaling improves temporal reasoning accuracy by 3.2%** (from 55.9% to 59.1%), with no additional training data, fine-tuning, or architectural modifications.
 
 The gains are modest but demonstrate that inference-time attention redistribution is a viable direction. They also reinforce the diagnostic finding: there are specific layers where temporal reasoning bottlenecks, and targeted intervention at those layers is what moves the needle.
 
 ## Takeaways {#takeaways}
 
-1. **Temporal reasoning is a persistent gap even for high-performing LALMs.** Models like Audio-Flamingo-3 that score above 70% on MMAU fail noticeably on simple foundational tasks — identifying which of four events started earliest, ended latest, or lasted longest.
+1. **Temporal reasoning is a persistent gap even for high-performing LALMs.** Models like Audio-Flamingo-3 that score above 70% on MMAU fail noticeably on simple foundational tasks: identifying which of four events started earliest, ended latest, or lasted longest.
 
 2. **Text dominates audio even when audio is the only informative signal.** Across most models and tasks, CQA (text only) outperforms AQA (audio only), and adding audio to text rarely helps. This holds even though our dataset is carefully validated to require audio contribution.
 
-3. **The modality imbalance hypothesis is incomplete.** Simply boosting the total amount of attention audio receives (upweighting) is less effective than redistributing it (scaling). The problem is not just that models look at audio less — it's that they don't look at the right parts of audio.
+3. **The modality imbalance hypothesis is incomplete.** Simply boosting the total amount of attention audio receives (upweighting) is less effective than redistributing it (scaling). The problem is not just that models look at audio less; it's that they don't look at the right parts of audio.
 
 4. **Keyword tokens carry diagnostic leverage.** Intervening from task-relevant keyword tokens ("earliest", "latest", "longest") provides complementary benefit alongside the final prompt position. The model's internal processing of the query term affects how it reads audio.
 
-5. **Training-free inference-time interventions can help.** Layer-targeted attention scaling at a single identified bottleneck layer yields a 3.2% accuracy improvement with no training. The intervention is architecture-dependent, but the pattern — a localized layer where redistribution matters most — holds for both models.
+5. **Training-free inference-time interventions can help.** Layer-targeted attention scaling at a single identified bottleneck layer yields a 3.2% accuracy improvement with no training. The intervention is architecture-dependent, but the pattern, a localized layer where redistribution matters most, holds for both models.
 
 ## Citation {#citation}
 
