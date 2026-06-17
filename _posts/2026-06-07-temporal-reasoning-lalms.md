@@ -6,7 +6,7 @@ authors: "Apoorva Kulkarni, <span class='me'>Kaousheik Jayakumar</span>, Sreyan 
 author_note: "University of Maryland, College Park"
 venue: "Interspeech 2026"
 paper_url: "https://arxiv.org/abs/2606.17417"
-dataset_url: "https://huggingface.co/datasets/Kaousheik/temporal-lalm"
+dataset_url: "https://huggingface.co/datasets/gamma-lab-umd/temporal-lalm"
 permalink: /temporal-reasoning-lalms/
 date: 2026-06-07
 
