@@ -72,7 +72,7 @@
   <!-- HERO FIGURE -->
   <figure style="max-width:1040px;margin:24px auto 0;padding:0 24px;">
     <div class="fig-card">
-      <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/teaser_final.jpeg" alt="Three-panel overview: low base competence gives scaffold-local gains, high base competence transfers across scaffolds, and hard structured RL accelerates downstream learning.">
+      <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/teaser.png" alt="Three-panel overview: low base competence gives scaffold-local gains, high base competence transfers across scaffolds, and hard-task RL accelerates downstream convergence.">
     </div>
     <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">Whether RL gains transfer across scaffolds depends on the base model's scaffold-independent competence. Low-competence models improve only where they were trained; high-competence models transfer everywhere; hard-task RL speeds up later training even when the skill itself does not transfer.</figcaption>
   </figure>
@@ -321,9 +321,9 @@
     <p style="max-width:720px;color:#57534E;margin:0 0 24px;">Qwen3-4B trains in three stages: FIREWORKS state tracking (Qwen-ST), mixed Sherlock + Mycroft gameplay (Qwen-Hanabi), then continued Mycroft-only training (Qwen-Hanabi+). GPT-OSS-120B trains across four phases of Mycroft data with progressively expanding game coverage.</p>
     <figure style="margin:0;">
       <div class="fig-card">
-        <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/checkpoint_lineage.jpeg" alt="Checkpoint lineage diagram: the GPT-OSS path through Phases I-IV of Mycroft data, and the Qwen path from Qwen3-4B through Qwen-ST, Qwen-Hanabi, and Qwen-Hanabi+, annotated with the experimental question each checkpoint tests.">
+        <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/checkpoint_lineage.png" alt="Checkpoint lineage diagram: the Qwen path from Qwen3-4B through Qwen-ST, Qwen-Hanabi, and Qwen-Hanabi+, and the GPT-OSS path from GPT-OSS-120B through Phases I-IV of Mycroft training.">
       </div>
-      <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">Checkpoint lineage for both model families, annotated with the experimental question each stage is designed to answer.</figcaption>
+      <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">Checkpoint lineage for both model families: the Qwen path through FIREWORKS state tracking and mixed-scaffold gameplay RL, and the GPT-OSS path through four phases of Mycroft training with expanding game coverage.</figcaption>
     </figure>
   </section>
 
