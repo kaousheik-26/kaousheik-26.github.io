@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <meta name="description" content="{{ page.subtitle | default: page.title }}">
+    {% seo %}
+    <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        html, body { margin: 0; padding: 0; background: #FAF8F4; color: #1C1917; }
+        .pill-primary {
+            display: inline-flex; align-items: center; gap: 8px; background: #1C1917; color: #FAF8F4;
+            text-decoration: none; font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: 999px;
+            transition: background 0.15s ease;
+        }
+        .pill-primary:hover { background: #C8502E; }
+        .pill {
+            display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #1C1917;
+            text-decoration: none; font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: 999px;
+            border: 1px solid #D6D3D1; transition: border-color 0.15s ease, color 0.15s ease;
+        }
+        .pill:hover { border-color: #C8502E; color: #C8502E; }
+        .copy-btn {
+            font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 16px;
+            border-radius: 999px; border: 1px solid #D6D3D1; background: transparent; color: #1C1917; cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+        .copy-btn:hover { border-color: #C8502E; color: #C8502E; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch; }
+        .grid-2-wide { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .fig-img { width: 100%; height: auto; display: block; border-radius: 12px; }
+        .fig-card { background: #FFFFFF; border: 1px solid #E7E2DA; border-radius: 12px; padding: 16px; }
+        @media (max-width: 760px) {
+            .grid-2, .grid-2-wide, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+<div style="font-family:'IBM Plex Sans',sans-serif;line-height:1.6;font-size:16px;">
+
+  <!-- HERO -->
+  <header style="max-width:880px;margin:0 auto;padding:72px 24px 40px;text-align:center;">
+    <div style="display:flex;justify-content:center;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;color:#C8502E;border:1px solid #E5C4B6;border-radius:999px;padding:5px 14px;background:#FDF3EE;">ICML 2026 Workshop · RLxF: Reinforcement Learning from World Feedback</span>
+    </div>
+    <h1 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:46px;line-height:1.15;margin:28px 0 10px;letter-spacing:-0.01em;">Playing with Fire: What Transfers When RL Trains a Language Agent?</h1>
+    <p style="font-family:'Source Serif 4',serif;font-style:italic;font-size:19px;color:#57534E;margin:0 0 28px;">Scaffold-local gains, competence-gated transfer, and trainability transfer in Hanabi</p>
+
+    <p style="font-size:16px;margin:0 0 6px;color:#292524;">
+      Mahesh Ramesh<sup>1*</sup> · Kaousheik Jayakumar<sup>2*</sup> · Hemanth Ram<sup>3</sup> · Pavan Thodima<sup>1</sup> · Ramani Duraiswami<sup>2</sup> · Dinesh Manocha<sup>2</sup> · Aniket Rege<sup>1</sup> · Emmanouil-Vasileios Vlatakis-Gkaragkounis<sup>1</sup>
+    </p>
+    <p style="font-size:13.5px;color:#78716C;margin:0 0 30px;"><sup>1</sup>University of Wisconsin, Madison &nbsp;·&nbsp; <sup>2</sup>University of Maryland, College Park &nbsp;·&nbsp; <sup>3</sup>The University of Texas at Austin &nbsp;·&nbsp; <span style="font-style:italic;">*equal contribution</span></p>
+
+    <nav style="display:flex;justify-content:center;flex-wrap:wrap;gap:10px;">
+      <a href="https://icml.cc/virtual/2026/78184" class="pill-primary">Paper</a>
+      <a href="#" class="pill">arXiv</a>
+      <a href="#" class="pill">Code</a>
+      <a href="#" class="pill">FIREWORKS data</a>
+      <a href="#bibtex" class="pill">BibTeX</a>
+    </nav>
+  </header>
+
+  <!-- HERO FIGURE -->
+  <figure style="max-width:1040px;margin:24px auto 0;padding:0 24px;">
+    <div class="fig-card">
+      <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/teaser_final.jpeg" alt="Three-panel overview: low base competence gives scaffold-local gains, high base competence transfers across scaffolds, and hard structured RL accelerates downstream learning.">
+    </div>
+    <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">Whether RL gains transfer across scaffolds depends on the base model's scaffold-independent competence. Low-competence models improve only where they were trained; high-competence models transfer everywhere; hard-task RL speeds up later training even when the skill itself does not transfer.</figcaption>
+  </figure>
+
+  <!-- CENTRAL QUESTION -->
+  <section style="max-width:880px;margin:64px auto 0;padding:0 24px;text-align:center;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#C8502E;margin-bottom:12px;">THE CENTRAL QUESTION</div>
+    <p style="font-family:'Source Serif 4',serif;font-size:28px;line-height:1.35;font-weight:600;color:#1C1917;margin:0;">When RL improves an LM agent in one scaffold, what actually transfers to another?</p>
+    <p style="max-width:680px;margin:16px auto 0;color:#57534E;font-size:15.5px;">Agent benchmarks wrap models in scaffolds, and the same model can score very differently across them. A higher reward can reflect idiosyncrasies of one training setup rather than transferable skill.</p>
+  </section>
+
+  <!-- TLDR -->
+  <section style="max-width:1040px;margin:72px auto 0;padding:0 24px;">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 8px;">What actually transfers?</h2>
+    <p style="max-width:720px;color:#57534E;margin:0 0 28px;">We train language agents with RL to play Hanabi, a cooperative hidden-information card game, and evaluate the same game through three different prompt scaffolds. RL post-training separates into three distinct outcomes.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;">
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C8502E;margin-bottom:10px;">01 · SCAFFOLD-LOCAL GAINS</div>
+        <p style="margin:0;font-size:15px;color:#292524;">When the base model lacks usable task competence, RL lifts the trained scaffolds 4 to 15x, yet the held-out Watson scaffold, which demands internal game knowledge, barely moves.</p>
+        <div style="margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#78716C;">Qwen3-4B, trained on Sherlock + Mycroft</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C8502E;margin-bottom:10px;">02 · COMPETENCE-GATED TRANSFER</div>
+        <p style="margin:0;font-size:15px;color:#292524;">A model that already plays Hanabi without prompt-supplied rules transfers its RL gains. Trained on Mycroft alone, it improves on all three scaffolds, including both held-out ones.</p>
+        <div style="margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#78716C;">GPT-OSS-120B, trained on Mycroft only</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:24px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C8502E;margin-bottom:10px;">03 · TRAINABILITY TRANSFER</div>
+        <p style="margin:0;font-size:15px;color:#292524;">Hard state-tracking RL does not transfer zero-shot across scaffolds, but it reshapes computation: longer, more persistent rollouts, 4x better downstream Pass@8, and roughly half the RL steps to reach the same reward.</p>
+        <div style="margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#78716C;">Qwen-ST, trained on FIREWORKS</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCAFFOLDS -->
+  <section style="background:#F2EDE4;margin-top:80px;padding:64px 24px;">
+    <div style="max-width:1040px;margin:0 auto;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 8px;">One game, three scaffolds</h2>
+      <p style="max-width:720px;color:#57534E;margin:0 0 28px;">The underlying Hanabi game never changes. What changes is how much support the prompt supplies: rules, legal moves, engine-computed deductions, and who has to maintain the belief state.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;">
+        <div style="background:#FAF8F4;border:1px solid #E0D9CD;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;">
+            <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;">Watson</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#78716C;">least support</span>
+          </div>
+          <div style="display:flex;gap:5px;">
+            <span style="height:6px;flex:1;border-radius:3px;background:#C8502E;"></span>
+            <span style="height:6px;flex:1;border-radius:3px;background:#E0D9CD;"></span>
+            <span style="height:6px;flex:1;border-radius:3px;background:#E0D9CD;"></span>
+          </div>
+          <p style="margin:0;font-size:14.5px;color:#44403C;">Public game state, visible hands, clue-derived own-card info, legal moves. No rules, no deductions. Strong play here means the model has internalized Hanabi, so Watson serves as the competence test.</p>
+        </div>
+        <div style="background:#FAF8F4;border:1px solid #E0D9CD;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;">
+            <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;">Sherlock</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#78716C;">richest support</span>
+          </div>
+          <div style="display:flex;gap:5px;">
+            <span style="height:6px;flex:1;border-radius:3px;background:#C8502E;"></span>
+            <span style="height:6px;flex:1;border-radius:3px;background:#C8502E;"></span>
+            <span style="height:6px;flex:1;border-radius:3px;background:#C8502E;"></span>
+          </div>
+          <p style="margin:0;font-size:14.5px;color:#44403C;">Everything Watson has, plus full Hanabi rules and engine-computed deductions over possible card identities from the Hanabi Learning Environment.</p>
+        </div>
+        <div style="background:#FAF8F4;border:1px solid #E0D9CD;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;">
+            <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;">Mycroft</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#78716C;">most demanding</span>
+          </div>
+          <div style="display:flex;gap:5px;">
+            <span style="height:6px;flex:1;border-radius:3px;background:#C8502E;"></span>
+            <span style="height:6px;flex:1;border-radius:3px;background:#8A6A5C;"></span>
+            <span style="height:6px;flex:1;border-radius:3px;background:#E0D9CD;"></span>
+          </div>
+          <p style="margin:0;font-size:14.5px;color:#44403C;">Only the previous turn's state plus all intervening moves. The model must reconstruct per-player belief states itself before acting, a direct test of state tracking and theory-of-mind reasoning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section style="max-width:1040px;margin:80px auto 0;padding:0 24px;">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 8px;">Results</h2>
+    <p style="max-width:720px;color:#57534E;margin:0 0 32px;">Transfer is gated by pre-RL competence, not model scale alone. And even when a trained skill does not transfer zero-shot, the checkpoint it produces is a better starting point.</p>
+
+    <!-- Qwen table -->
+    <div style="margin-bottom:44px;">
+      <h3 style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;margin:0 0 4px;">Low game knowledge: gains stay scaffold-local</h3>
+      <p style="font-size:13.5px;color:#78716C;margin:0 0 16px;font-family:'IBM Plex Mono',monospace;">Qwen3-4B lineage · IQM over seeds 1001 to 1010 · Hanabi score out of 25</p>
+      <div style="overflow-x:auto;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;">
+        <table style="border-collapse:collapse;width:100%;min-width:720px;font-size:13px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:12px 16px;border-bottom:1px solid #E7E2DA;font-weight:600;color:#44403C;" rowspan="2">Model</th>
+              <th style="text-align:center;padding:10px 8px 2px;color:#C8502E;font-weight:600;background:#FDF3EE;" colspan="4">Watson · held out</th>
+              <th style="text-align:center;padding:10px 8px 2px;color:#44403C;font-weight:600;" colspan="4">Sherlock · trained</th>
+              <th style="text-align:center;padding:10px 8px 2px;color:#44403C;font-weight:600;" colspan="4">Mycroft · trained</th>
+            </tr>
+            <tr>
+              <th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">2P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">3P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">4P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">5P</th>
+              <th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">2P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">3P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">4P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">5P</th>
+              <th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">2P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">3P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">4P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">5P</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">Qwen3-4B</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">1.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">1.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">1.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">0.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">1.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">2.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">5.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">3.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">0.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">0.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">1.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">0.67</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">Qwen-ST</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">1.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">3.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">10.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">7.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">7.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">2.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">3.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">3.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">2.17</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">Qwen-Hanabi</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">11.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.67</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">Qwen-Hanabi+</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">2.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">5.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">11.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.33</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="max-width:760px;font-size:14px;color:#57534E;margin:14px 0 0;">RL lifts the trained Sherlock and Mycroft scaffolds 4 to 14x, but held-out Watson barely moves: the model does not acquire enough scaffold-independent Hanabi knowledge to transfer. Continued Mycroft RL even degrades Sherlock.</p>
+    </div>
+
+    <!-- GPT-OSS table -->
+    <div style="margin-bottom:44px;">
+      <h3 style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;margin:0 0 4px;">High game knowledge: gains transfer across scaffolds</h3>
+      <p style="font-size:13.5px;color:#78716C;margin:0 0 16px;font-family:'IBM Plex Mono',monospace;">GPT-OSS-120B lineage · Mycroft-only RL · IQM · Hanabi score out of 25</p>
+      <div style="overflow-x:auto;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;">
+        <table style="border-collapse:collapse;width:100%;min-width:720px;font-size:13px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:12px 16px;border-bottom:1px solid #E7E2DA;font-weight:600;color:#44403C;" rowspan="2">Model</th>
+              <th style="text-align:center;padding:10px 8px 2px;color:#C8502E;font-weight:600;background:#FDF3EE;" colspan="4">Watson · held out</th>
+              <th style="text-align:center;padding:10px 8px 2px;color:#C8502E;font-weight:600;background:#FDF3EE;" colspan="4">Sherlock · held out</th>
+              <th style="text-align:center;padding:10px 8px 2px;color:#44403C;font-weight:600;" colspan="4">Mycroft · trained</th>
+            </tr>
+            <tr>
+              <th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">2P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">3P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">4P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">5P</th>
+              <th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">2P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">3P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">4P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;background:#FDF3EE;">5P</th>
+              <th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">2P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">3P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">4P</th><th style="text-align:center;padding:2px 8px 10px;border-bottom:1px solid #E7E2DA;font-family:'IBM Plex Mono',monospace;font-weight:400;color:#A8A29E;">5P</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">GPT-OSS-120B</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">12.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">11.17</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">+ Phase I</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">12.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">12.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">11.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.00</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">+ Phase II</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">16.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.17</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">+ Phase III</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">12.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">16.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.50</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">12.33</td>
+              </tr>
+              <tr>
+                <td style="padding:9px 16px;border-bottom:1px solid #F0EBE3;font-weight:500;color:#292524;white-space:nowrap;">+ Phase IV</td>
+                <td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">14.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">13.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">16.83</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">16.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">16.17</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;background:#FDF3EE;">15.00</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">15.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.67</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">14.33</td><td style="text-align:center;padding:9px 8px;border-bottom:1px solid #F0EBE3;font-family:'IBM Plex Mono',monospace;color:#44403C;">13.67</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="max-width:760px;font-size:14px;color:#57534E;margin:14px 0 0;">A stronger base model trained on Mycroft alone improves on all three scaffolds. Cross-scaffold transfer is gated by pre-RL competence, not model scale alone. Training on the hard failure subset (Phase IV) elicits deliberation and gives the strongest transfer.</p>
+      <figure style="margin:24px 0 0;">
+        <div class="fig-card">
+          <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/stitched_openai120b_sequence.png" alt="GPT-OSS-120B training curves across Phases I-IV: state-tracking reward, move-rating reward, mean Hanabi score per phase, and training tokens per turn.">
+        </div>
+        <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">GPT-OSS-120B across the four Mycroft training phases: state-tracking reward climbs steadily, mean Hanabi score improves on all three scaffolds, and Phase IV's hard failure data lengthens per-turn computation while trading off the move-rating reward.</figcaption>
+      </figure>
+    </div>
+
+    <h3 style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;margin:0 0 16px;">Trainability transfer: hard-task RL is a better starting point</h3>
+    <div class="grid-2">
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:26px;display:flex;flex-direction:column;justify-content:center;gap:14px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C8502E;">COMPUTATION STYLE</div>
+        <p style="margin:0;font-size:14.5px;color:#44403C;">FIREWORKS RL lengthens completions from about 1.5K to 8K tokens as reward rises from near 0 to about 0.9. Initialized from Qwen-ST, downstream Mycroft RL reaches the same state-tracking reward in roughly half as many steps as a cold start, which lags from reward interference between the joint objectives.</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:26px;display:flex;flex-direction:column;justify-content:center;gap:18px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C8502E;">HELD-OUT LOGIC · PI-LOGIC PASS@8</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:10px;font-size:13.5px;">
+            <span style="color:#57534E;">Base model</span>
+            <div style="height:14px;background:#EFEAE1;border-radius:7px;overflow:hidden;"><div style="width:15%;height:100%;background:#D6CFC3;border-radius:7px;"></div></div>
+            <span style="font-family:'IBM Plex Mono',monospace;color:#78716C;">0.15</span>
+          </div>
+          <div style="display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:10px;font-size:13.5px;">
+            <span style="color:#57534E;">Hard-task RL</span>
+            <div style="height:14px;background:#EFEAE1;border-radius:7px;overflow:hidden;"><div style="width:37%;height:100%;background:#E08D6B;border-radius:7px;"></div></div>
+            <span style="font-family:'IBM Plex Mono',monospace;color:#78716C;">0.37</span>
+          </div>
+          <div style="display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:10px;font-size:13.5px;">
+            <span style="color:#57534E;">+ Hanabi RL</span>
+            <div style="height:14px;background:#EFEAE1;border-radius:7px;overflow:hidden;"><div style="width:61%;height:100%;background:#C8502E;border-radius:7px;"></div></div>
+            <span style="font-family:'IBM Plex Mono',monospace;color:#C8502E;font-weight:500;">0.61</span>
+          </div>
+        </div>
+        <p style="margin:0;font-size:13.5px;color:#78716C;">FIREWORKS state-tracking RL lifts a held-out, non-Hanabi logic task 4x, and continued Hanabi RL raises it further, even though the exact belief-reconstruction skill does not transfer zero-shot to Mycroft.</p>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:18px;">
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:22px;">
+        <div style="font-family:'Source Serif 4',serif;font-size:34px;font-weight:700;color:#C8502E;">4-15x</div>
+        <p style="margin:6px 0 0;font-size:13.5px;color:#57534E;">in-domain gain on trained scaffolds for the low-competence 4B model, with almost no held-out improvement</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:22px;">
+        <div style="font-family:'Source Serif 4',serif;font-size:34px;font-weight:700;color:#C8502E;">~1/2</div>
+        <p style="margin:6px 0 0;font-size:13.5px;color:#57534E;">the RL steps to reach the same state-tracking reward when initializing from the FIREWORKS checkpoint instead of a cold start</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:22px;">
+        <div style="font-family:'Source Serif 4',serif;font-size:34px;font-weight:700;color:#C8502E;">~0</div>
+        <p style="margin:6px 0 0;font-size:13.5px;color:#57534E;">Pass@1 for Qwen3-4B on FIREWORKS exact belief reconstruction before training, across 2 to 5 player games</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIREWORKS -->
+  <section style="max-width:1040px;margin:80px auto 0;padding:0 24px;">
+    <div class="grid-2-wide">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C8502E;margin-bottom:10px;">BENCHMARK</div>
+        <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 12px;">FIREWORKS: strict state tracking</h2>
+        <p style="color:#44403C;font-size:15.5px;margin:0 0 14px;">A 10K-example state-transition dataset across 2 to 5 player Hanabi games. The model sees the previous and current public state and must reconstruct the full hidden-belief state exactly. Reward is 1 only when every card belief is correct, 0 otherwise. The base model's Pass@1 is near zero.</p>
+        <p style="color:#44403C;font-size:15.5px;margin:0;">We also release 18K Mycroft-scaffold gameplay samples with verifiable state-tracking rewards, enabling deterministic reward signals during Hanabi RL.</p>
+      </div>
+      <figure style="margin:0;">
+        <div class="fig-card">
+          <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/state_tracking_length_reward_stitched.png" alt="FIREWORKS RL training dynamics: average rollout completion length and FIREWORKS reward versus global training step.">
+        </div>
+        <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;">FIREWORKS RL training dynamics: completion length grows from about 1.5K to 8K tokens as the strict state-tracking reward rises from near 0 to about 0.9.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section style="max-width:1040px;margin:80px auto 0;padding:0 24px;">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 8px;">Multi-stage training</h2>
+    <p style="max-width:720px;color:#57534E;margin:0 0 24px;">Qwen3-4B trains in three stages: FIREWORKS state tracking (Qwen-ST), mixed Sherlock + Mycroft gameplay (Qwen-Hanabi), then continued Mycroft-only training (Qwen-Hanabi+). GPT-OSS-120B trains across four phases of Mycroft data with progressively expanding game coverage.</p>
+    <figure style="margin:0;">
+      <div class="fig-card">
+        <img class="fig-img" src="{{ site.url }}/assets/playing_with_fire/checkpoint_lineage.jpeg" alt="Checkpoint lineage diagram: the GPT-OSS path through Phases I-IV of Mycroft data, and the Qwen path from Qwen3-4B through Qwen-ST, Qwen-Hanabi, and Qwen-Hanabi+, annotated with the experimental question each checkpoint tests.">
+      </div>
+      <figcaption style="font-size:13.5px;color:#78716C;margin-top:12px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;">Checkpoint lineage for both model families, annotated with the experimental question each stage is designed to answer.</figcaption>
+    </figure>
+  </section>
+
+  <!-- TAKEAWAYS -->
+  <section style="background:#1C1917;margin-top:80px;padding:64px 24px;">
+    <div style="max-width:1040px;margin:0 auto;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 28px;color:#FAF8F4;">Takeaways</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;">
+        <div style="border:1px solid #3B3835;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E08D6B;">1</span>
+          <p style="margin:0;font-size:14.5px;color:#D6D3D1;">RL training scores can be deceiving: gains on one scaffold can be brittle elsewhere.</p>
+        </div>
+        <div style="border:1px solid #3B3835;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E08D6B;">2</span>
+          <p style="margin:0;font-size:14.5px;color:#D6D3D1;">Injecting new knowledge through SFT or on-policy distillation beats doing RL from scratch.</p>
+        </div>
+        <div style="border:1px solid #3B3835;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E08D6B;">3</span>
+          <p style="margin:0;font-size:14.5px;color:#D6D3D1;">Hard-task RL is useful when the model has the needed knowledge or receives it in context.</p>
+        </div>
+        <div style="border:1px solid #3B3835;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E08D6B;">4</span>
+          <p style="margin:0;font-size:14.5px;color:#D6D3D1;">Hard-task RL enables faster downstream convergence, even when the skill itself does not transfer zero-shot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABSTRACT -->
+  <section style="max-width:880px;margin:80px auto 0;padding:0 24px;">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0 0 16px;">Abstract</h2>
+    <p style="font-family:'Source Serif 4',serif;font-size:16.5px;color:#292524;margin:0;text-align:justify;">What does reinforcement learning teach an agentic language model: task-transferable competence or scaffold-specific behavior? We study this question in Hanabi, a cooperative hidden-information card game, by training and evaluating models across three Holmesian scaffolds that present the same game with different prompt support. A Qwen3-4B model with weak scaffold-independent Hanabi competence, trained with RL on the supported Sherlock and Mycroft scaffolds, achieves large in-domain gains but fails to transfer to held-out Watson, where rules are not provided in context. In contrast, GPT-OSS-120B, which starts with stronger scaffold-independent competence, improves on both held-out scaffolds after RL on Mycroft alone. To evaluate long-horizon state tracking we construct FIREWORKS, a 10K benchmark requiring exact reconstruction of per-player hidden card beliefs. Together, our results separate RL post-training into three outcomes: scaffold-local gains, competence-gated transfer, and computation-style and trainability transfer, where hard-task RL changes rollout behavior and improves downstream optimization even when the trained zero-shot skill does not transfer across scaffolds.</p>
+  </section>
+
+  <!-- BIBTEX -->
+  <section id="bibtex" style="max-width:880px;margin:72px auto 0;padding:0 24px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;margin:0;">Citation</h2>
+      <button class="copy-btn" onclick="copyBibtex(this)">Copy BibTeX</button>
+    </div>
+    <pre id="bibtex-text" style="background:#1C1917;color:#E7E2DA;border-radius:12px;padding:22px 24px;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6;margin:0;">@inproceedings{ramesh2026playingwithfire,
+  title     = {Playing with Fire: What Transfers When RL Trains a Language Agent?},
+  author    = {Ramesh, Mahesh and Jayakumar, Kaousheik and Ram, Hemanth and
+               Thodima, Pavan and Duraiswami, Ramani and Manocha, Dinesh and
+               Rege, Aniket and Vlatakis-Gkaragkounis, Emmanouil-Vasileios},
+  booktitle = {ICML 2026 Workshop on RLxF: Reinforcement Learning from World Feedback},
+  year      = {2026}
+}</pre>
+  </section>
+
+  <footer style="max-width:880px;margin:72px auto 0;padding:28px 24px 48px;border-top:1px solid #E7E2DA;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:#78716C;">
+    <span>ICML 2026 Workshop on RLxF: Reinforcement Learning from World Feedback</span>
+    <a href="{{ site.url }}" style="color:#78716C;">{{ site.full_name | default: "Home" }}</a>
+  </footer>
+
+</div>
+
+<script>
+function copyBibtex(btn) {
+  navigator.clipboard.writeText(document.getElementById('bibtex-text').textContent).then(function () {
+    btn.textContent = 'Copied';
+    setTimeout(function () { btn.textContent = 'Copy BibTeX'; }, 1500);
+  });
+}
+</script>
+{% include analytics.html %}
+</body>
+
+</html>

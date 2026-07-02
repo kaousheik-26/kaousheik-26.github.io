@@ -292,7 +292,7 @@ order: 1
 </a>
 
 <!-- Playing with Fire -->
-<a class="blog-card" href="https://icml.cc/virtual/2026/78184">
+<a class="blog-card" href="{{ site.url }}/playing-with-fire/">
   <div class="blog-card-body">
     <div class="blog-card-meta">Mahesh Ramesh*, <strong>Kaousheik Jayakumar</strong>*, Hemanth Ram, Pavan Thodima, Ramani Duraiswami, Dinesh Manocha, Aniket Rege, Emmanouil-Vasileios Vlatakis-Gkaragkounis</div>
     <h3 class="blog-card-title">Playing with Fire: What Transfers When RL Trains a Language Agent?</h3>
