@@ -20,6 +20,7 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <table>
 <col width="100px">
 <col width="650px">
+<tr><td><b>July 2026:</b></td><td> Selected as an Outstanding Reviewer for the Mechanistic Interpretability Workshop at ICML 2026 </td></tr>
 <tr><td><b>June 2026:</b></td><td> <a href="{{ site.url }}/playing-with-fire/">Playing with Fire: What Transfers When RL Trains a Language Agent?</a> accepted at Reinforcement Learning from World Feedback workshop at ICML 2026, Seoul </td></tr>
 <tr><td><b>June 2026:</b></td><td> <a href="https://apoorva-ak.github.io/temporal-reasoning-lalms/">A Closer Look at Failure Modes in Temporal Understanding of
 Large Audio-Language Models</a> paper accepted at Interspeech 2026, Sydney </td></tr>
