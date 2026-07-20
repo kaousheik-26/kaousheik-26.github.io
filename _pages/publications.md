@@ -148,13 +148,13 @@ order: 2
   <div class="blog-card-body">
     <div class="blog-card-meta">Sreyan Ghosh, Arushi Goel, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h2 class="blog-card-title">
-      <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
+      <a href="https://arxiv.org/abs/2607.16107">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
     </h2>
     <div class="blog-card-footer">
       <span class="blog-card-venue">Preprint · 2026</span>
       <span class="blog-card-venue" style="background:#fff3cd; color:#856404;">Coming Soon</span>
       <span class="blog-card-links">
-        <a href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">📄 Paper</a>
+        <a href="https://arxiv.org/abs/2607.16107">📄 Paper</a>
       </span>
     </div>
   </div>

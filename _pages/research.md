@@ -211,7 +211,7 @@ order: 1
 </a>
 
 <!-- Audio-Visual Flamingo -->
-<a class="blog-card" href="https://drive.google.com/file/d/1s8loNX_FHOkbM83ws4agPgMEJFzMAY5e/view?usp=sharing">
+<a class="blog-card" href="https://arxiv.org/abs/2607.16107">
   <div class="blog-card-body">
     <div class="blog-card-meta">Sreyan Ghosh*, Arushi Goel*, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</div>
     <h3 class="blog-card-title">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</h3>
