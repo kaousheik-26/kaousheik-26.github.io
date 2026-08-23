@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMPO: Temporally-grounded Multi-task Post-training for Large Audio-Language Models</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --primary: #f43f5e;
+            --primary-hover: #e11d48;
+            --primary-light: #fff1f2;
+            --secondary: #0ea5e9;
+            --dark-bg: #0f172a;
+            --sidebar-bg: #1e293b;
+            --sidebar-text: #94a3b8;
+            --sidebar-active: #ffffff;
+            --body-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* LEFT NAVBAR / SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f43f5e, #fb7185);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .sidebar-nav {
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .nav-section-label {
+            padding: 12px 24px 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #64748b;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 24px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: var(--sidebar-active);
+            background-color: rgba(255, 255, 255, 0.04);
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-nav a i {
+            width: 18px;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .sidebar-footer strong {
+            color: #cbd5e1;
+        }
+
+        /* MAIN CONTENT AREA */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 48px 40px 80px 40px;
+            width: 100%;
+        }
+
+        /* HEADER / HERO SECTION */
+        .hero {
+            margin-bottom: 48px;
+            padding-bottom: 36px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .paper-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .paper-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--dark-bg);
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .paper-title .highlight {
+            color: var(--primary);
+        }
+
+        .authors-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .author-item {
+            display: inline-block;
+        }
+
+        .author-item a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .author-item a:hover {
+            color: var(--primary);
+        }
+
+        .affiliation {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* RESOURCE BUTTONS */
+        .resource-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-accent {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--body-bg);
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        /* SECTIONS */
+        .section {
+            margin-bottom: 56px;
+            scroll-margin-top: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+        }
+
+        .section-header .section-icon {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        /* ABSTRACT & HIGHLIGHTS */
+        .abstract-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 24px;
+        }
+
+        .key-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark-bg);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* INNOVATIONS CARDS */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* METHODOLOGY & PIPELINE */
+        .pipeline-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+        }
+
+        .pipeline-stages {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .stage-box {
+            background: var(--body-bg);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stage-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            background: var(--sidebar-bg);
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .stage-box h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+            margin-bottom: 4px;
+        }
+
+        .stage-box p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .math-block {
+            background: #f1f5f9;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--dark-bg);
+            margin: 12px 0;
+            border-left: 4px solid var(--secondary);
+            overflow-x: auto;
+        }
+
+        /* TASKS TABS & DEMOS */
+        .task-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .tab-btn {
+            padding: 10px 18px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+        }
+
+        .meta-tag {
+            background: #e2e8f0;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .prompt-box {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .prompt-box .tag {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        .prompt-box .time {
+            color: #f43f5e;
+            font-weight: 600;
+        }
+
+        /* RESULTS TABLE */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: var(--dark-bg);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.highlight-row {
+            background: #fff1f2;
+            font-weight: 600;
+        }
+
+        tr.highlight-row td {
+            color: var(--primary-hover);
+        }
+
+        .best-score {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* BIBTEX BLOCK */
+        .bibtex-box {
+            position: relative;
+            background: var(--code-bg);
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            padding: 24px 40px;
+            border-top: 1px solid var(--border-color);
+            background: white;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-header {
+                display: flex !important;
+            }
+
+            .pipeline-stages {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mobile-header {
+            display: none;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 16px 20px;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .mobile-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="brand-logo" style="width: 32px; height: 32px; font-size: 1rem;">T</div>
+            <span style="font-weight: 800; font-size: 1.1rem;">TEMPO</span>
+        </div>
+        <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+    </div>
+
+    <!-- LEFT NAVBAR / SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo"><i class="fa-solid fa-wave-square"></i></div>
+            <div>
+                <div class="brand-title">TEMPO</div>
+                <div class="brand-subtitle">Audio Timestamping LALM</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Paper Sections</div>
+            <ul>
+                <li><a href="#overview" class="active" onclick="setActive(this)"><i class="fa-solid fa-align-left"></i> Abstract & Overview</a></li>
+                <li><a href="#innovations" onclick="setActive(this)"><i class="fa-solid fa-lightbulb"></i> Core Innovations</a></li>
+                <li><a href="#method" onclick="setActive(this)"><i class="fa-solid fa-gears"></i> Method & Curriculum</a></li>
+                <li><a href="#tasks" onclick="setActive(this)"><i class="fa-solid fa-list-check"></i> Supported Tasks</a></li>
+                <li><a href="#results" onclick="setActive(this)"><i class="fa-solid fa-chart-simple"></i> Evaluation Results</a></li>
+                <li><a href="#citation" onclick="setActive(this)"><i class="fa-solid fa-quote-right"></i> BibTeX Citation</a></li>
+            </ul>
+
+            <div class="nav-section-label" style="margin-top: 16px;">Resources</div>
+            <ul>
+                <li><a href="https://github.com/kaousheik-26/tempo" target="_blank"><i class="fa-brands fa-github"></i> GitHub Code</a></li>
+                <li><a href="https://huggingface.co/datasets/Kaousheik/tempo" target="_blank"><i class="fa-solid fa-database"></i> HF Dataset</a></li>
+                <li><a href="https://huggingface.co/collections/Kaousheik/tempo-6a8a96ced2752994aa9034e2" target="_blank"><i class="fa-solid fa-cubes"></i> HF Checkpoints</a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div>Published at <strong>ACL Submission</strong></div>
+            <div style="margin-top: 4px;">University of Maryland, College Park</div>
+        </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+        <div class="content-container">
+
+            <!-- HERO HEADER -->
+            <header class="hero">
+                <div class="paper-badge"><i class="fa-solid fa-sparkles"></i> First Unified LALM for Audio, Speech & Music Timestamping</div>
+                <h1 class="paper-title">
+                    <span class="highlight">TEMPO</span>: Temporally-grounded Multi-task Post-training for Large Audio-Language Models
+                </h1>
+
+                <div class="authors-list">
+                    <span class="author-item">Apoorva Kulkarni</span> • 
+                    <span class="author-item">Kaousheik Jayakumar</span> • 
+                    <span class="author-item">Sreyan Ghosh</span> • 
+                    <span class="author-item">Utathya Aich</span> • 
+                    <span class="author-item">Ramani Duraiswami</span> • 
+                    <span class="author-item">Dinesh Manocha</span>
+                </div>
+
+                <div class="affiliation">
+                    <i class="fa-solid fa-building-columns"></i> University of Maryland, College Park
+                </div>
+
+                <div class="resource-links">
+                    <a href="https://github.com/kaousheik-26/tempo" target="_blank" class="btn btn-primary"><i class="fa-brands fa-github"></i> Code Repository</a>
+                    <a href="https://huggingface.co/datasets/Kaousheik/tempo" target="_blank" class="btn btn-accent"><i class="fa-solid fa-database"></i> Hugging Face Dataset (119K)</a>
+                    <a href="https://huggingface.co/collections/Kaousheik/tempo-6a8a96ced2752994aa9034e2" target="_blank" class="btn btn-outline"><i class="fa-solid fa-box-open"></i> Model Checkpoints</a>
+                </div>
+            </header>
+
+            <!-- ABSTRACT & OVERVIEW -->
+            <section id="overview" class="section">
+                <div class="section-header">
+                    <i class="fa-solid fa-align-left section-icon"></i>
+                    <h2>Abstract & Overview</h2>
+                </div>
+
+                <div class="abstract-card">
+                    <p>Large audio-language models (LALMs) describe audio at the clip level but cannot assign timestamps to the events, speakers, or sounds they identify. Despite being essential for downstream tasks like speech recognition and dense audio captioning, timestamping remains a key limitation of most LALMs.</p>
+                    <br>
+                    <p>We present <strong>TEMPO</strong> (Temporally-grounded Multi-task Post-training), the first unified model to handle audio, speech, and music timestamping tasks in a single decoder. TEMPO is trained on a synthetic-to-real post-training curriculum and refined using Group Relative Policy Optimization (GRPO) with verifiable temporal rewards.</p>
+                </div>
+
+                <div class="key-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">5 Tasks</div>
+                        <div class="stat-label">Speech, Sound & Music</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">119K</div>
+                        <div class="stat-label">Training Examples</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0.1 s</div>
+                        <div class="stat-label">Atomic Resolution</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">43.5%</div>
+                        <div class="stat-label">Speech WER (vs 69.7% Baseline)</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CORE INNOVATIONS -->
+            <section id="innovations" class="section">
+                <div class="section-header">
+                    <i class="fa-solid fa-lightbulb section-icon"></i>
+                    <h2>Core Architectural Innovations</h2>
+                </div>
+
+                <div class="grid-cards">
+                    <div class="card">
+                        <div class="card-icon"><i class="fa-solid fa-cubes"></i></div>
+                        <h3>1. Atomic Timestamp Tokens</h3>
+                        <p>Replaces BPE subword fragmentation with ~601 dedicated discrete tokens <code>&lt;|0.0|&gt;</code> to <code>&lt;|60.0|&gt;</code> at 0.1s resolution, enabling a single softmax prediction over exact wall-clock timestamps.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+                        <h3>2. Time-Aware Projector</h3>
+                        <p>Injects sinusoidal wall-clock encodings φ(t) into frozen audio encoder frame features, enabling the LLM decoder to directly perceive elapsed temporal structure spanning sub-second to long-range events.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon"><i class="fa-solid fa-chart-area"></i></div>
+                        <h3>3. Distance-Aware Gaussian Loss</h3>
+                        <p>Applies a Gaussian target distribution ($\sigma_t = 0.3s$) over the timestamp vocabulary to grant partial credit for near-miss predictions, matching the ordinal nature of temporal evaluation metrics (tIoU).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- METHOD & PIPELINE -->
+            <section id="method" class="section">
+                <div class="section-header">
+                    <i class="fa-solid fa-gears section-icon"></i>
+                    <h2>Methodology & 3-Stage Training</h2>
+                </div>
+
+                <div class="pipeline-card">
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Post-Training Curriculum</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
+                        TEMPO is initialized from Audio Flamingo 3 (Whisper-large encoder + Qwen2-7B LLM) and follows a progressive three-stage optimization recipe:
+                    </p>
+
+                    <div class="pipeline-stages">
+                        <div class="stage-box">
+                            <span class="stage-badge">Stage 1: Cold Start SFT</span>
+                            <h4>Synthetic Calibration</h4>
+                            <p><strong>51K Synthetic Samples</strong></p>
+                            <p>Establishes uniform timestamp vocabulary distribution across all tasks.</p>
+                        </div>
+                        <div class="stage-box">
+                            <span class="stage-badge">Stage 2: Real-Data SFT</span>
+                            <h4>Supervised Fine-Tuning</h4>
+                            <p><strong>33K Real-World Samples</strong></p>
+                            <p>Fine-tunes on real conversational, sound, and music corpora.</p>
+                        </div>
+                        <div class="stage-box">
+                            <span class="stage-badge">Stage 3: RL with GRPO</span>
+                            <h4>Verifiable Rewards</h4>
+                            <p><strong>35K Optimization Steps</strong></p>
+                            <p>Refines temporal boundaries directly against evaluation metrics (WER, mIoU, F1).</p>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 24px; margin-bottom: 8px;">Time-Aware Projection Formula:</h4>
+                    <div class="math-block">
+                        h_t = Linear_2( σ( Linear_1( x_t + W_τ * φ(t) ) ) )
+                    </div>
+                </div>
+            </section>
+
+            <!-- SUPPORTED TASKS -->
+            <section id="tasks" class="section">
+                <div class="section-header">
+                    <i class="fa-solid fa-list-check section-icon"></i>
+                    <h2>5 Unified Timestamping Tasks</h2>
+                </div>
+
+                <div class="task-tabs">
+                    <button class="tab-btn active" onclick="switchTab('asr')">Multi-Speaker ASR</button>
+                    <button class="tab-btn" onclick="switchTab('diar')">Speaker Diarization</button>
+                    <button class="tab-btn" onclick="switchTab('ground')">Audio Temporal Grounding</button>
+                    <button class="tab-btn" onclick="switchTab('dac')">Dense Audio Captioning</button>
+                    <button class="tab-btn" onclick="switchTab('music')">Music Captioning</button>
+                </div>
+
+                <!-- ASR -->
+                <div id="tab-asr" class="tab-content active">
+                    <div class="task-meta">
+                        <span class="meta-tag">Task Tag: [speech: asr]</span>
+                        <span class="meta-tag">Benchmark: AMI Meeting Corpus</span>
+                    </div>
+                    <p style="margin-bottom: 12px; color: var(--text-muted);">Provides timestamped transcriptions for multi-speaker conversational audio.</p>
+                    <div class="prompt-box">
+                        <span class="tag">[speech: asr]</span> <span class="time">&lt;|0.0|&gt;</span> The memory uh <span class="time">&lt;|2.2|&gt;</span> Pops up the options <span class="time">&lt;|4.5|&gt;</span> <span class="tag">[speech: asr]</span> <span class="time">&lt;|4.9|&gt;</span> Yeah yeah that would be possible <span class="time">&lt;|7.1|&gt;</span>
+                    </div>
+                </div>
+
+                <!-- DIAR -->
+                <div id="tab-diar" class="tab-content">
+                    <div class="task-meta">
+                        <span class="meta-tag">Task Tag: [speech: diar]</span>
+                        <span class="meta-tag">Benchmark: AMI Meeting Corpus</span>
+                    </div>
+                    <p style="margin-bottom: 12px; color: var(--text-muted);">Identifies speaker turns and active speaker time spans.</p>
+                    <div class="prompt-box">
+                        <span class="tag">[speech: diar]</span> <span class="time">&lt;|0.0|&gt;</span> Speaker 1 <span class="time">&lt;|6.2|&gt;</span> <span class="tag">[speech: diar]</span> <span class="time">&lt;|4.6|&gt;</span> Speaker 2 <span class="time">&lt;|6.1|&gt;</span> <span class="tag">[speech: diar]</span> <span class="time">&lt;|5.9|&gt;</span> Speaker 3 <span class="time">&lt;|6.9|&gt;</span>
+                    </div>
+                </div>
+
+                <!-- GROUND -->
+                <div id="tab-ground" class="tab-content">
+                    <div class="task-meta">
+                        <span class="meta-tag">Task Tag: [audio:ground]</span>
+                        <span class="meta-tag">Benchmark: AudioSet Strong / TACOS</span>
+                    </div>
+                    <p style="margin-bottom: 12px; color: var(--text-muted);">Localizes specific textual sound queries to temporal start and end intervals.</p>
+                    <div class="prompt-box">
+                        Query: "a bird tweets quietly outdoors"<br>
+                        <span class="tag">[audio:ground]</span> <span class="time">&lt;|0.9|&gt;</span> to <span class="time">&lt;|1.4|&gt;</span> <span class="tag">[audio:ground]</span> <span class="time">&lt;|2.3|&gt;</span> to <span class="time">&lt;|2.8|&gt;</span>
+                    </div>
+                </div>
+
+                <!-- DAC -->
+                <div id="tab-dac" class="tab-content">
+                    <div class="task-meta">
+                        <span class="meta-tag">Task Tag: [audio:caption]</span>
+                        <span class="meta-tag">Benchmark: TACOS Benchmark</span>
+                    </div>
+                    <p style="margin-bottom: 12px; color: var(--text-muted);">Segments audio stream and provides natural language captions for each sound event.</p>
+                    <div class="prompt-box">
+                        <span class="tag">[audio:caption]</span> <span class="time">&lt;|0.0|&gt;</span> A river flows loudly outdoors. <span class="time">&lt;|23.9|&gt;</span> <span class="tag">[audio:caption]</span> <span class="time">&lt;|0.9|&gt;</span> A bird tweets quietly. <span class="time">&lt;|1.4|&gt;</span>
+                    </div>
+                </div>
+
+                <!-- MUSIC -->
+                <div id="tab-music" class="tab-content">
+                    <div class="task-meta">
+                        <span class="meta-tag">Task Tag: [audio:music]</span>
+                        <span class="meta-tag">Benchmark: Slakh2100 Benchmark</span>
+                    </div>
+                    <p style="margin-bottom: 12px; color: var(--text-muted);">Generates structured chord progressions, instrument entries/exits, tempo BPM, and note stats.</p>
+                    <div class="prompt-box">
+                        <span class="tag">[audio:music]</span> [instrument] Organ enters at <span class="time">&lt;|0.0|&gt;</span> exits at <span class="time">&lt;|30.0|&gt;</span> [tempo] 120.0 BPM at <span class="time">&lt;|0.0|&gt;</span> [chord] B:min from <span class="time">&lt;|0.0|&gt;</span> to <span class="time">&lt;|3.5|&gt;</span> [chord] D:sus2 from <span class="time">&lt;|3.5|&gt;</span> to <span class="time">&lt;|21.0|&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EVALUATION & RESULTS -->
+            <section id="results" class="section">
+                <div class="section-header">
+                    <i class="fa-solid fa-chart-simple section-icon"></i>
+                    <h2>Benchmark Evaluation Results</h2>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>ASR WER ↓</th>
+                                <th>ASR mIoU ↑</th>
+                                <th>Diar DER ↓</th>
+                                <th>Diar mIoU ↑</th>
+                                <th>Dense eF1 ↑</th>
+                                <th>Ground F1 ↑</th>
+                                <th>Music Inst F1 ↑</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Audio Flamingo 3</td>
+                                <td>209.7%</td>
+                                <td>19.4%</td>
+                                <td>103.2%</td>
+                                <td>2.9%</td>
+                                <td>1.0%</td>
+                                <td>3.3%</td>
+                                <td>33.7%</td>
+                            </tr>
+                            <tr>
+                                <td>Audio Flamingo Next</td>
+                                <td>115.4%</td>
+                                <td>11.5%</td>
+                                <td>106.9%</td>
+                                <td>12.4%</td>
+                                <td>7.6%</td>
+                                <td>3.6%</td>
+                                <td>33.5%</td>
+                            </tr>
+                            <tr>
+                                <td>Qwen3-Omni</td>
+                                <td>69.7%</td>
+                                <td>31.6%</td>
+                                <td>44.2%</td>
+                                <td>44.4%</td>
+                                <td>37.9%</td>
+                                <td>47.4%</td>
+                                <td>2.8%</td>
+                            </tr>
+                            <tr>
+                                <td>TimeAudio</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>43.6%</td>
+                                <td>40.1%</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>SFT (Stage 1+2)</td>
+                                <td>44.7%</td>
+                                <td>63.8%</td>
+                                <td>25.4%</td>
+                                <td>70.5%</td>
+                                <td>58.5%</td>
+                                <td>46.2%</td>
+                                <td>96.3%</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><strong>TEMPO (SFT + Multi-Task RL)</strong></td>
+                                <td class="best-score">43.5%</td>
+                                <td class="best-score">65.8%</td>
+                                <td class="best-score">25.4%</td>
+                                <td class="best-score">71.1%</td>
+                                <td class="best-score">59.3%</td>
+                                <td class="best-score">49.4%</td>
+                                <td class="best-score">96.0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- BIBTEX CITATION -->
+            <section id="citation" class="section">
+                <div class="section-header">
+                    <i class="fa-solid fa-quote-right section-icon"></i>
+                    <h2>BibTeX Citation</h2>
+                </div>
+
+                <div class="bibtex-box">
+                    <button class="copy-btn" onclick="copyBibtex()"><i class="fa-regular fa-copy"></i> Copy</button>
+                    <pre id="bibtex-text">@article{kulkarni2026tempo,
+  title={TEMPO: Temporally-grounded Multi-task Post-training for Large Audio-Language Models},
+  author={Kulkarni, Apoorva and Jayakumar, Kaousheik and Ghosh, Sreyan and Aich, Utathya and Duraiswami, Ramani and Manocha, Dinesh},
+  journal={ACL Submission},
+  year={2026}
+}</pre>
+                </div>
+            </section>
+
+        </div>
+
+        <footer>
+            &copy; 2026 TEMPO Project. University of Maryland, College Park. All Rights Reserved.
+        </footer>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function setActive(element) {
+            const links = document.querySelectorAll('.sidebar-nav a');
+            links.forEach(l => l.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function switchTab(taskId) {
+            const btns = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            btns.forEach(b => b.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById('tab-' + taskId).classList.add('active');
+        }
+
+        function copyBibtex() {
+            const bibtexText = document.getElementById('bibtex-text').innerText;
+            navigator.clipboard.writeText(bibtexText).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
