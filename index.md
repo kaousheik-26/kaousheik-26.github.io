@@ -20,6 +20,7 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <table>
 <col width="100px">
 <col width="650px">
+<tr><td><b>Sept 2026:</b></td><td> Joined <a href="https://www.centific.com/">Centific AI Research</a> as a Research Intern </td></tr>
 <tr><td><b>August 2026:</b></td><td> <a href="{{ site.url }}/tempo/">TEMPO: Temporally-grounded Multi-task Post-training for Large Audio-Language Models</a> accepted at EMNLP 2026 (Main Conference) </td></tr>
 <tr><td><b>July 2026:</b></td><td> Releasing <a href="https://arxiv.org/abs/2607.16107">Audio-Visual Flamingo</a>: Open Audio-Visual
 Intelligence for Long and Complex Videos in collaboration with NVIDIA </td></tr>
