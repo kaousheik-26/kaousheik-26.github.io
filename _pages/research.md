@@ -180,6 +180,21 @@ order: 1
 <!-- ============================================================= -->
 <h2 class="research-section-title">Audio Understanding and Processing</h2>
 
+<!-- TEMPO -->
+<a class="blog-card" href="{{ site.url }}/tempo/">
+  <div class="blog-card-body">
+    <div class="blog-card-meta">Apoorva Kulkarni*, <strong>Kaousheik Jayakumar</strong>*, Sreyan Ghosh, Utathya Aich, Ramani Duraiswami, Dinesh Manocha</div>
+    <h3 class="blog-card-title">TEMPO: Temporally-grounded Multi-task Post-training for Large Audio-Language Models</h3>
+    <p class="blog-card-subtitle">The first unified LALM for timestamping across speech, sound, and music — multi-speaker ASR, speaker diarization, audio temporal grounding, dense audio captioning, and timestamped music captioning, all in a single decoder. A synthetic-to-real SFT curriculum with atomic timestamp tokens and a distance-aware Gaussian loss, refined with GRPO over verifiable temporal rewards, substantially outperforms Audio Flamingo Next and Qwen3-Omni.</p>
+    <div class="blog-card-footer">
+      <span class="blog-card-venue">EMNLP · Main Conference, 2026</span>
+    </div>
+  </div>
+  <div class="blog-card-thumbnail">
+    <img src="{{ site.url }}/assets/logos/TEMPO.svg" alt="TEMPO">
+  </div>
+</a>
+
 <!-- Do AV LLMs See and Hear? (CVPR Findings) -->
 <a class="blog-card" href="https://ramaneswaran.github.io/avllm_interpretability/">
   <div class="blog-card-body">
