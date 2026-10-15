@@ -154,6 +154,7 @@ order: 2
       <span class="blog-card-venue">NeurIPS · 2026</span>
       <span class="blog-card-links">
         <a href="https://arxiv.org/abs/2607.16107">📄 Paper</a>
+        <a href="https://avflamingo.pages.dev/">🌐 Project Page</a>
       </span>
     </div>
   </div>

@@ -167,7 +167,7 @@ order: 1
   <li class="pub-entry">
     <a class="pub-title" href="https://arxiv.org/abs/2607.16107">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a> <br/>
     <span class="pub-authors">Sreyan Ghosh*, Arushi Goel*, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</span> <br/>
-    <span class="pub-links"><a href="https://arxiv.org/abs/2607.16107">arXiv</a></span> <br/>
+    <span class="pub-links"><a href="https://arxiv.org/abs/2607.16107">arXiv</a> / <a href="https://avflamingo.pages.dev/">Project Page</a></span> <br/>
     <span class="pub-venue">NeurIPS 2026</span>
   </li>
 
