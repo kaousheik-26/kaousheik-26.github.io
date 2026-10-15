@@ -232,8 +232,7 @@ order: 1
     <h3 class="blog-card-title">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</h3>
     <p class="blog-card-subtitle">An open audio-visual model built to understand long and complex videos, jointly reasoning over speech, sound, and what's on screen across extended temporal contexts — advancing open audio-visual intelligence beyond short clips.</p>
     <div class="blog-card-footer">
-      <span class="blog-card-venue">Under Review · 2026</span>
-      <span class="blog-card-venue" style="background:#fff3cd; color:#856404;">Coming Soon</span>
+      <span class="blog-card-venue">NeurIPS · 2026</span>
     </div>
   </div>
   <div class="blog-card-thumbnail">
@@ -263,7 +262,7 @@ order: 1
     <h3 class="blog-card-title">Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long Real-World Videos</h3>
     <p class="blog-card-subtitle">A massive multi-task benchmark for omni understanding and reasoning over long, real-world videos, stress-testing models across audio, vision, and language jointly rather than in isolation.</p>
     <div class="blog-card-footer">
-      <span class="blog-card-venue">arXiv preprint · 2026</span>
+      <span class="blog-card-venue">NeurIPS · 2026</span>
     </div>
   </div>
   <div class="blog-card-thumbnail">

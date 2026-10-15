@@ -151,8 +151,7 @@ order: 2
       <a href="https://arxiv.org/abs/2607.16107">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a>
     </h2>
     <div class="blog-card-footer">
-      <span class="blog-card-venue">Preprint · 2026</span>
-      <span class="blog-card-venue" style="background:#fff3cd; color:#856404;">Coming Soon</span>
+      <span class="blog-card-venue">NeurIPS · 2026</span>
       <span class="blog-card-links">
         <a href="https://arxiv.org/abs/2607.16107">📄 Paper</a>
       </span>
@@ -192,7 +191,7 @@ order: 2
       <a href="https://arxiv.org/abs/2603.14145">MMOU - Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long and Complex Real-World Videos</a>
     </h2>
     <div class="blog-card-footer">
-      <span class="blog-card-venue">Preprint · 2026</span>
+      <span class="blog-card-venue">NeurIPS · 2026</span>
       <span class="blog-card-links">
         <a href="https://arxiv.org/abs/2603.14145">📄 arXiv</a>
         <a href="https://mmou-bench.github.io/">🌐 Project Page</a>
