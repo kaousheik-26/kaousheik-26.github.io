@@ -225,6 +225,13 @@ order: 1
     <span class="pub-venue">Preprint · 2026</span>
   </li>
 
+  <li class="pub-entry">
+    <a class="pub-title" href="https://arxiv.org/pdf/2511.15418">Building Robust and Scalable Multilingual ASR for Indian Languages</a> <br/>
+    <span class="pub-authors">Arjun Gangwar, <strong>Kaousheik Jayakumar</strong>, S. Umesh</span> <br/>
+    <span class="pub-links"><a href="https://arxiv.org/pdf/2511.15418">arXiv</a></span> <br/>
+    <span class="pub-venue">Preprint · 2026</span>
+  </li>
+
 </ul>
 
 </div>
