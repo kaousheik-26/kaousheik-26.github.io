@@ -144,7 +144,7 @@ order: 1
   <li class="pub-entry">
     <a class="pub-title" href="https://arxiv.org/abs/2606.17417">A Closer Look at Failure Modes in Temporal Understanding of Large Audio-Language Models</a> <br/>
     <span class="pub-authors">Apoorva Kulkarni, <strong>Kaousheik Jayakumar</strong>, Sreyan Ghosh, Sarah Wiegreffe, Dinesh Manocha, Ramani Duraiswami</span> <br/>
-    <span class="pub-links"><a href="https://arxiv.org/abs/2606.17417">arXiv</a> / <a href="{{ '/temporal-reasoning-lalms' | relative_url }}">Project Page</a></span> <br/>
+    <span class="pub-links"><a href="https://arxiv.org/abs/2606.17417">arXiv</a> / <a href="{{ '/temporal-reasoning-lalms' | relative_url }}">Project Page</a> / <a href="https://huggingface.co/datasets/gamma-lab-umd/temporal-lalm">Dataset</a></span> <br/>
     <span class="pub-venue">Interspeech 2026</span>
   </li>
 
