@@ -3,7 +3,7 @@ layout: page
 ---
 {% include JB/setup %}
 
-<img style="float: right; width: 35%; padding: 6px;" src=" {{ site.url }}/assets/IMG_6822.jpg">
+<img style="float: right; width: 35%; padding: 6px;" src=" {{ site.url }}/assets/IMG_6822_cropped.jpg">
 
 I am a 2nd year Master's student in Computer Science at University of Maryland, College Park. I work audio-visual understanding at [Gamma Lab](https://gamma.umd.edu/) and [PIRL](http://www.pirl.umd.edu/) lab under the guidance of [Prof. Dinesh Manocha](https://scholar.google.com/citations?user=X08l_4IAAAAJ&hl=en) and [Prof. Ramani Duraiswami](http://users.umiacs.umd.edu/~ramanid/)
 
