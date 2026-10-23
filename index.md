@@ -11,7 +11,7 @@ I am currently working as a Research Intern at [Centific AI Research](https://ww
 
 I completed my undergrad from IIT Madras where I had the opportunity to work with [Prof. Umesh](https://speech-lab-iitm.github.io/) at the [SPRING Lab](https://asr.iitm.ac.in/) on multilingual ASR systems for Indian languages. I was also fortunate to work with [Prof. Hema Murthy](https://bhashini.gov.in/) on the [Bhashini Project](https://bhashini.gov.in/) in collaboration with the Govt. of India.
 
-After my undergrad I've worked as a Member of Technical Staff at [Oracle](https://www.oracle.com/cloud/) working on various edge-computing solutions and integrating them into the [Oracle Cloud Infrastructure (OCI)](https://www.oracle.com/cloud/). In the meanwhile I've also collaborated with students from University of Wisconsin Madision on understanding the Cooperative reasoning capabilities of LLMs through the [Hanabi](https://www.oracle.com/cloud/) game
+I've also collaborated with students from University of Wisconsin Madison on understanding the Cooperative reasoning capabilities of LLMs through the [Hanabi]({{ site.url }}/llms-hanabi-cooperative-reasoning) game
 
 [CV / Resume]({{ site.url }}/assets/kaousheik_CV.pdf), [Google Scholar](https://scholar.google.com/citations?user=Yc8bSDIAAAAJ&hl=en) 
 Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)  
