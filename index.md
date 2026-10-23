@@ -22,9 +22,9 @@ Email ID: [kaousheik@gmail.com](mailto:kaousheik@gmail.com)
 <table>
 <col width="100px">
 <col width="650px">
-<tr><td><b>October 2026:</b></td><td> <a href="{{ site.url }}/playing-with-fire/">Playing with Fire: What Transfers When RL Trains a Language Agent?</a> accepted as a Spotlight at the Efficient Reasoning workshop, COLM 2026 </td></tr>
+<tr><td><b>October 2026:</b></td><td> <a href="{{ site.url }}/playing-with-fire/">Playing with Fire: What Transfers When RL Trains a Language Agent?</a> accepted as a <span style="color:#c0392b; font-weight:700">Spotlight</span> at the Efficient Reasoning workshop, COLM 2026 </td></tr>
 <tr><td><b>Sept 2026:</b></td><td> <a href="https://avflamingo.pages.dev/">Audio-Visual Flamingo: Open Audio-Visual Intelligence for Long and Complex Videos</a> and <a href="https://mmou-bench.github.io/">MMOU: Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long and Complex Real-World Videos</a> accepted at NeurIPS 2026 </td></tr>
-<tr><td><b>Sept 2026:</b></td><td> <a href="{{ site.url }}/tempo/">TEMPO: Temporally-grounded Multi-task Post-training for Large Audio-Language Models</a> accepted as an Oral at EMNLP 2026 (Main Conference), Budapest </td></tr>
+<tr><td><b>Sept 2026:</b></td><td> <a href="{{ site.url }}/tempo/">TEMPO: Temporally-grounded Multi-task Post-training for Large Audio-Language Models</a> accepted as an <span style="color:#c0392b; font-weight:700">Oral</span> at EMNLP 2026 (Main Conference), Budapest </td></tr>
 <tr><td><b>Sept 2026:</b></td><td> Joined <a href="https://www.centific.com/">Centific AI Research</a> as a Research Intern </td></tr>
 <tr><td><b>July 2026:</b></td><td> Releasing <a href="https://avflamingo.pages.dev/">Audio-Visual Flamingo</a>: Open Audio-Visual
 Intelligence for Long and Complex Videos in collaboration with NVIDIA </td></tr>
