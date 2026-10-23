@@ -175,7 +175,7 @@ order: 1
     <a class="pub-title" href="https://arxiv.org/abs/2603.14145">MMOU: Massive Multi-Task Omni Understanding and Reasoning Benchmark for Long and Complex Real-World Videos</a> <br/>
     <span class="pub-authors">Arushi Goel*, Sreyan Ghosh*, Vatsal Agarwal*, Nishit Anand*, <strong>Kaousheik Jayakumar</strong>, et al. (in collaboration with NVIDIA)</span> <br/>
     <span class="pub-links"><a href="https://arxiv.org/abs/2603.14145">arXiv</a> / <a href="https://mmou-bench.github.io/">Project Page</a> / <a href="https://huggingface.co/datasets/nvidia/MMOU">Data</a></span> <br/>
-    <span class="pub-venue">NeurIPS 2026</span>
+    <span class="pub-venue">NeurIPS 2026 Dataset and Benchmark Track</span>
   </li>
 
   <li class="pub-entry">
